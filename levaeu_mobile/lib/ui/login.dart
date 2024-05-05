@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:levaeu_mobile/ui/registration.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -18,10 +18,11 @@ class _loginState extends State<Login>{
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
       ),
 
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
+        scrollDirection: Axis.vertical,
         children:  <Widget> [
           Column(
             children: <Widget> [
@@ -29,50 +30,65 @@ class _loginState extends State<Login>{
               Container(
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.all(10),
-                constraints: const BoxConstraints(maxWidth: 280),
+                constraints: const BoxConstraints(maxWidth: 250),
                 child: Image.asset('img/img_login.png'),
               ),
 
               Container(
-                padding: const EdgeInsets.all(0),
-                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                margin: const EdgeInsets.only(top: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
                 child: const Text(
-                  "Entre com seu email ou número de telefone",
+                  "Acesse sua conta",
                   textAlign: TextAlign.justify,
                   softWrap: true,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 24,
+                    fontSize: 28,
                     color: Color.fromRGBO(65, 65, 65, 1)
                   ),
                 ),
               ),
 
               Container(
+                constraints: const BoxConstraints(maxWidth: 300),
+                child: const Text(
+                  'Entre com seu email ou número de telefone e aproveite suas viajens.',
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: Color.fromRGBO(160, 160, 160, 1)
+                  ),
+                ),
+              ),
+
+              Container(
                 padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 350),
+                constraints: const BoxConstraints(maxWidth: 300),
                 child: buildTextField("Email ou telefone", TextInputType.emailAddress, emailController)
               ),
 
               Container(
                 padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 350),
+                constraints: const BoxConstraints(maxWidth: 300),
                 child: buildTextField("Senha", TextInputType.visiblePassword, passController)
               ),
 
               Container(
-                //constraints: const BoxConstraints(maxWidth: 300),
+                constraints: const BoxConstraints(maxWidth: 300),
                 padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 20),
+                alignment: Alignment.center,
                 child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, "Entrar", context, Login())
               ),
 
               Container(
-                //constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
+                constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Criar conta", context, Login())
+                alignment: Alignment.center,
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Criar conta", context, Registration())
               ),
 
             ],
@@ -88,7 +104,7 @@ class _loginState extends State<Login>{
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1)),
-        border: const OutlineInputBorder(),
+        border: const UnderlineInputBorder(),
       ),
       style: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1), fontSize: 12.0),
       keyboardType: inputType
@@ -107,18 +123,15 @@ class _loginState extends State<Login>{
           color: colorBorder
         )
       ),
-      child: Row(
-        children: <Widget>[
-          Text(
-            " $text",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: colorText,
-              fontSize: 16,
-            ),
+      child:
+        Text(
+          " $text",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: colorText,
+            fontSize: 16,
           ),
-        ],
-      ),
+        ),
       onPressed: (){
         Navigator.push(context, MaterialPageRoute(builder: (context) => f));        
       }, 
