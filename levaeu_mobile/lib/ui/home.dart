@@ -25,9 +25,9 @@ class _HomeState extends State<Home>{
             children: <Widget>[
 
               Container(
-                padding: const EdgeInsets.all(30.0),
-                width: 200,
-                height: 200,
+                padding: const EdgeInsets.all(50.0),
+                width: 250,
+                height: 250,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image.asset('img/logo.png'),
@@ -35,7 +35,7 @@ class _HomeState extends State<Home>{
               ),
               
               Container(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
+                padding: const EdgeInsets.only(bottom: 5.0),
                 child: const Text(
                 'Bem-vindo ao LevaEu!',
                   style: TextStyle(
