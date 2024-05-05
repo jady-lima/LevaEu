@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/ui/login.dart';
 
-class Homelogin extends StatefulWidget{
+class Homelogin extends StatelessWidget{
   @override
-  _HomeloginState createState() => _HomeloginState();
+  Widget build(BuildContext context) {
+    return _HomeloginContent();
+  }
 }
 
-class _HomeloginState extends State<Homelogin> {
+class _HomeloginContent extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +37,12 @@ class _HomeloginState extends State<Homelogin> {
               
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 45,'img/logo_gmail.png', "Login com Gmail")
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 45,'img/logo_gmail.png', "Login com Gmail", context, Login())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 45, 'img/logo_sigaa.png', "Login com SIGAA")
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 45, 'img/logo_sigaa.png', "Login com SIGAA", context, Login())
               ),
 
               const SizedBox(height: 15),
@@ -54,12 +57,12 @@ class _HomeloginState extends State<Homelogin> {
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, 45, null, "Criar Conta")
+                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, 45, null, "Criar Conta", context, Login())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 235, 45, null, "Entrar")
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 235, 45, null, "Entrar", context, Login())
                 ),
 
             ]
@@ -69,7 +72,7 @@ class _HomeloginState extends State<Homelogin> {
     );
   }
 
-  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth, double sizeHeight, String? imagePath, String text){
+  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth, double sizeHeight, String? imagePath, String text, BuildContext context, Widget f){
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(sizeWidth, sizeHeight),
@@ -93,14 +96,13 @@ class _HomeloginState extends State<Homelogin> {
             " $text",
             style: TextStyle(
               color: colorText,
-              fontFamily: 'Roboto',
               fontSize: 16
             ),
           ),
         ],
       ),
       onPressed: (){
-        
+        Navigator.push(context, MaterialPageRoute(builder: (context) => f));        
       }, 
     );
   }

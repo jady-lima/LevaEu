@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/ui/home_login.dart';
 
-class Home extends StatefulWidget{
+class Home extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() => _HomeState();
+  Widget build(BuildContext context) {
+    return _HomeContent();
+  }
 }
 
-class _HomeState extends State<Home>{
+class _HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +40,6 @@ class _HomeState extends State<Home>{
                 child: const Text(
                 'Bem-vindo ao LevaEu!',
                   style: TextStyle(
-                    fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                     fontSize: 28,
                     color: Color.fromRGBO(65, 65, 65, 1)
@@ -55,7 +55,6 @@ class _HomeState extends State<Home>{
                   textAlign: TextAlign.center,
                   softWrap: true,
                   style: TextStyle(
-                    fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
                     color: Color.fromRGBO(160, 160, 160, 1)

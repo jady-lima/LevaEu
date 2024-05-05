@@ -7,6 +7,7 @@ void main() {
     home: Home(),
     theme: ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(57, 96, 143, 0)),
+      fontFamily: 'Roboto',
       useMaterial3: true,
     ),
   ));
