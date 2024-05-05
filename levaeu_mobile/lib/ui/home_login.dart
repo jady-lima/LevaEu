@@ -37,12 +37,12 @@ class _HomeloginContent extends StatelessWidget{
               
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 45,'img/logo_gmail.png', "Login com Gmail", context, Login())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, Login())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 45, 'img/logo_sigaa.png', "Login com SIGAA", context, Login())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, Login())
               ),
 
               const SizedBox(height: 15),
@@ -57,13 +57,13 @@ class _HomeloginContent extends StatelessWidget{
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, 45, null, "Criar Conta", context, Login())
+                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, null, "Criar Conta", context, Login())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 235, 45, null, "Entrar", context, Login())
-                ),
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 235, null, "Entrar", context, Login())
+              ),
 
             ]
           ),
@@ -72,10 +72,10 @@ class _HomeloginContent extends StatelessWidget{
     );
   }
 
-  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth, double sizeHeight, String? imagePath, String text, BuildContext context, Widget f){
+  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth,  String? imagePath, String text, BuildContext context, Widget f){
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(sizeWidth, sizeHeight),
+        minimumSize: Size(sizeWidth, 50),
         backgroundColor: colorButton,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

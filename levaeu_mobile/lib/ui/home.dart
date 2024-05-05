@@ -26,7 +26,7 @@ class _HomeContent extends StatelessWidget {
             children: <Widget>[
 
               Container(
-                padding: const EdgeInsets.all(50.0),
+                padding: const EdgeInsets.all(30),
                 width: 250,
                 height: 250,
                 child: ClipRRect(
