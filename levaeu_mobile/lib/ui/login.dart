@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/ui/registration.dart';
+import 'package:levaeu_mobile/utils/elevated_buttons.dart';
+import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -9,6 +11,7 @@ class Login extends StatefulWidget{
 class _loginState extends State<Login>{
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class _loginState extends State<Login>{
           Column(
             children: <Widget> [
 
+              //Container: Imagem
               Container(
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.all(10),
@@ -34,6 +38,7 @@ class _loginState extends State<Login>{
                 child: Image.asset('img/img_login.png'),
               ),
 
+              //Container: Titulo Principal
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
@@ -49,6 +54,7 @@ class _loginState extends State<Login>{
                 ),
               ),
 
+              //Container: Titulo Secundário
               Container(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: const Text(
@@ -63,78 +69,61 @@ class _loginState extends State<Login>{
                 ),
               ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: buildTextField("Email ou telefone", TextInputType.emailAddress, emailController)
-              ),
+              //Form: Formulário de login
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: buildTextField("Senha", TextInputType.visiblePassword, passController)
-              ),
+                    //Container/TextFormFiel: Email
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: TextFieldsForms.buildTextFormField("Email ou telefone", TextInputType.emailAddress, emailController, false, ValidationType.email, TextFieldsForms.saveFormFieldValue),
+                    ),
 
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(top: 20),
-                alignment: Alignment.center,
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, "Entrar", context, Login())
-              ),
+                    //Container/TextFormFiel: Senha
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: TextFieldsForms.buildTextFormField("Senha", TextInputType.visiblePassword, passController, true, ValidationType.password, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                alignment: Alignment.center,
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Criar conta", context, Registration())
-              ),
+                    //Container/ElevatedButton: Entrar
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(top: 20),
+                      alignment: Alignment.center,
+                      child: ElevatedButtonsForms.buildElevatedButton(
+                        const Color.fromRGBO(57, 96, 143, 1.0), 
+                        const Color.fromRGBO(255, 255, 255, 1), 
+                        const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, 
+                        "Entrar", context, Login(), _formKey)
+                    ),
 
+                    //Container/ElevatedButton: Criar Conta
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: ElevatedButtonsForms.buildElevatedButton(
+                        Colors.white, 
+                        const Color.fromRGBO(57, 96, 143, 1.0),
+                        const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,
+                        "Criar conta", context, Registration(), null)
+                    ),
+                    
+                  ],
+                ),
+              )
+    
             ],
           )
         ]
       )
-    );
-  }
-
-  Widget buildTextField(String label, TextInputType inputType, TextEditingController controller) {
-    return TextField (
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1)),
-        border: const UnderlineInputBorder(),
-      ),
-      style: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1), fontSize: 12.0),
-      keyboardType: inputType
-    );
-  }
-
-  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth, double sizeHeight, String text, BuildContext context, Widget f){
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(sizeWidth, sizeHeight),
-        backgroundColor: colorButton,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        side:  BorderSide(
-          color: colorBorder
-        )
-      ),
-      child:
-        Text(
-          " $text",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: colorText,
-            fontSize: 16,
-          ),
-        ),
-      onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => f));        
-      }, 
     );
   }
 
