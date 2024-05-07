@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/ui/login.dart';
-import 'package:levaeu_mobile/ui/registration.dart';
+import 'package:levaeu_mobile/screens/login.dart';
+import 'package:levaeu_mobile/screens/registration.dart';
 
-class Homelogin extends StatelessWidget{
+class Startlogin extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return _HomeloginContent();
+    return _StartloginContent();
   }
 }
 
-class _HomeloginContent extends StatelessWidget{
+class _StartloginContent extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,12 +39,12 @@ class _HomeloginContent extends StatelessWidget{
               
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, Homelogin())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, Startlogin())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, Homelogin())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, Startlogin())
               ),
 
               const SizedBox(height: 15),

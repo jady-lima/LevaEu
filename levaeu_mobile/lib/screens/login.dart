@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/ui/registration.dart';
+import 'package:levaeu_mobile/screens/registration.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/ui/home_login.dart';
+import 'package:levaeu_mobile/screens/home.dart';
+import 'package:levaeu_mobile/screens/start_login.dart';
+import 'package:levaeu_mobile/screens/registrationCNH.dart';
+import 'package:levaeu_mobile/utils/check_box_menus.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
@@ -24,6 +27,7 @@ class _RegistrationState extends State<Registration> {
   final _formKeyRegistration = GlobalKey<FormState>();
 
   String dropdownValue = genderList.first;
+  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +87,7 @@ class _RegistrationState extends State<Registration> {
                 ),
               ),
 
+              //Formulário de registro
               Form(
                 key: _formKeyRegistration,
                 child: Column(
@@ -172,13 +177,32 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
 
+                    //Container/TextFormField: Gênero
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: CheckBoxMenus.buildCheckBoxMenu(_isChecked,
+                        (bool? value) {
+                          setState(() {
+                            _isChecked = value ?? false;
+                          });
+                        },
+                      ),
+                    ),
+
                     //Container/ElevatedButton: Criar conta
                     Container(
                       constraints: const BoxConstraints(maxWidth: 300),
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, "Criar conta", context, Registration(), _formKeyRegistration)
+                      child: ElevatedButtonsForms.buildElevatedButton(
+                        const Color.fromRGBO(57, 96, 143, 1.0), 
+                        const Color.fromRGBO(255, 255, 255, 1), 
+                        const Color.fromRGBO(57, 96, 143, 1.0), 
+                        320, 50, "Criar conta", context,
+                        _isChecked ? RegistrationCNH() : Home(), 
+                        _formKeyRegistration)
                     ),
 
                     //Container/ElevatedButton: Cancelar
@@ -187,7 +211,7 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Homelogin(), null)
+                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Startlogin(), null)
                     ),
 
                   ],
