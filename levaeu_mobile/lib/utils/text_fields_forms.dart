@@ -2,9 +2,13 @@ import "package:flutter/material.dart";
 
 enum ValidationType {
   notEmpty,
+  name,
   email,
   password,
   phone,
+  zipcode,
+  address,
+  emailOrPhone,
 }
 
 class TextFieldsForms {
@@ -16,6 +20,9 @@ class TextFieldsForms {
       case ValidationType.notEmpty:
         validator = validateNotEmpty;
         break;
+      case ValidationType.name:
+        validator = validateName;
+        break;
       case ValidationType.email:
         validator = validateEmail;
         break;
@@ -24,6 +31,15 @@ class TextFieldsForms {
         break;
       case ValidationType.phone:
         validator = validatePhone;
+        break;
+      case ValidationType.zipcode:
+        validator = validateZipcode;
+        break;
+      case ValidationType.address:
+        validator = validateAddress;
+        break;
+      case ValidationType.emailOrPhone:
+        validator = validateEmailOrPhone;
         break;
     }
 
@@ -40,7 +56,7 @@ class TextFieldsForms {
       keyboardType: inputType,
       onSaved: onSaved,
     );
-    
+
   }
 
   static void saveFormFieldValue(String? value) {
@@ -48,9 +64,19 @@ class TextFieldsForms {
   }
 
   static String? validateNotEmpty(String? value) {
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (value == null || value.isEmpty) {
-      return 'Por favor, insira um email.';
+      return 'Por favor, preencha o campo abaixo.';
+    }
+    return null;
+  }
+
+  static String? validateName(String? value) {
+    final nameRegex = RegExp(r'^(?! )[a-zA-Z ]{3,}$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu nome.';
+    } 
+    if (!nameRegex.hasMatch(value)) {
+      return 'Por favor, insira um nome válido.';
     }
     return null;
   }
@@ -79,13 +105,53 @@ class TextFieldsForms {
   }
 
   static String? validatePhone(String? value) {
-    final phoneRegex = RegExp(r'^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$');
+    final phoneRegex = RegExp(r'^[0-9]{2} [0-9]{5}-[0-9]{4}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número de telefone';
     }
 
     if (!phoneRegex.hasMatch(value)) {
-      return 'Por favor, insira um telefone válido, no formato: (xx) 9xxxx-xxxx.';
+      return 'Por favor, insira um telefone no formato: xx 9xxxx-xxxx.';
+    }
+
+    return null;
+  }
+
+  static String? validateZipcode(String? value) {
+    final zipCodeRegex = RegExp(r'^[0-9]{5}-[0-9]{3}$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu número CEP';
+    }
+
+    if (!zipCodeRegex.hasMatch(value)) {
+      return 'Por favor, insira um CEP válido, no formato: xxxxx-xxx.';
+    }
+
+    return null;
+  }
+
+  static String? validateAddress(String? value) {
+    final addressRegex = RegExp(r'^(?! )[a-zA-Z 0-9]{3,}$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu endereço';
+    }
+    if(!addressRegex.hasMatch(value)){
+      return 'Por favor, insira um endereço válido';
+    }
+
+    return null;
+  }
+
+  static String? validateEmailOrPhone(String? value){
+    final phoneRegex = RegExp(r'^[0-9]{2} [0-9]{5}-[0-9]{4}$');
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o campo';
+    }
+
+    if (!phoneRegex.hasMatch(value) && !emailRegex.hasMatch(value)) {
+      return 'Por favor, insira seu email ou telefone';
     }
 
     return null;

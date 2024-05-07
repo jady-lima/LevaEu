@@ -11,7 +11,7 @@ class Login extends StatefulWidget{
 class _loginState extends State<Login>{
   final emailController = TextEditingController();
   final passController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyLogin = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _loginState extends State<Login>{
               Container(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: const Text(
-                  'Entre com seu email ou número de telefone e aproveite suas viajens.',
+                  'Entre com seu email ou telefone e aproveite suas viajens.',
                   textAlign: TextAlign.center,
                   softWrap: true,
                   style: TextStyle(
@@ -71,7 +71,7 @@ class _loginState extends State<Login>{
 
               //Form: Formulário de login
               Form(
-                key: _formKey,
+                key: _formKeyLogin,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -80,7 +80,7 @@ class _loginState extends State<Login>{
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 300),
-                      child: TextFieldsForms.buildTextFormField("Email ou telefone", TextInputType.emailAddress, emailController, false, ValidationType.email, TextFieldsForms.saveFormFieldValue),
+                      child: TextFieldsForms.buildTextFormField("Email ou telefone", TextInputType.text, emailController, false, ValidationType.emailOrPhone, TextFieldsForms.saveFormFieldValue),
                     ),
 
                     //Container/TextFormFiel: Senha
@@ -100,7 +100,7 @@ class _loginState extends State<Login>{
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, 
-                        "Entrar", context, Login(), _formKey)
+                        "Entrar", context, Login(), _formKeyLogin)
                     ),
 
                     //Container/ElevatedButton: Criar Conta

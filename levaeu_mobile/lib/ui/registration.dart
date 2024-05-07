@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/ui/home_login.dart';
+import 'package:levaeu_mobile/utils/drop_down_menu.dart';
+import 'package:levaeu_mobile/utils/elevated_buttons.dart';
+import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 
 class Registration extends StatefulWidget{
   @override
@@ -17,6 +21,9 @@ class _RegistrationState extends State<Registration> {
   final passwordConfController = TextEditingController();
   final zipcodeController = TextEditingController();
   final genderController = TextEditingController();
+  final _formKeyRegistration = GlobalKey<FormState>();
+
+  String dropdownValue = genderList.first;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +42,7 @@ class _RegistrationState extends State<Registration> {
           Column(
             children: <Widget>[
 
+              //Container: Icon
               Container(
                 padding: const EdgeInsets.all(10),
                 width: 120,
@@ -42,6 +50,7 @@ class _RegistrationState extends State<Registration> {
                 child: const Icon(Icons.account_circle_rounded, color: Color.fromRGBO(57, 96, 143, 1.0), size: 100,)
               ),
 
+              //Container: Titulo Principal
               Container(
                 padding: const EdgeInsets.all(0),
                 margin: const EdgeInsets.only(top: 10, bottom: 10),
@@ -58,6 +67,7 @@ class _RegistrationState extends State<Registration> {
                 ),
               ),
 
+              //Container: Titulo Secundário
               Container(
                 padding: const EdgeInsetsDirectional.all(5),
                 constraints: const BoxConstraints(maxWidth: 300),
@@ -72,88 +82,118 @@ class _RegistrationState extends State<Registration> {
                   ),
                 ),
               ),
-              
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Nome", TextInputType.text, nameController, false)
-              ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Email", TextInputType.emailAddress, emailController, false)
-              ),
+              Form(
+                key: _formKeyRegistration,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget> [
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Telefone", TextInputType.phone, phoneController, false)
-              ),
+                    //Container/TextFormField: Nome         
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Nome", TextInputType.text, nameController, false, ValidationType.name, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("CEP", TextInputType.number, zipcodeController, false)
-              ),
+                    //Container/TextFormField: Email
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Email", TextInputType.emailAddress, emailController, false, ValidationType.email, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Endereço", TextInputType.text, addressController, false)
-              ),
+                    //Container/TextFormField: Telefone
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Telefone", TextInputType.phone, phoneController, false, ValidationType.phone, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Cidade", TextInputType.text, cityController, false)
-              ),
+                    //Container/TextFormField: CEP
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("CEP", TextInputType.number, zipcodeController, false, ValidationType.zipcode, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Estado", TextInputType.text, stateController,false)
-              ),
+                    //Container/TextFormField: Endereço
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Endereço", TextInputType.text, addressController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("País", TextInputType.text, countryController, false)
-              ),
+                    //Container/TextFormField: Cidade
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Cidade", TextInputType.text, cityController, false, ValidationType.name, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Senha", TextInputType.visiblePassword, passwordController, true)
-              ),
+                    //Container/TextFormField: Estado
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Estado", TextInputType.text, stateController,false, ValidationType.name, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Confirme a senha", TextInputType.visiblePassword, passwordConfController, true)
-              ),
+                    //Container/TextFormField: País
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("País", TextInputType.text, countryController, false, ValidationType.name, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: buildTextField("Gênero", TextInputType.emailAddress, nameController, false)
-              ),
-            
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(top: 20),
-                alignment: Alignment.center,
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, "Criar conta", context, Registration())
-              ),
+                    //Container/TextFormField: Senha
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Senha", TextInputType.visiblePassword, passwordController, true,ValidationType.password, TextFieldsForms.saveFormFieldValue)
+                    ),
 
-              Container(
-                constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                alignment: Alignment.center,
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Registration())
-              ),
+                    //Container/TextFormField: Confirmação de Senha
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Confirme a senha", TextInputType.visiblePassword, passwordConfController, true, ValidationType.password, TextFieldsForms.saveFormFieldValue)
+                    ),
+  
+                    //Container/TextFormField: Gênero
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: DropDownMenus.buildDropDownButton(dropdownValue,
+                        (String? value) {
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                      ),
+                    ),
+
+                    //Container/ElevatedButton: Criar conta
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(top: 20),
+                      alignment: Alignment.center,
+                      child: ElevatedButtonsForms.buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, "Criar conta", context, Registration(), _formKeyRegistration)
+                    ),
+
+                    //Container/ElevatedButton: Cancelar
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Homelogin(), null)
+                    ),
+
+                  ],
+                ),
+              )
+
             ],
           )
 
@@ -162,44 +202,4 @@ class _RegistrationState extends State<Registration> {
     );
   }
 
-  Widget buildTextField(String label, TextInputType inputType, TextEditingController controller, bool pass) {
-    return TextField (
-      controller: controller,
-      obscureText: pass,
-      decoration: InputDecoration(
-        border: const UnderlineInputBorder(),
-        labelText: label,
-        labelStyle: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1)),
-      ),
-      style: const TextStyle(color: Color.fromRGBO(57, 96, 143, 1.0), fontSize: 12.0),
-      keyboardType: inputType
-    );
-  }
-
-  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth, double sizeHeight, String text, BuildContext context, Widget f){
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(sizeWidth, sizeHeight),
-        backgroundColor: colorButton,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        side:  BorderSide(
-          color: colorBorder
-        )
-      ),
-      child:
-        Text(
-          " $text",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: colorText,
-            fontSize: 16,
-          ),
-        ),
-      onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => f));        
-      }, 
-    );
-  }
 }
