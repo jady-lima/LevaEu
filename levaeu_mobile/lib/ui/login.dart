@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:levaeu_mobile/ui/registration.dart';
+import 'package:levaeu_mobile/utils/elevated_buttons.dart';
+import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -9,6 +11,7 @@ class Login extends StatefulWidget{
 class _loginState extends State<Login>{
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final _formKeyLogin = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,110 +21,109 @@ class _loginState extends State<Login>{
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
       ),
 
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
+        scrollDirection: Axis.vertical,
         children:  <Widget> [
           Column(
             children: <Widget> [
 
+              //Container: Imagem
               Container(
                 margin: const EdgeInsets.all(10),
                 padding: const EdgeInsets.all(10),
-                constraints: const BoxConstraints(maxWidth: 280),
+                constraints: const BoxConstraints(maxWidth: 250),
                 child: Image.asset('img/img_login.png'),
               ),
 
+              //Container: Titulo Principal
               Container(
-                padding: const EdgeInsets.all(0),
-                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                margin: const EdgeInsets.only(top: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
                 child: const Text(
-                  "Entre com seu email ou número de telefone",
+                  "Acesse sua conta",
                   textAlign: TextAlign.justify,
                   softWrap: true,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 24,
+                    fontSize: 28,
                     color: Color.fromRGBO(65, 65, 65, 1)
                   ),
                 ),
               ),
 
+              //Container: Titulo Secundário
               Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 350),
-                child: buildTextField("Email ou telefone", TextInputType.emailAddress, emailController)
+                constraints: const BoxConstraints(maxWidth: 300),
+                child: const Text(
+                  'Entre com seu email ou telefone e aproveite suas viajens.',
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    color: Color.fromRGBO(160, 160, 160, 1)
+                  ),
+                ),
               ),
 
-              Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 5),
-                constraints: const BoxConstraints(maxWidth: 350),
-                child: buildTextField("Senha", TextInputType.visiblePassword, passController)
-              ),
+              //Form: Formulário de login
+              Form(
+                key: _formKeyLogin,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
 
-              Container(
-                //constraints: const BoxConstraints(maxWidth: 300),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, "Entrar", context, Login())
-              ),
+                    //Container/TextFormFiel: Email
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: TextFieldsForms.buildTextFormField("Email ou telefone", TextInputType.text, emailController, false, ValidationType.emailOrPhone, TextFieldsForms.saveFormFieldValue),
+                    ),
 
-              Container(
-                //constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Criar conta", context, Login())
-              ),
+                    //Container/TextFormFiel: Senha
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: TextFieldsForms.buildTextFormField("Senha", TextInputType.visiblePassword, passController, true, ValidationType.password, TextFieldsForms.saveFormFieldValue)
+                    ),
 
+                    //Container/ElevatedButton: Entrar
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(top: 20),
+                      alignment: Alignment.center,
+                      child: ElevatedButtonsForms.buildElevatedButton(
+                        const Color.fromRGBO(57, 96, 143, 1.0), 
+                        const Color.fromRGBO(255, 255, 255, 1), 
+                        const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, 
+                        "Entrar", context, Login(), _formKeyLogin)
+                    ),
+
+                    //Container/ElevatedButton: Criar Conta
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      child: ElevatedButtonsForms.buildElevatedButton(
+                        Colors.white, 
+                        const Color.fromRGBO(57, 96, 143, 1.0),
+                        const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,
+                        "Criar conta", context, Registration(), null)
+                    ),
+                    
+                  ],
+                ),
+              )
+    
             ],
           )
         ]
       )
-    );
-  }
-
-  Widget buildTextField(String label, TextInputType inputType, TextEditingController controller) {
-    return TextField (
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1)),
-        border: const OutlineInputBorder(),
-      ),
-      style: const TextStyle(color: Color.fromRGBO(184, 184, 184, 1), fontSize: 12.0),
-      keyboardType: inputType
-    );
-  }
-
-  Widget buildElevatedButton(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth, double sizeHeight, String text, BuildContext context, Widget f){
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size(sizeWidth, sizeHeight),
-        backgroundColor: colorButton,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        side:  BorderSide(
-          color: colorBorder
-        )
-      ),
-      child: Row(
-        children: <Widget>[
-          Text(
-            " $text",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: colorText,
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-      onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => f));        
-      }, 
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/ui/login.dart';
+import 'package:levaeu_mobile/ui/registration.dart';
 
 class Homelogin extends StatelessWidget{
   @override
@@ -17,6 +18,7 @@ class _HomeloginContent extends StatelessWidget{
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
       ),
 
       body: Row(
@@ -37,12 +39,12 @@ class _HomeloginContent extends StatelessWidget{
               
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, Login())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, Homelogin())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, Login())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, Homelogin())
               ),
 
               const SizedBox(height: 15),
@@ -57,7 +59,7 @@ class _HomeloginContent extends StatelessWidget{
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, null, "Criar Conta", context, Login())
+                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, null, "Criar Conta", context, Registration())
               ),
 
               Container(
