@@ -43,14 +43,16 @@ class _loginState extends State<Login>{
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
-                child: TitlesScreens.buildMainTitle("Acesse sua conta"),
+                child: TitlesScreens.buildMainTitle(
+                  "Acesse sua conta"
+                ),
               ),
 
               //Container: Titulo Secundário
               Container(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: TitlesScreens.buildSecondaryTitle(
-                  'Entre com seu email ou telefone e aproveite suas viajens.'
+                  'Entre com seu email ou telefone e aproveite suas viajens.',
                 ),
               ),
 

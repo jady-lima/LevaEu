@@ -99,13 +99,15 @@ class _RegistrationState extends State<Registration> {
                 padding: const EdgeInsets.all(0),
                 margin: const EdgeInsets.only(top: 10, bottom: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
-                child: TitlesScreens.buildMainTitle("Crie sua conta"),
+                child: TitlesScreens.buildMainTitle(
+                  "Crie sua conta"
+                )
               ),
 
               //Container: Titulo Secundário
               Container(
                 padding: const EdgeInsetsDirectional.all(5),
-                constraints: const BoxConstraints(maxWidth: 300),
+                constraints: const BoxConstraints(maxWidth: 250),
                 child: TitlesScreens.buildSecondaryTitle(
                   'Preencha os campos abaixo para criação da sua conta gratuita.'
                 ),
