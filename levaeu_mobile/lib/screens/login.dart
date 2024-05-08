@@ -63,7 +63,7 @@ class _loginState extends State<Login>{
                   softWrap: true,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 12,
+                    fontSize: 14,
                     color: Color.fromRGBO(160, 160, 160, 1)
                   ),
                 ),
