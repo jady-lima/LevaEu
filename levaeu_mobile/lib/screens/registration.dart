@@ -9,6 +9,7 @@ import 'package:levaeu_mobile/utils/check_box_menus.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
+import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Registration extends StatefulWidget{
   @override
@@ -98,31 +99,17 @@ class _RegistrationState extends State<Registration> {
                 padding: const EdgeInsets.all(0),
                 margin: const EdgeInsets.only(top: 10, bottom: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
-                child: const Text(
-                  "Crie sua conta",
-                  textAlign: TextAlign.justify,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 24,
-                    color: Color.fromRGBO(65, 65, 65, 1)
-                  ),
-                ),
+                child: TitlesScreens.buildMainTitle(
+                  "Crie sua conta"
+                )
               ),
 
               //Container: Titulo Secundário
               Container(
                 padding: const EdgeInsetsDirectional.all(5),
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: const Text(
-                  'Preencha os campos abaixo para criação da sua conta gratuita.',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: Color.fromRGBO(160, 160, 160, 1)
-                  ),
+                constraints: const BoxConstraints(maxWidth: 250),
+                child: TitlesScreens.buildSecondaryTitle(
+                  'Preencha os campos abaixo para criação da sua conta gratuita.'
                 ),
               ),
 
