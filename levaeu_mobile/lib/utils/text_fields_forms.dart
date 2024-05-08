@@ -71,11 +71,22 @@ class TextFieldsForms {
   }
 
   static String? validateName(String? value) {
-    final nameRegex = RegExp(r'^(?! )[a-zA-Z ]{3,}$');
+    final nameRegex = RegExp(r'^(?! )[a-z A-Z]{3,}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu nome.';
     } 
     if (!nameRegex.hasMatch(value)) {
+      return 'Por favor, insira um nome válido.';
+    }
+    return null;
+  }
+
+  static String? validateAddress(String? value){
+    final addressRegex = RegExp(r'^[a-zA-ZÀ-ú 0-9]+(?: [a-zA-ZÀ-ú]+)*$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu nome.';
+    } 
+    if (!addressRegex.hasMatch(value)) {
       return 'Por favor, insira um nome válido.';
     }
     return null;
@@ -118,25 +129,13 @@ class TextFieldsForms {
   }
 
   static String? validateZipcode(String? value) {
-    final zipCodeRegex = RegExp(r'^[0-9]{5}-[0-9]{3}$');
+    final zipCodeRegex = RegExp(r'^[0-9]{8}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número CEP';
     }
 
     if (!zipCodeRegex.hasMatch(value)) {
-      return 'Por favor, insira um CEP válido, no formato: xxxxx-xxx.';
-    }
-
-    return null;
-  }
-
-  static String? validateAddress(String? value) {
-    final addressRegex = RegExp(r'^(?! )[a-zA-Z 0-9]{3,}$');
-    if (value == null || value.isEmpty) {
-      return 'Por favor, insira seu endereço';
-    }
-    if(!addressRegex.hasMatch(value)){
-      return 'Por favor, insira um endereço válido';
+      return 'Por favor, insira um CEP válido, no formato: xxxxxxxx.';
     }
 
     return null;
