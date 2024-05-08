@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/ui/home_login.dart';
+import 'package:levaeu_mobile/screens/start_login.dart';
 
-class Home extends StatelessWidget {
+class Start extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return _HomeContent();
+    return _StartContent();
   }
 }
 
-class _HomeContent extends StatelessWidget {
+class _StartContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +17,7 @@ class _HomeContent extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
       ),
 
       body: Row(
@@ -73,7 +74,7 @@ class _HomeContent extends StatelessWidget {
                   onPressed: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Homelogin())
+                      MaterialPageRoute(builder: (context) => Startlogin())
                     );
                   }, 
                 ),
