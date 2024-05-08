@@ -52,14 +52,7 @@ class _loginState extends State<Login>{
               Container(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: TitlesScreens.buildSecondaryTitle(
-                  'Entre com seu email ou telefone e aproveite suas viajens.',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: Color.fromRGBO(160, 160, 160, 1)
-                  ),
+                  'Entre com seu email ou telefone e aproveite suas viajens.'
                 ),
               ),
 
