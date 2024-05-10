@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/screens/registration.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
+import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Login extends StatefulWidget{
   @override
@@ -42,30 +43,16 @@ class _loginState extends State<Login>{
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 constraints: const BoxConstraints(maxWidth: 350),
-                child: const Text(
-                  "Acesse sua conta",
-                  textAlign: TextAlign.justify,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 28,
-                    color: Color.fromRGBO(65, 65, 65, 1)
-                  ),
+                child: TitlesScreens.buildMainTitle(
+                  "Acesse sua conta"
                 ),
               ),
 
               //Container: Titulo Secundário
               Container(
                 constraints: const BoxConstraints(maxWidth: 300),
-                child: const Text(
-                  'Entre com seu email ou telefone e aproveite suas viajens.',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: Color.fromRGBO(160, 160, 160, 1)
-                  ),
+                child: TitlesScreens.buildSecondaryTitle(
+                  'Entre com seu email ou telefone e aproveite suas viajens.'
                 ),
               ),
 

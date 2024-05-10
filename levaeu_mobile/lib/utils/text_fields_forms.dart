@@ -9,6 +9,9 @@ enum ValidationType {
   zipcode,
   address,
   emailOrPhone,
+  registro, 
+  cpf,
+  data,
 }
 
 class TextFieldsForms {
@@ -41,6 +44,15 @@ class TextFieldsForms {
       case ValidationType.emailOrPhone:
         validator = validateEmailOrPhone;
         break;
+      case ValidationType.registro:
+        validator = validateCNH;
+        break;
+      case ValidationType.cpf:
+        validator = validateCPF;
+        break;
+      case ValidationType.data:
+        validator = validateDate;
+        break;
     }
 
     return TextFormField (
@@ -70,6 +82,31 @@ class TextFieldsForms {
     return null;
   }
 
+  static String? validateCPF(String? value){
+    final RegExp cpfRegex = RegExp(r'^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$');
+
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o CPF.';
+    }
+    if (!cpfRegex.hasMatch(value)) {
+      return 'Por favor, insira um CPF válido.';
+    }
+    return null;
+  }
+
+  static String? validateCNH(String? value) {
+    final RegExp nchRegex = RegExp(r'^\d{11}$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o registro da CNH.';
+    }
+
+    if (!nchRegex.hasMatch(value)) {
+      return 'Por favor, insira um registro válido.';
+    }
+
+    return null;
+}
+
   static String? validateName(String? value) {
     final nameRegex = RegExp(r'^(?! )[a-z A-Z]{3,}$');
     if (value == null || value.isEmpty) {
@@ -84,10 +121,21 @@ class TextFieldsForms {
   static String? validateAddress(String? value){
     final addressRegex = RegExp(r'^[a-zA-ZÀ-ú 0-9]+(?: [a-zA-ZÀ-ú]+)*$');
     if (value == null || value.isEmpty) {
-      return 'Por favor, insira seu nome.';
+      return 'Por favor, insira seu endereço.';
     } 
     if (!addressRegex.hasMatch(value)) {
-      return 'Por favor, insira um nome válido.';
+      return 'Por favor, insira um endereço válido.';
+    }
+    return null;
+  }
+
+  static String? validateDate(String? value){
+    final RegExp dateRegex = RegExp(r'^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\d{4}$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira a data.';
+    } 
+    if (!dateRegex.hasMatch(value)) {
+      return 'Por favor, insira uma data válida.';
     }
     return null;
   }
@@ -116,13 +164,13 @@ class TextFieldsForms {
   }
 
   static String? validatePhone(String? value) {
-    final phoneRegex = RegExp(r'^[0-9]{2} [0-9]{5}-[0-9]{4}$');
+    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9?[0-9]{4}-[0-9]{4}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número de telefone';
     }
 
     if (!phoneRegex.hasMatch(value)) {
-      return 'Por favor, insira um telefone no formato: xx 9xxxx-xxxx.';
+      return 'Por favor, insira um telefone válido.';
     }
 
     return null;

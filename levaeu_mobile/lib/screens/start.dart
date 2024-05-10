@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/screens/start_login.dart';
+import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Start extends StatelessWidget {
   @override
@@ -38,28 +39,14 @@ class _StartContent extends StatelessWidget {
               
               Container(
                 padding: const EdgeInsets.only(bottom: 5.0),
-                child: const Text(
-                'Bem-vindo ao LevaEu!',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 28,
-                    color: Color.fromRGBO(65, 65, 65, 1)
-                  ),
-                ),
+                child: TitlesScreens.buildMainTitle('Bem-vindo ao LevaEu!')
               ),
 
               Container(
                 padding: const EdgeInsetsDirectional.all(15),
                 constraints: const BoxConstraints(maxWidth: 300),
-                child: const Text(
-                  'Estamos aqui para tornar suas viagens mais fáceis, econômicas e amigáveis. Conecte-se com outros estudantes e compartilhe caronas de forma segura e conveniente.',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    color: Color.fromRGBO(160, 160, 160, 1)
-                  ),
+                child: TitlesScreens.buildStartSecondaryTitle(
+                  'Estamos aqui para tornar suas viagens mais fáceis, econômicas e amigáveis. Conecte-se com outros estudantes e compartilhe caronas de forma segura e conveniente.'
                 ),
               ),
 
