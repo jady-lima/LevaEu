@@ -1,18 +1,38 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
-const List<String> genderList = <String>['','Feminino', 'Masculino', 'Prefiro não informar'];
-const List<String> categoriaList = <String>['','A', 'B', 'C', 'D', 'E'];
+enum ListType {
+  genderList,
+  categoryList
+}
 
-class DropDownMenus{
+List<String> categoryList = ['', 'A', 'B', 'C', 'D', 'E'];
+List<String> genderList = ['','Feminino', 'Masculino', 'Prefiro não informar'];
 
-  static Widget buildDropDownButton(String dropdownValue, ValueChanged<String?> onChanged,) {
+class DropDownMenus {
 
-    List<String> selectedList = categoriaList.indexOf == 'feminino' ? genderList : categoriaList; 
+  static Widget buildDropDownButton(String dropdownValue, ValueChanged<String?> onChanged, ListType listType) {
+    List<String> itemList;
+    
+    switch(listType) {
+      case ListType.categoryList:
+        itemList = categoryList;
+        break;
+      case ListType.genderList:
+        itemList = genderList;
+        break;
+    }
+
+    if (!itemList.contains(dropdownValue)) {
+      dropdownValue = itemList.first;
+    }
+
+    itemList = itemList.toSet().toList();
+
     return DropdownButtonFormField<String>(
       value: dropdownValue,
       icon: const Icon(Icons.keyboard_arrow_down),
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Color.fromRGBO(57, 96, 143, 1.0)),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Por favor, selecione uma opção';
@@ -20,7 +40,7 @@ class DropDownMenus{
         return null;
       },
       onChanged: onChanged,
-      items: genderList.map<DropdownMenuItem<String>>((String value) {
+      items: itemList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value.isNotEmpty ? value : 'Selecione'),

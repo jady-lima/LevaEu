@@ -37,8 +37,6 @@ class _RegistrationState extends State<Registration> {
   String state = '';
   String city = '';
   String country = "Brasil";
-
-  String dropdownValue = genderList.first;
   bool _isChecked = false;
 
   Future<void> getAddress(String zipcode) async{
@@ -225,12 +223,12 @@ class _RegistrationState extends State<Registration> {
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
-                      child: DropDownMenus.buildDropDownButton(dropdownValue,
+                      child: DropDownMenus.buildDropDownButton(genderList.first,
                         (String? value) {
                           setState(() {
-                            dropdownValue = value!;
+                            genderList.first = value!;
                           });
-                        },
+                        }, ListType.genderList,
                       ),
                     ),
 
