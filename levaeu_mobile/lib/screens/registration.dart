@@ -21,6 +21,7 @@ class _RegistrationState extends State<Registration> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final addressController = TextEditingController();
+  final numberController = TextEditingController();
   final cityController = TextEditingController();
   final stateController = TextEditingController();
   final countryController = TextEditingController();
@@ -200,18 +201,24 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
 
-                    //Container/TextFormField: Endereço
-                    Container(
-                      padding: const EdgeInsets.only(top: 15, bottom: 5),
-                      constraints: const BoxConstraints(maxWidth: 320),
-                      child: TextFieldsForms.buildTextFormField("Endereço", TextInputType.text, addressController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
-                    ),
+                    // //Container/TextFormField: Endereço
+                    // Container(
+                    //   padding: const EdgeInsets.only(top: 15, bottom: 5),
+                    //   constraints: const BoxConstraints(maxWidth: 320),
+                    //   child: TextFieldsForms.buildTextFormField("Endereço", TextInputType.text, addressController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
+                    // ),
 
                     //Container/TextFormField: Rua
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
                       child: TextFieldsForms.buildTextFormField("Rua", TextInputType.text, streetController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
+                    ),
+
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Número", TextInputType.number, numberController, false, ValidationType.streetNumber, TextFieldsForms.saveFormFieldValue),
                     ),
 
                     //Container/TextFormField: Bairro
