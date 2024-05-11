@@ -164,7 +164,7 @@ class TextFieldsForms {
   }
 
   static String? validatePhone(String? value) {
-    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9?[0-9]{4}-[0-9]{4}$');
+    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9? [0-9]{4}-[0-9]{4}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número de telefone';
     }

@@ -39,6 +39,49 @@ class _RegistrationState extends State<Registration> {
   String country = "Brasil";
   bool _isChecked = false;
 
+  @override
+  void initState() {
+  super.initState();
+  // Adicione um listener para o TextEditingController do telefone
+  phoneController.addListener(formatPhoneNumber);
+  }
+
+  @override
+  void dispose() {
+  // Remova o listener quando o widget for descartado
+  phoneController.removeListener(formatPhoneNumber);
+  phoneController.dispose();
+  super.dispose();
+  }
+
+  void formatPhoneNumber() {
+  String formatted = _formatPhone(phoneController.text);
+  // Atualize o valor do controller com o número formatado sem caracteres não numéricos
+  phoneController.value = phoneController.value.copyWith(
+  text: formatted,
+  selection: TextSelection.collapsed(offset: formatted.length),
+  );
+  }
+
+  String _formatPhone(String value) {
+
+    // Remove todos os caracteres não numéricos do número de telefone
+    String digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+    print(digitsOnly);
+    if (digitsOnly.length <= 2) {
+      return '($digitsOnly';
+    } else if (digitsOnly.length <= 3){
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)}';
+    } else if (digitsOnly.length <= 7){
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)} ${digitsOnly.substring(3)}';
+    } else if (digitsOnly.length <= 11) {
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)} ${digitsOnly.substring(3, 7)}-${digitsOnly.substring(7)}';
+    } else {
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)} ${digitsOnly.substring(3, 7)}-${digitsOnly.substring(7, 11)}';
+    }
+  }
+
+
   Future<void> getAddress(String zipcode) async{
     String requestAddress = "https://api.brasilaberto.com/v1/zipcode/$zipcode";
     final response = await http.get(Uri.parse(requestAddress));
