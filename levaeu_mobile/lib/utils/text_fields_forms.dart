@@ -8,6 +8,7 @@ enum ValidationType {
   phone,
   zipcode,
   address,
+  streetNumber,
   emailOrPhone,
   registro, 
   cpf,
@@ -40,6 +41,9 @@ class TextFieldsForms {
         break;
       case ValidationType.address:
         validator = validateAddress;
+        break;
+      case ValidationType.streetNumber:
+        validator = validateStreetNumber;
         break;
       case ValidationType.emailOrPhone:
         validator = validateEmailOrPhone;
@@ -118,6 +122,16 @@ class TextFieldsForms {
     return null;
   }
 
+  static String? validateStreetNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira o número do endereço.';
+    }
+    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      return 'Por favor, insira um número válido.';
+    } 
+      return null;
+  }
+  
   static String? validateAddress(String? value){
     final addressRegex = RegExp(r'^[a-zA-ZÀ-ú 0-9]+(?: [a-zA-ZÀ-ú]+)*$');
     if (value == null || value.isEmpty) {
@@ -164,7 +178,7 @@ class TextFieldsForms {
   }
 
   static String? validatePhone(String? value) {
-    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9?[0-9]{4}-[0-9]{4}$');
+    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9? [0-9]{4}-[0-9]{4}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número de telefone';
     }
