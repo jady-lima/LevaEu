@@ -215,6 +215,7 @@ class _RegistrationState extends State<Registration> {
                       child: TextFieldsForms.buildTextFormField("Rua", TextInputType.text, streetController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
                     ),
 
+                    //Container/TextFormField: Rua
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
