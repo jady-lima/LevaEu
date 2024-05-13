@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class RegistrationCar extends StatefulWidget{
+  const RegistrationCar({super.key});
+
   @override
   _RegistrationCarState createState() => _RegistrationCarState();
 }
 
 class _RegistrationCarState extends State<RegistrationCar> {
 
-  final _formKeyRegistration = GlobalKey<FormState>();
+ final _formKeyRegistration = GlobalKey<FormState>();
 
+ @override
  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,

@@ -5,6 +5,8 @@ import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Login extends StatefulWidget{
+  const Login({super.key});
+
   @override
   _loginState createState() => _loginState();
 }
@@ -87,7 +89,7 @@ class _loginState extends State<Login>{
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, 
-                        "Entrar", context, Login(), _formKeyLogin)
+                        "Entrar", context, const Login(), _formKeyLogin)
                     ),
 
                     //Container/ElevatedButton: Criar Conta
@@ -100,7 +102,7 @@ class _loginState extends State<Login>{
                         Colors.white, 
                         const Color.fromRGBO(57, 96, 143, 1.0),
                         const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,
-                        "Criar conta", context, Registration(), null)
+                        "Criar conta", context, const Registration(), null)
                     ),
                     
                   ],

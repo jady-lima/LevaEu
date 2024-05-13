@@ -3,6 +3,8 @@ import 'package:levaeu_mobile/screens/start_login.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Start extends StatelessWidget {
+  const Start({super.key});
+
   @override
   Widget build(BuildContext context) {
     return _StartContent();
@@ -61,7 +63,7 @@ class _StartContent extends StatelessWidget {
                   onPressed: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Startlogin())
+                      MaterialPageRoute(builder: (context) => const Startlogin())
                     );
                   }, 
                 ),
