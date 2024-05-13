@@ -12,6 +12,8 @@ import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Registration extends StatefulWidget{
+  const Registration({super.key});
+
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -21,6 +23,7 @@ class _RegistrationState extends State<Registration> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final addressController = TextEditingController();
+  final numberController = TextEditingController();
   final cityController = TextEditingController();
   final stateController = TextEditingController();
   final countryController = TextEditingController();
@@ -38,6 +41,43 @@ class _RegistrationState extends State<Registration> {
   String city = '';
   String country = "Brasil";
   bool _isChecked = false;
+
+  @override
+  void initState() {
+  super.initState();
+  phoneController.addListener(formatPhoneNumber);
+  }
+
+  @override
+  void dispose() {
+  phoneController.removeListener(formatPhoneNumber);
+  phoneController.dispose();
+  super.dispose();
+  }
+
+  void formatPhoneNumber() {
+  String formatted = _formatPhone(phoneController.text);
+  phoneController.value = phoneController.value.copyWith(
+  text: formatted,
+  selection: TextSelection.collapsed(offset: formatted.length),
+  );
+  }
+
+  String _formatPhone(String value) {
+    String digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digitsOnly.length <= 2) {
+      return '($digitsOnly';
+    } else if (digitsOnly.length <= 3){
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)}';
+    } else if (digitsOnly.length <= 7){
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)} ${digitsOnly.substring(3)}';
+    } else if (digitsOnly.length <= 11) {
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)} ${digitsOnly.substring(3, 7)}-${digitsOnly.substring(7)}';
+    } else {
+      return '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 3)} ${digitsOnly.substring(3, 7)}-${digitsOnly.substring(7, 11)}';
+    }
+  }
+
 
   Future<void> getAddress(String zipcode) async{
     String requestAddress = "https://api.brasilaberto.com/v1/zipcode/$zipcode";
@@ -163,18 +203,25 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
 
-                    //Container/TextFormField: Endereço
-                    Container(
-                      padding: const EdgeInsets.only(top: 15, bottom: 5),
-                      constraints: const BoxConstraints(maxWidth: 320),
-                      child: TextFieldsForms.buildTextFormField("Endereço", TextInputType.text, addressController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
-                    ),
+                    // //Container/TextFormField: Endereço
+                    // Container(
+                    //   padding: const EdgeInsets.only(top: 15, bottom: 5),
+                    //   constraints: const BoxConstraints(maxWidth: 320),
+                    //   child: TextFieldsForms.buildTextFormField("Endereço", TextInputType.text, addressController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
+                    // ),
 
                     //Container/TextFormField: Rua
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
                       child: TextFieldsForms.buildTextFormField("Rua", TextInputType.text, streetController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
+                    ),
+
+                    //Container/TextFormField: Rua
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Número", TextInputType.number, numberController, false, ValidationType.streetNumber, TextFieldsForms.saveFormFieldValue),
                     ),
 
                     //Container/TextFormField: Bairro
@@ -256,7 +303,7 @@ class _RegistrationState extends State<Registration> {
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         320, 50, "Criar conta", context,
-                        _isChecked ? RegistrationCNH() : Home(), 
+                        _isChecked ? const RegistrationCNH() : const Home(), 
                         _formKeyRegistration)
                     ),
 
@@ -266,7 +313,7 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Startlogin(), null)
+                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, const Startlogin(), null)
                     ),
 
                   ],

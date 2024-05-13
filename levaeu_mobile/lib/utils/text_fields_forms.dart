@@ -8,10 +8,14 @@ enum ValidationType {
   phone,
   zipcode,
   address,
+  streetNumber,
   emailOrPhone,
   registro, 
   cpf,
   data,
+  placa,
+  ano,
+  modelo,
 }
 
 class TextFieldsForms {
@@ -41,6 +45,9 @@ class TextFieldsForms {
       case ValidationType.address:
         validator = validateAddress;
         break;
+      case ValidationType.streetNumber:
+        validator = validateStreetNumber;
+        break;
       case ValidationType.emailOrPhone:
         validator = validateEmailOrPhone;
         break;
@@ -52,6 +59,15 @@ class TextFieldsForms {
         break;
       case ValidationType.data:
         validator = validateDate;
+        break;
+      case ValidationType.placa:
+        validator = validatePlaca;
+        break;
+      case ValidationType.ano:
+        validator = validateAno;
+        break;
+      case ValidationType.modelo:
+        validator = validateModelo;
         break;
     }
 
@@ -78,6 +94,39 @@ class TextFieldsForms {
   static String? validateNotEmpty(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor, preencha o campo abaixo.';
+    }
+    return null;
+  }
+
+  static String? validatePlaca(String? value) {
+    final RegExp placaRegex = RegExp(r'^([a-zA-Z]{3}[0-9]{4}|[a-zA-Z]{3}-[0-9]{4})$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o campo abaixo.';
+    } 
+    if (!placaRegex.hasMatch(value)) {
+      return "Por favor, insira uma placa válida";
+    }
+    return null;
+  }
+
+  static String? validateAno(String? value) {
+    final RegExp anoRegex = RegExp(r'^([0-9]{4})$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o campo abaixo.';
+    } 
+    if (!anoRegex.hasMatch(value)) {
+      return "Por favor, insira um ano válido";
+    }
+    return null;
+  }
+
+  static String? validateModelo(String? value) {
+    final modeloRegex = RegExp(r'^([a-zA-Z0-9 ]+)$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu nome.';
+    } 
+    if (!modeloRegex.hasMatch(value)) {
+      return 'Por favor, insira um modelo válido.';
     }
     return null;
   }
@@ -118,6 +167,16 @@ class TextFieldsForms {
     return null;
   }
 
+  static String? validateStreetNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira o número do endereço.';
+    }
+    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      return 'Por favor, insira um número válido.';
+    } 
+      return null;
+  }
+  
   static String? validateAddress(String? value){
     final addressRegex = RegExp(r'^[a-zA-ZÀ-ú 0-9]+(?: [a-zA-ZÀ-ú]+)*$');
     if (value == null || value.isEmpty) {
@@ -164,7 +223,7 @@ class TextFieldsForms {
   }
 
   static String? validatePhone(String? value) {
-    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9?[0-9]{4}-[0-9]{4}$');
+    final phoneRegex = RegExp(r'^\([1-9]{2}\) 9? [0-9]{4}-[0-9]{4}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número de telefone';
     }

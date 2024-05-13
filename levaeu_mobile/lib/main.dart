@@ -3,10 +3,12 @@ import 'package:levaeu_mobile/screens/home.dart';
 import 'package:levaeu_mobile/screens/start.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,8 +22,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Start(),
-        '/home': (context) => Home(),
+        '/': (context) => const Start(),
+        '/home': (context) => const Home(),
       },
     );
   }
