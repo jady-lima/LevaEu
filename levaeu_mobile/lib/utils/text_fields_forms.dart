@@ -13,6 +13,9 @@ enum ValidationType {
   registro, 
   cpf,
   data,
+  placa,
+  ano,
+  modelo,
 }
 
 class TextFieldsForms {
@@ -57,6 +60,15 @@ class TextFieldsForms {
       case ValidationType.data:
         validator = validateDate;
         break;
+      case ValidationType.placa:
+        validator = validatePlaca;
+        break;
+      case ValidationType.ano:
+        validator = validateAno;
+        break;
+      case ValidationType.modelo:
+        validator = validateModelo;
+        break;
     }
 
     return TextFormField (
@@ -82,6 +94,39 @@ class TextFieldsForms {
   static String? validateNotEmpty(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor, preencha o campo abaixo.';
+    }
+    return null;
+  }
+
+  static String? validatePlaca(String? value) {
+    final RegExp placaRegex = RegExp(r'^([a-zA-Z]{3}[0-9]{4}|[a-zA-Z]{3}-[0-9]{4})$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o campo abaixo.';
+    } 
+    if (!placaRegex.hasMatch(value)) {
+      return "Por favor, insira uma placa válida";
+    }
+    return null;
+  }
+
+  static String? validateAno(String? value) {
+    final RegExp anoRegex = RegExp(r'^([0-9]{4})$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, preencha o campo abaixo.';
+    } 
+    if (!anoRegex.hasMatch(value)) {
+      return "Por favor, insira um ano válido";
+    }
+    return null;
+  }
+
+  static String? validateModelo(String? value) {
+    final modeloRegex = RegExp(r'^([a-zA-Z0-9 ]+)$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu nome.';
+    } 
+    if (!modeloRegex.hasMatch(value)) {
+      return 'Por favor, insira um modelo válido.';
     }
     return null;
   }
