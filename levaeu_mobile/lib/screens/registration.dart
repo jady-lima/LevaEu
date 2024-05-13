@@ -12,6 +12,8 @@ import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Registration extends StatefulWidget{
+  const Registration({super.key});
+
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -301,7 +303,7 @@ class _RegistrationState extends State<Registration> {
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         320, 50, "Criar conta", context,
-                        _isChecked ? RegistrationCNH() : Home(), 
+                        _isChecked ? const RegistrationCNH() : const Home(), 
                         _formKeyRegistration)
                     ),
 
@@ -311,7 +313,7 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Startlogin(), null)
+                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, const Startlogin(), null)
                     ),
 
                   ],

@@ -3,6 +3,8 @@ import 'package:levaeu_mobile/screens/login.dart';
 import 'package:levaeu_mobile/screens/registration.dart';
 
 class Startlogin extends StatelessWidget{
+  const Startlogin({super.key});
+
   @override
   Widget build(BuildContext context) {
     return _StartloginContent();
@@ -39,12 +41,12 @@ class _StartloginContent extends StatelessWidget{
               
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, Startlogin())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_gmail.png', "Login com Gmail", context, const Startlogin())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, Startlogin())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(90, 90, 90, 1.0), const Color.fromRGBO(196, 198, 208, 1.0), 300, 'img/logo_sigaa.png', "Login com SIGAA", context, const Startlogin())
               ),
 
               const SizedBox(height: 15),
@@ -59,12 +61,12 @@ class _StartloginContent extends StatelessWidget{
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, null, "Criar Conta", context, Registration())
+                child: buildElevatedButton(const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(255, 255, 255, 1), const Color.fromRGBO(57, 96, 143, 1.0), 300, null, "Criar Conta", context, const Registration())
               ),
 
               Container(
                 padding: const EdgeInsets.all(10),
-                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 235, null, "Entrar", context, Login())
+                child: buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 235, null, "Entrar", context, const Login())
               ),
 
             ]

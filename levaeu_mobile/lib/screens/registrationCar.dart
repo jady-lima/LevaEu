@@ -3,13 +3,16 @@
 import 'package:flutter/material.dart';
 
 class RegistrationCar extends StatefulWidget{
+  const RegistrationCar({super.key});
+
   @override
   _RegistrationCarState createState() => _RegistrationCarState();
 }
 
 class _RegistrationCarState extends State<RegistrationCar> {
 
- Widget build(BuildContext context) {
+ @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
 
@@ -19,7 +22,7 @@ class _RegistrationCarState extends State<RegistrationCar> {
         iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
       ),
 
-      body: Text("Registro carro"),
+      body: const Text("Registro carro"),
     );
   }
 

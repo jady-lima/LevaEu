@@ -7,6 +7,8 @@ import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class RegistrationCNH extends StatefulWidget{
+  const RegistrationCNH({super.key});
+
   @override
   _RegistrationCNHState createState() => _RegistrationCNHState();
 }
@@ -38,7 +40,7 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
             children: <Widget>[
               
               //Container: Icon driver_license
-              Container(
+              SizedBox(
                 width: 120,
                 height: 120,
                 child: ClipRRect(
@@ -108,7 +110,7 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
-                        320, 50, "Continuar", context, RegistrationCar(), 
+                        320, 50, "Continuar", context, const RegistrationCar(), 
                         _formKeyRegistration)
                     ),
 
@@ -118,7 +120,7 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, Startlogin(), null)
+                      child: ElevatedButtonsForms.buildElevatedButton(Colors.white, const Color.fromRGBO(57, 96, 143, 1.0), const Color.fromRGBO(57, 96, 143, 1.0), 320, 50,"Cancelar", context, const Startlogin(), null)
                     ),
 
 
