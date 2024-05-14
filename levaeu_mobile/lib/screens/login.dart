@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/screens/home.dart';
 import 'package:levaeu_mobile/screens/registration.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
@@ -89,7 +90,7 @@ class _loginState extends State<Login>{
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 320, 50, 
-                        "Entrar", context, const Login(), _formKeyLogin)
+                        "Entrar", context, const Home(), _formKeyLogin)
                     ),
 
                     //Container/ElevatedButton: Criar Conta

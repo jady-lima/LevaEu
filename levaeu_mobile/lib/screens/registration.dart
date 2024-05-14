@@ -44,23 +44,23 @@ class _RegistrationState extends State<Registration> {
 
   @override
   void initState() {
-  super.initState();
-  phoneController.addListener(formatPhoneNumber);
+    super.initState();
+    phoneController.addListener(formatPhoneNumber);
   }
 
   @override
   void dispose() {
-  phoneController.removeListener(formatPhoneNumber);
-  phoneController.dispose();
-  super.dispose();
+    phoneController.removeListener(formatPhoneNumber);
+    phoneController.dispose();
+    super.dispose();
   }
 
   void formatPhoneNumber() {
-  String formatted = _formatPhone(phoneController.text);
-  phoneController.value = phoneController.value.copyWith(
-  text: formatted,
-  selection: TextSelection.collapsed(offset: formatted.length),
-  );
+    String formatted = _formatPhone(phoneController.text);
+    phoneController.value = phoneController.value.copyWith(
+      text: formatted,
+      selection: TextSelection.collapsed(offset: formatted.length),
+    );
   }
 
   String _formatPhone(String value) {
