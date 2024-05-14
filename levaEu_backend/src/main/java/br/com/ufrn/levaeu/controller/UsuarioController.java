@@ -1,6 +1,7 @@
 package br.com.ufrn.levaeu.controller;
 
 import br.com.ufrn.levaeu.model.Usuario;
+import br.com.ufrn.levaeu.service.MotoristaService;
 import br.com.ufrn.levaeu.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private MotoristaService motoristaService;
 
     @GetMapping
     public ResponseEntity<List<Usuario>> listarTodos() {
