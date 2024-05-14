@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 enum ListType {
   genderList,
-  categoryList
+  categoryList,
+  vehicleList,
 }
 
 List<String> categoryList = ['', 'A', 'B', 'C', 'D', 'E'];
 List<String> genderList = ['','Feminino', 'Masculino', 'Prefiro não informar'];
+List<String> vehicleList = ['','Carro', 'Moto'];
 
 class DropDownMenus {
 
@@ -19,6 +21,9 @@ class DropDownMenus {
         break;
       case ListType.genderList:
         itemList = genderList;
+        break;
+      case ListType.vehicleList:
+        itemList = vehicleList;
         break;
     }
 
