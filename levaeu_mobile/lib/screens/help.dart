@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/utils/drawer_menu.dart';
 
-class Home extends StatefulWidget{
-  const Home({super.key});
+class Help extends StatefulWidget{
+  const Help({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  _HelpState createState() => _HelpState();
 }
 
-class _HomeState extends State<Home> {
+class _HelpState extends State<Help> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
       //Menu lateral
       drawer: DrawerMenu.buildDrawerMenu(context),
 
-      body: const Text("Tela de inicio"),
+      body: const Text("Tela de Suporte"),
     );
   }
 }

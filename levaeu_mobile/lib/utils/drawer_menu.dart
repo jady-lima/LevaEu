@@ -1,71 +1,54 @@
 import "package:flutter/material.dart";
+import "package:levaeu_mobile/screens/MyRaces.dart";
+import "package:levaeu_mobile/screens/chats.dart";
+import "package:levaeu_mobile/screens/help.dart";
+import "package:levaeu_mobile/screens/login.dart";
+import "package:levaeu_mobile/screens/payment.dart";
+import "package:levaeu_mobile/screens/profile.dart";
 
-class DrawerMenu{
-  static Widget buildDrawerMenu(){
+class DrawerMenu{  
+  static Widget buildDrawerMenu(BuildContext context){
+
     return Drawer(
         backgroundColor:  const Color.fromRGBO(57, 96, 143, 1.0),
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const <Widget>[
+          children: <Widget>[
 
             //Cabeçalho
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Color.fromRGBO(228, 226, 226, 1),
               ),
               child: Text("Nome usuário"),
             ),
 
-            //Lista de elementos
-            ListTile(
-              title: Text(
-                "Minha conta",
-                style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-              ),
-            ),
+            buildListItem("Minha conta", context, const Profile()),
 
-            //Lista de elementos
-            ListTile(
-              title: Text(
-                "Discussões",
-                style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-              ),
-            ),
+            buildListItem("Discussões", context, const Chats()),
 
-            //Lista de elementos
-            ListTile(
-              title: Text(
-                "Histórico",
-                style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-              ),
-            ),
+            buildListItem("Histórico", context, const MyRaces()),
 
-            //Lista de elementos
-            ListTile(
-              title: Text(
-                "Formas de pagamento",
-                style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-              ),
-            ),
+            buildListItem("Formas de pagamento", context, const Payment()),
 
-            //Lista de elementos
-            ListTile(
-              title: Text(
-                "Suporte",
-                style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-              ),
-            ),
+            buildListItem("Suporte", context, const Help()),
 
-            //Lista de elementos
-            ListTile(
-              title: Text(
-                "Sair",
-                style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
-              ),
-            ),
+            buildListItem("Sair", context, const Login()),
 
           ],
         ),
       );
+  }
+
+  static Widget buildListItem(String label, BuildContext context, Widget f,){
+    return ListTile(
+      title: Text(
+        label,
+        style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+      ),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => f));
+      },
+    );
   }
 }
