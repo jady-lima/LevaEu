@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:levaeu_mobile/screens/home.dart';
+import 'package:levaeu_mobile/screens/homeState.dart';
 import 'package:levaeu_mobile/screens/start_login.dart';
 import 'package:levaeu_mobile/screens/registrationCNH.dart';
 import 'package:levaeu_mobile/utils/check_box_menus.dart';
@@ -303,7 +303,7 @@ class _RegistrationState extends State<Registration> {
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         320, 50, "Criar conta", context,
-                        _isChecked ? const RegistrationCNH() : const Home(), 
+                        _isChecked ? const RegistrationCNH() : const HomeState(), 
                         _formKeyRegistration)
                     ),
 

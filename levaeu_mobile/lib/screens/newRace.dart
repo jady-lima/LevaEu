@@ -11,19 +11,18 @@ class NewRace extends StatefulWidget{
 class _NewRaceState extends State<NewRace> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          
+          Container(
+            height: 200,
+            color: Colors.green,
+            child: Center(child: Text('Tela de corridas')),
+          ),
 
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: const Color.fromRGBO(184, 184, 184, 0),
-        iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
+        ],
       ),
-
-      //Menu lateral
-      drawer: DrawerMenu.buildDrawerMenu(context),
-
-      body: const Text("Tela de Nova corrida"),
     );
   }
 }
