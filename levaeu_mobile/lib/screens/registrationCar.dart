@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/home.dart';
+import 'package:levaeu_mobile/screens/homeState.dart';
 import 'package:levaeu_mobile/screens/start_login.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
@@ -115,7 +115,7 @@ class _RegistrationCarState extends State<RegistrationCar> {
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
-                        320, 50, "Criar conta", context, const Home(), 
+                        320, 50, "Criar conta", context, const HomeState(), 
                         _formKeyRegistration)
                     ),
 

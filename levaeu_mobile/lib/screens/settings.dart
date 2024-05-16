@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NewRace extends StatefulWidget{
-  const NewRace({super.key});
+class Settings extends StatefulWidget{
+  const Settings({super.key});
 
   @override
-  _NewRaceState createState() => _NewRaceState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _NewRaceState extends State<NewRace> {
+class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -16,8 +16,8 @@ class _NewRaceState extends State<NewRace> {
           
           Container(
             height: 200,
-            color: Colors.green,
-            child: Center(child: Text('Tela de corridas')),
+            color: Colors.yellow,
+            child: Center(child: Text('Tela de configurações')),
           ),
 
         ],

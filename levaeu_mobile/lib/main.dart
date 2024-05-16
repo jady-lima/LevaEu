@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/home.dart';
+import 'package:levaeu_mobile/screens/homeState.dart';
 import 'package:levaeu_mobile/screens/start.dart';
 
 void main() {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',
       routes: {
         '/': (context) => const Start(),
-        '/home': (context) => const Home(),
+        '/home': (context) => const HomeState(),
       },
     );
   }
