@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
-import "package:levaeu_mobile/screens/MyRaces.dart";
-import "package:levaeu_mobile/screens/chats.dart";
 import "package:levaeu_mobile/screens/help.dart";
+import "package:levaeu_mobile/screens/homeState.dart";
 import "package:levaeu_mobile/screens/login.dart";
 import "package:levaeu_mobile/screens/payment.dart";
 import "package:levaeu_mobile/screens/profile.dart";
@@ -23,11 +22,9 @@ class DrawerMenu{
               child: Text("Nome usuário"),
             ),
 
+            buildListItem("Home", context, const HomeState()),
+
             buildListItem("Minha conta", context, const Profile()),
-
-            buildListItem("Discussões", context, const Chats()),
-
-            buildListItem("Histórico", context, const MyRaces()),
 
             buildListItem("Formas de pagamento", context, const Payment()),
 

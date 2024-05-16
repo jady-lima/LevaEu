@@ -38,24 +38,39 @@ class _NavigationBarMenuState extends State<NavigationBarMenu> {
       onTap: _onItemTapped,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Text('Home'),
-          label: '',
+          icon: Icon(
+            Icons.home,
+            color: Color.fromRGBO(57, 96, 143, 1.0),
+          ),
+          label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Text('Fóruns'),
-          label: '',
+          icon: Icon(
+            Icons.chat_bubble,
+            color: Color.fromRGBO(57, 96, 143, 1.0),
+          ),
+          label: 'Fóruns',
         ),
         BottomNavigationBarItem(
-          icon: Text('Corrida'),
-          label: '',
+          icon: Icon(
+            Icons.drive_eta,
+            color: Color.fromRGBO(57, 96, 143, 1.0),
+          ),
+          label: 'Corridas',
         ),
         BottomNavigationBarItem(
-          icon: Text('Histórico'),
-          label: '',
+          icon: Icon(
+            Icons.history,
+            color: Color.fromRGBO(57, 96, 143, 1.0),
+          ),
+          label: 'Histórico',
         ),
         BottomNavigationBarItem(
-          icon: Text('Confi.'),
-          label: '',
+          icon: Icon(
+            Icons.settings,
+            color: Color.fromRGBO(57, 96, 143, 1.0),
+          ),
+          label: 'Confi.',
         ),
       ],
     );

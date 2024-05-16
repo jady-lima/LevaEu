@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/utils/drawer_menu.dart';
 
 class Chats extends StatefulWidget{
   const Chats({super.key});
@@ -14,7 +13,7 @@ class _ChatsState extends State<Chats> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          
+
           Container(
             height: 200,
             color: Colors.red,
