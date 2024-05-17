@@ -16,7 +16,7 @@ class _MyRacesState extends State<MyRaces> {
           Container(
             height: 200,
             color: Colors.blue,
-            child: Center(child: Text('Histórico')),
+            child: const Center(child: Text('Histórico')),
           ),
         ],
       ),

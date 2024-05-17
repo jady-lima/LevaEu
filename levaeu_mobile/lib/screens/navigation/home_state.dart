@@ -56,11 +56,11 @@ class _HomeState extends State<HomeState> {
         switch (settings.name) {
           case '/':
             builder = (BuildContext context) => [
-              HomeContent(),
-              Chats(),
-              NewRace(),
-              MyRaces(),
-              Settings(),
+              const HomeContent(),
+              const Chats(),
+              const NewRace(),
+              const MyRaces(),
+              const Settings(),
             ][_selectedIndex];
             break;
           default:

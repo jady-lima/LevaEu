@@ -9,10 +9,10 @@ class Login extends StatefulWidget{
   const Login({super.key});
 
   @override
-  _loginState createState() => _loginState();
+  LoginState createState() => LoginState();
 }
 
-class _loginState extends State<Login>{
+class LoginState extends State<Login>{
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final _formKeyLogin = GlobalKey<FormState>();

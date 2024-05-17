@@ -17,7 +17,7 @@ class _NewRaceState extends State<NewRace> {
           Container(
             height: 200,
             color: Colors.green,
-            child: Center(child: Text('Tela de corridas')),
+            child: const Center(child: Text('Tela de corridas')),
           ),
 
         ],

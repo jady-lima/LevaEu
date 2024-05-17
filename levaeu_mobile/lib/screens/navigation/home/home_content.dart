@@ -17,7 +17,7 @@ class _HomeContentState extends State<HomeContent> {
           Container(
             height: 200,
             color: Colors.orange,
-            child: Center(child: Text('Tela inicial')),
+            child: const Center(child: Text('Tela inicial')),
           ),
 
         ],

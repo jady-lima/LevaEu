@@ -17,7 +17,7 @@ class _ChatsState extends State<Chats> {
           Container(
             height: 200,
             color: Colors.red,
-            child: Center(child: Text('Tela de discussões')),
+            child: const Center(child: Text('Tela de discussões')),
           ),
           
         ],
