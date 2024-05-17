@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/start_login.dart';
+import 'package:levaeu_mobile/screens/login/start_login.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class Start extends StatelessWidget {

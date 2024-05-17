@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 
-class Chats extends StatefulWidget{
-  const Chats({super.key});
+class MyRaces extends StatefulWidget{
+  const MyRaces({super.key});
 
   @override
-  _ChatsState createState() => _ChatsState();
+  _MyRacesState createState() => _MyRacesState();
 }
 
-class _ChatsState extends State<Chats> {
+class _MyRacesState extends State<MyRaces> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-
           Container(
             height: 200,
-            color: Colors.red,
-            child: Center(child: Text('Tela de discussões')),
+            color: Colors.blue,
+            child: const Center(child: Text('Histórico')),
           ),
-          
         ],
       ),
     );

@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-class NewRace extends StatefulWidget{
-  const NewRace({super.key});
+class Chats extends StatefulWidget{
+  const Chats({super.key});
 
   @override
-  _NewRaceState createState() => _NewRaceState();
+  _ChatsState createState() => _ChatsState();
 }
 
-class _NewRaceState extends State<NewRace> {
+class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          
+
           Container(
             height: 200,
-            color: Colors.green,
-            child: Center(child: Text('Tela de corridas')),
+            color: Colors.red,
+            child: const Center(child: Text('Tela de discussões')),
           ),
-
+          
         ],
       ),
     );

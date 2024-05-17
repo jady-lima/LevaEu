@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/homeState.dart';
+import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/start.dart';
 
 void main() {

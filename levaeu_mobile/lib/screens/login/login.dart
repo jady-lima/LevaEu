@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/homeState.dart';
-import 'package:levaeu_mobile/screens/registration.dart';
+import 'package:levaeu_mobile/screens/navigation/home_state.dart';
+import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
@@ -9,10 +9,10 @@ class Login extends StatefulWidget{
   const Login({super.key});
 
   @override
-  _loginState createState() => _loginState();
+  LoginState createState() => LoginState();
 }
 
-class _loginState extends State<Login>{
+class LoginState extends State<Login>{
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final _formKeyLogin = GlobalKey<FormState>();

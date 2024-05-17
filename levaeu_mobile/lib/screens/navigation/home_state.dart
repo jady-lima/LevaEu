@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/chats.dart';
-import 'package:levaeu_mobile/screens/homeContent.dart';
-import 'package:levaeu_mobile/screens/myRaces.dart';
-import 'package:levaeu_mobile/screens/newRace.dart';
-import 'package:levaeu_mobile/screens/settings.dart';
+import 'package:levaeu_mobile/screens/navigation/chats/chats.dart';
+import 'package:levaeu_mobile/screens/navigation/home/home_content.dart';
+import 'package:levaeu_mobile/screens/navigation/history/my_races.dart';
+import 'package:levaeu_mobile/screens/navigation/new_races/new_race.dart';
+import 'package:levaeu_mobile/screens/navigation/settings/settings.dart';
 import 'package:levaeu_mobile/utils/drawer_menu.dart';
 import 'package:levaeu_mobile/utils/navigation_bar_menu.dart';
 
@@ -56,11 +56,11 @@ class _HomeState extends State<HomeState> {
         switch (settings.name) {
           case '/':
             builder = (BuildContext context) => [
-              HomeContent(),
-              Chats(),
-              NewRace(),
-              MyRaces(),
-              Settings(),
+              const HomeContent(),
+              const Chats(),
+              const NewRace(),
+              const MyRaces(),
+              const Settings(),
             ][_selectedIndex];
             break;
           default:

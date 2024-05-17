@@ -17,7 +17,7 @@ class _SettingsState extends State<Settings> {
           Container(
             height: 200,
             color: Colors.yellow,
-            child: Center(child: Text('Tela de configurações')),
+            child: const Center(child: Text('Tela de configurações')),
           ),
 
         ],
