@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
-import "package:levaeu_mobile/screens/help.dart";
-import "package:levaeu_mobile/screens/homeState.dart";
-import "package:levaeu_mobile/screens/login.dart";
-import "package:levaeu_mobile/screens/payment.dart";
-import "package:levaeu_mobile/screens/profile.dart";
+import "package:levaeu_mobile/screens/navigation/settings/help.dart";
+import "package:levaeu_mobile/screens/navigation/home_state.dart";
+import "package:levaeu_mobile/screens/login/login.dart";
+import "package:levaeu_mobile/screens/navigation/settings/payment.dart";
+import "package:levaeu_mobile/screens/navigation/settings/profile.dart";
 
 class DrawerMenu{  
   static Widget buildDrawerMenu(BuildContext context){

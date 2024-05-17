@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/homeState.dart';
-import 'package:levaeu_mobile/screens/start_login.dart';
+import 'package:levaeu_mobile/screens/navigation/home_state.dart';
+import 'package:levaeu_mobile/screens/login/start_login.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';

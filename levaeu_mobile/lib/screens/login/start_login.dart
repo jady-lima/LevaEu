@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/login.dart';
-import 'package:levaeu_mobile/screens/registration.dart';
+import 'package:levaeu_mobile/screens/login/login.dart';
+import 'package:levaeu_mobile/screens/register/registration.dart';
 
 class Startlogin extends StatelessWidget{
   const Startlogin({super.key});
