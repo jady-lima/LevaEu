@@ -30,36 +30,40 @@ class ElevatedButtonsForms{
     );
   }
 
-  static Widget buildElevatedButtonIcon(Color? colorButton, Color? colorText, Color colorBorder, double sizeWidth,  IconData? icon, String text, BuildContext context, Widget f){
+  static Widget buildElevatedButtonIcon(IconData? icon, String text, BuildContext context, Function() onPressed, {bool rootNavigator = false}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 80),
         maximumSize: const Size(320, 120),
-        backgroundColor: colorButton,
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        side:  BorderSide(
-          color: colorBorder
+        side:  const BorderSide(
+          color: Color.fromRGBO(196, 198, 208, 1.0), 
         ),
-        
-      ),
+      ),      
+      onPressed: () {
+        if (rootNavigator) {
+          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => onPressed()));
+        } else {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => onPressed()));
+        }
+      },
       child: Row(
         children: <Widget>[
           if (icon != null) 
             Icon(icon),
           Text(
             " $text",
-            style: TextStyle(
-              color: colorText,
+            style: const TextStyle(
+              color: Color.fromRGBO(90, 90, 90, 1.0),
               fontSize: 16
             ),
           ),
+
         ],
-      ),
-      onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => f));        
-      }, 
+      ) 
     );
   }
 }
