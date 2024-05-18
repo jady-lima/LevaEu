@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/screens/login/login.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/help.dart';
-import 'package:levaeu_mobile/screens/navigation/settings/payment.dart';
+import 'package:levaeu_mobile/screens/navigation/settings/payment/payment_screen.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
-import 'package:levaeu_mobile/screens/navigation/settings/security_screen.dart';
+import 'package:levaeu_mobile/screens/navigation/settings/security/security_screen.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/share.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 

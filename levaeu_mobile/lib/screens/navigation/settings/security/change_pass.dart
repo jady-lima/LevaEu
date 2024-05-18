@@ -15,8 +15,12 @@ class _ChangePassState extends State<ChangePass> {
 
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
-        centerTitle: true,
+        centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
+          "Alterar senha",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       
       body: const Text("Tela de alteração de senha"),

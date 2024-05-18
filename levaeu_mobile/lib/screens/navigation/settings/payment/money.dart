@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Share extends StatefulWidget {
-  const Share({Key? key}) : super(key: key);
+class Money extends StatefulWidget {
+  const Money({Key? key}) : super(key: key);
 
   @override
-  _ShareState createState() => _ShareState();
+  _MoneyState createState() => _MoneyState();
 }
 
-class _ShareState extends State<Share> {
+class _MoneyState extends State<Money> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +18,12 @@ class _ShareState extends State<Share> {
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          "Indique um amigo",
+          "Dinheiro",
           style: TextStyle(color: Colors.white),
         ),
       ),
       
-      
-      body: const Text("Tela de compartilhamento"),
+      body: const Text("Tela de dinheiro"),
     );
   }
 }
