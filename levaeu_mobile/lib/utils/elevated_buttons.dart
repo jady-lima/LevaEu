@@ -30,6 +30,43 @@ class ElevatedButtonsForms{
     );
   }
 
+  static Widget buildElevatedButtonSubmitUserData(
+      Color? colorButton,
+      Color? colorText,
+      Color colorBorder,
+      double sizeWidth,
+      double sizeHeight,
+      String text,
+      BuildContext context,
+      GlobalKey<FormState>? formkey,
+      VoidCallback onSubmit) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(sizeWidth, sizeHeight),
+        backgroundColor: colorButton,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        side: BorderSide(color: colorBorder),
+      ),
+      child: Text(
+        " $text",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: colorText,
+          fontSize: 16,
+        ),
+      ),
+      onPressed: () {
+        if (formkey == null || formkey.currentState!.validate()) {
+          onSubmit();
+        }
+      },
+    );
+  }
+
+
+
   static Widget buildElevatedButtonIcon(IconData? icon, String text, BuildContext context, Function() onPressed, {bool rootNavigator = false}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(

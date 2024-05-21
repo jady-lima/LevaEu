@@ -1,12 +1,15 @@
 import "package:flutter/material.dart";
+import "package:levaeu_mobile/model/userData.dart";
 import "package:levaeu_mobile/screens/navigation/settings/help.dart";
 import "package:levaeu_mobile/screens/navigation/home_state.dart";
 import "package:levaeu_mobile/screens/login/login.dart";
 import "package:levaeu_mobile/screens/navigation/settings/payment/payment_screen.dart";
 import "package:levaeu_mobile/screens/navigation/settings/profile.dart";
+import "package:provider/provider.dart";
 
 class DrawerMenu{  
   static Widget buildDrawerMenu(BuildContext context){
+    final userData = Provider.of<UserData>(context);
 
     return Drawer(
         backgroundColor:  const Color.fromRGBO(57, 96, 143, 1.0),
@@ -15,11 +18,53 @@ class DrawerMenu{
           children: <Widget>[
 
             //Cabeçalho
-            const DrawerHeader(
-              decoration: BoxDecoration(
+            DrawerHeader(
+              decoration: const BoxDecoration(
                 color: Color.fromRGBO(228, 226, 226, 1),
               ),
-              child: Text("Nome usuário"),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.all(0),
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    const Icon(
+                      Icons.person,
+                      size: 50,
+                      color: Color.fromRGBO(57, 96, 143, 1.0),
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget> [
+                        Text(
+                          userData.name,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+
+                        Text(
+                          userData.matricula,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    )
+
+                  ]
+                )
+
+              )
             ),
 
             buildListItem("Home", context, const HomeState()),

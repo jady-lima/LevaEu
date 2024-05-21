@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:levaeu_mobile/model/userData.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
@@ -10,6 +11,7 @@ import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
+import 'package:provider/provider.dart';
 
 class Registration extends StatefulWidget{
   const Registration({super.key});
@@ -21,6 +23,7 @@ class Registration extends StatefulWidget{
 class _RegistrationState extends State<Registration> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final matriculaController = TextEditingController();
   final phoneController = TextEditingController();
   final addressController = TextEditingController();
   final numberController = TextEditingController();
@@ -107,6 +110,32 @@ class _RegistrationState extends State<Registration> {
     }
   }
 
+  void _submitUserData(BuildContext context) {
+    Provider.of<UserData>(context, listen: false).updateAll(
+      newName: nameController.text,
+      newEmail: emailController.text,
+      newMatricula: matriculaController.text,
+      newPhone: phoneController.text,
+      newCep: zipcodeController.text,
+      newStreet: streetController.text,
+      newNumber: numberController.text,
+      newDistrict: districtController.text,
+      newCity: cityController.text,
+      newState: stateController.text,
+      newCountry: countryController.text,
+      newPass: passwordController.text,
+      newGender: genderController.text,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => _isChecked ? const RegistrationCNH() : const HomeState(),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,6 +199,13 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
                       child: TextFieldsForms.buildTextFormField("Email", TextInputType.emailAddress, emailController, false, ValidationType.email, TextFieldsForms.saveFormFieldValue)
+                    ),
+
+                    //Container/TextFormField: Matricula
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Matricula", TextInputType.number, matriculaController, false, ValidationType.matricula, TextFieldsForms.saveFormFieldValue)
                     ),
 
                     //Container/TextFormField: Telefone
@@ -291,13 +327,19 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(
+                      child: ElevatedButtonsForms.buildElevatedButtonSubmitUserData(
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
-                        320, 50, "Criar conta", context,
-                        _isChecked ? const RegistrationCNH() : const HomeState(), 
-                        _formKeyRegistration)
+                        320, 
+                        50, 
+                        "Criar conta", 
+                        context,
+                        _formKeyRegistration,
+                        () { 
+                          _submitUserData(context);
+                        },
+                      )
                     ),
 
                     //Container/ElevatedButton: Cancelar

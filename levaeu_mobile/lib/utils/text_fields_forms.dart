@@ -16,6 +16,7 @@ enum ValidationType {
   placa,
   ano,
   modelo,
+  matricula,
 }
 
 class TextFieldsForms {
@@ -68,6 +69,9 @@ class TextFieldsForms {
         break;
       case ValidationType.modelo:
         validator = validateModelo;
+        break;
+      case ValidationType.matricula:
+        validator = validateMatricula;
         break;
     }
 
@@ -224,6 +228,19 @@ class TextFieldsForms {
 
   static String? validatePhone(String? value) {
     final phoneRegex = RegExp(r'^([1-9]{2}) 9? [0-9]{4}-[0-9]{4}|[0-9]{11}$');
+    if (value == null || value.isEmpty) {
+      return 'Por favor, insira seu número de telefone';
+    }
+
+    if (!phoneRegex.hasMatch(value)) {
+      return 'Por favor, insira um telefone válido.';
+    }
+
+    return null;
+  }
+
+  static String? validateMatricula(String? value) {
+    final phoneRegex = RegExp(r'^[0-9]{11}$');
     if (value == null || value.isEmpty) {
       return 'Por favor, insira seu número de telefone';
     }
