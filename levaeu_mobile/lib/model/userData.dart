@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class UserData extends ChangeNotifier {
   String _name = '';
   String _email = '';
+  String _matricula = '';
   String _phone = '';
   String _cep = '';
   String _street = '';
@@ -16,6 +17,7 @@ class UserData extends ChangeNotifier {
 
   String get name => _name;
   String get phone => _phone;
+  String get matricula => _matricula;
   String get cep => _cep;
   String get street => _street;
   String get district => _district;
@@ -35,6 +37,11 @@ class UserData extends ChangeNotifier {
 
   void updateEmail(String newEmail) {
     _email = newEmail;
+    notifyListeners();
+  }
+
+  void updateMatricula(String newMatricula) {
+    _matricula = newMatricula;
     notifyListeners();
   }
 
@@ -91,6 +98,7 @@ class UserData extends ChangeNotifier {
   void updateAll({
     required String newName,
     required String newEmail,
+    required String newMatricula,
     required String newPhone,
     required String newCep,
     required String newStreet,
@@ -104,6 +112,7 @@ class UserData extends ChangeNotifier {
   }) {
     _name = newName ?? _name;
     _email = newEmail ?? _email;
+    _matricula = newMatricula ?? _matricula;
     _phone = newPhone ?? _phone;
     _cep = newCep ?? _cep;
     _street = newStreet ?? _street;

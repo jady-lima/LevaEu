@@ -23,6 +23,7 @@ class Registration extends StatefulWidget{
 class _RegistrationState extends State<Registration> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final matriculaController = TextEditingController();
   final phoneController = TextEditingController();
   final addressController = TextEditingController();
   final numberController = TextEditingController();
@@ -113,6 +114,7 @@ class _RegistrationState extends State<Registration> {
     Provider.of<UserData>(context, listen: false).updateAll(
       newName: nameController.text,
       newEmail: emailController.text,
+      newMatricula: matriculaController.text,
       newPhone: phoneController.text,
       newCep: zipcodeController.text,
       newStreet: streetController.text,
@@ -197,6 +199,13 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
                       child: TextFieldsForms.buildTextFormField("Email", TextInputType.emailAddress, emailController, false, ValidationType.email, TextFieldsForms.saveFormFieldValue)
+                    ),
+
+                    //Container/TextFormField: Matricula
+                    Container(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: TextFieldsForms.buildTextFormField("Matricula", TextInputType.number, matriculaController, false, ValidationType.matricula, TextFieldsForms.saveFormFieldValue)
                     ),
 
                     //Container/TextFormField: Telefone
