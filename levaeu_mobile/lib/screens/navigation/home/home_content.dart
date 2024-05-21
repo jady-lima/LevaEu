@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/userData.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
+import 'package:provider/provider.dart';
 
 class HomeContent extends StatefulWidget {
   final Function(int) onItemTapped;
@@ -13,6 +15,8 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context);
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -24,9 +28,9 @@ class _HomeContentState extends State<HomeContent> {
             constraints: const BoxConstraints(maxWidth: 300, minWidth: 240),
             margin: const EdgeInsets.only(top: 20, left: 25, bottom: 10),
             alignment: Alignment.centerLeft,
-            child: const Text(
-              "Olá, user!",
-              style: TextStyle(
+            child: Text(
+              "Olá, ${userData.name}!",
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 18,
                 color: Color.fromRGBO(0, 0, 0, 1)
@@ -50,6 +54,7 @@ class _HomeContentState extends State<HomeContent> {
 
           const Center(
             child: Card(
+              color: Colors.white,
               child: SizedBox(
                 width: 350,
                 height: 100,
@@ -73,9 +78,10 @@ class _HomeContentState extends State<HomeContent> {
 
           Center(
             child: Card(
+              color: Colors.white,
               child: SizedBox(
                 width: 350,
-                height: 190,
+                height: 175,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -106,7 +112,6 @@ class _HomeContentState extends State<HomeContent> {
                       },
                     ),
                       
-                    
                   ]
                 ),
               )
@@ -122,6 +127,7 @@ class _HomeContentState extends State<HomeContent> {
 
           Center(
             child: Card(
+              color: Colors.white,
               child: SizedBox(
                 width: 350,
                 height: 150,

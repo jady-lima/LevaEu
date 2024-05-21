@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/userData.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
+import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/screens/start.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserData()),
+      ],
+      child: MyApp()
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -21,11 +30,12 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
         useMaterial3: true,
       ),
-      initialRoute: '/home',
+      initialRoute: '/userRegistration',
       routes: {
         '/': (context) => const Start(),
         '/home': (context) => const HomeState(),
         '/profile': (context) => const Profile(),
+        '/userRegistration': (context) => const Registration(),
       },
     );
   }
