@@ -15,15 +15,7 @@ class HomeState extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeState> {
-  final List<GlobalKey<NavigatorState>> _screensKeys = [
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-  ];
-
-  int _selectedIndex = 0;
+   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -33,6 +25,14 @@ class _HomeState extends State<HomeState> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _screens = [
+      HomeContent(onItemTapped: _onItemTapped), //0
+      const Chats(), //1
+      const NewRace(), //2
+      const MyRaces(), //3
+      const Settings(), //4
+    ];
+  
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -41,36 +41,13 @@ class _HomeState extends State<HomeState> {
       ),
       drawer: DrawerMenu.buildDrawerMenu(context),
       bottomNavigationBar: NavigationBarMenu(
-        initialIndex: 0,
+        initialIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),
-      body: Container(
-        child: _buildBody(),
-        color: Theme.of(context).colorScheme.onInverseSurface,
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    return Navigator(
-      key: _screensKeys[_selectedIndex],
-      onGenerateRoute: (settings) {
-        WidgetBuilder builder;
-        switch (settings.name) {
-          case '/':
-            builder = (BuildContext context) => [
-              const HomeContent(),
-              const Chats(),
-              const NewRace(),
-              const MyRaces(),
-              const Settings(),
-            ][_selectedIndex];
-            break;
-          default:
-            throw Exception('Invalid route: ${settings.name}');
-        }
-        return MaterialPageRoute(builder: builder, settings: settings);
-      },
+      body:IndexedStack(
+        index: _selectedIndex,
+        children: _screens,
+      ), 
     );
   }
 }

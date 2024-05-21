@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       //home: Start(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(57, 96, 143, 0)),
-        scaffoldBackgroundColor: const Color.fromRGBO(184, 184, 184, 1),
+        scaffoldBackgroundColor: const Color.fromRGBO(240, 240, 247, 1),
         fontFamily: 'Roboto',
         useMaterial3: true,
       ),

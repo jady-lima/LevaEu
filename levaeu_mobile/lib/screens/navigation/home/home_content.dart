@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/navigation/history/my_races.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 
 class HomeContent extends StatefulWidget {
-  const HomeContent({Key? key}) : super(key: key);
+  final Function(int) onItemTapped;
+  
+  const HomeContent({Key? key, required this.onItemTapped}) : super(key: key);
 
   @override
   _HomeContentState createState() => _HomeContentState();
@@ -88,7 +89,7 @@ class _HomeContentState extends State<HomeContent> {
                         size: 16,
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MyRaces()));
+                        widget.onItemTapped(3);
                       },
                     ),
 
@@ -101,7 +102,7 @@ class _HomeContentState extends State<HomeContent> {
                         size: 16,
                       ),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MyRaces()));
+                        widget.onItemTapped(3);
                       },
                     ),
                       
@@ -112,7 +113,6 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ),
     
-
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
             padding: const EdgeInsets.only(left: 10),
@@ -120,24 +120,46 @@ class _HomeContentState extends State<HomeContent> {
             child: TitlesScreens.buildHomeMainTitle("Discussões recentes: "),
           ),
 
-          const Center(
+          Center(
             child: Card(
               child: SizedBox(
                 width: 350,
-                height: 100,
-                child: Center(
-                  child: Text(
-                    "Sem corridas até o momento",
-                    style: TextStyle(
-                      fontSize: 14,
+                height: 150,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+
+                    ListTile(
+                      leading: const Icon(Icons.car_crash_rounded),
+                      title: const Text('Buscando carona para N34'),
+                      subtitle: const Text('Aluna 1'),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
+                      onTap: () {
+                        widget.onItemTapped(1);
+                      },
                     ),
-                  )
+
+                    ListTile(
+                      leading: const Icon(Icons.car_crash_rounded),
+                      title: const Text('Tenho 3 vagas para o M12'),
+                      subtitle: const Text('Motorista 3'),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
+                      onTap: () {
+                        widget.onItemTapped(1);
+                      },
+                    ),
+                       
+                  ]
                 ),
               )
             ),
           ),
-
-          
 
         ],
       ),
