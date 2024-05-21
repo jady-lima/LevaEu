@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class Autentication extends StatefulWidget {
+  const Autentication({Key? key}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _AutenticationState createState() => _AutenticationState();
 }
 
-class _ProfileState extends State<Profile> {
+class _AutenticationState extends State<Autentication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +18,12 @@ class _ProfileState extends State<Profile> {
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          "Minha conta",
+          "Autenticação de dois fatores",
           style: TextStyle(color: Colors.white),
         ),
       ),
       
-      
-      body: const Text("Tela de Perfil"),
+      body: const Text("Tela de Autenticação"),
     );
   }
 }

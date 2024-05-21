@@ -14,10 +14,15 @@ class _HelpState extends State<Help> {
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
 
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: const Color.fromRGBO(184, 184, 184, 0),
-        iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
+        backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
+        centerTitle: false,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
+          "Suporte",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
+      
 
       body: const Text("Tela de Suporte"),
     );

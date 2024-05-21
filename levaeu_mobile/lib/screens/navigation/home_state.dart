@@ -44,7 +44,10 @@ class _HomeState extends State<HomeState> {
         initialIndex: 0,
         onItemTapped: _onItemTapped,
       ),
-      body: _buildBody(),
+      body: Container(
+        child: _buildBody(),
+        color: Theme.of(context).colorScheme.onInverseSurface,
+      ),
     );
   }
 

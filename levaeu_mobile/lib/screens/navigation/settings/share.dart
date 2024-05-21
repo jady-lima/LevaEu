@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class Share extends StatefulWidget {
+  const Share({Key? key}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _ShareState createState() => _ShareState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ShareState extends State<Share> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +18,13 @@ class _ProfileState extends State<Profile> {
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          "Minha conta",
+          "Indique um amigo",
           style: TextStyle(color: Colors.white),
         ),
       ),
       
       
-      body: const Text("Tela de Perfil"),
+      body: const Text("Tela de compartilhamento"),
     );
   }
 }

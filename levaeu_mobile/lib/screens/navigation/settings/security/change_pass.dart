@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class ChangePass extends StatefulWidget {
+  const ChangePass({Key? key}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _ChangePassState createState() => _ChangePassState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ChangePassState extends State<ChangePass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +18,12 @@ class _ProfileState extends State<Profile> {
         centerTitle: false,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          "Minha conta",
+          "Alterar senha",
           style: TextStyle(color: Colors.white),
         ),
       ),
       
-      
-      body: const Text("Tela de Perfil"),
+      body: const Text("Tela de alteração de senha"),
     );
   }
 }

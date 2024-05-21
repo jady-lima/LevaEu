@@ -176,7 +176,7 @@ class _RegistrationState extends State<Registration> {
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
-                      child: TextFieldsForms.buildTextFormField("Telefone", TextInputType.phone, phoneController, false, ValidationType.phone, TextFieldsForms.saveFormFieldValue)
+                      child: TextFieldsForms.buildTextFormField("Telefone", TextInputType.phone, phoneController, false, ValidationType.notEmpty, TextFieldsForms.saveFormFieldValue)
                     ),
 
                     //Container/TextFormField: CEP
@@ -202,13 +202,6 @@ class _RegistrationState extends State<Registration> {
                         },
                       ),
                     ),
-
-                    // //Container/TextFormField: Endereço
-                    // Container(
-                    //   padding: const EdgeInsets.only(top: 15, bottom: 5),
-                    //   constraints: const BoxConstraints(maxWidth: 320),
-                    //   child: TextFieldsForms.buildTextFormField("Endereço", TextInputType.text, addressController, false, ValidationType.address, TextFieldsForms.saveFormFieldValue)
-                    // ),
 
                     //Container/TextFormField: Rua
                     Container(

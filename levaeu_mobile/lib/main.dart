@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
+import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/start.dart';
 
 void main() {
@@ -20,10 +21,11 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
         useMaterial3: true,
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => const Start(),
         '/home': (context) => const HomeState(),
+        '/profile': (context) => const Profile(),
       },
     );
   }
