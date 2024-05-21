@@ -40,4 +40,17 @@ class TitlesScreens{
       ),
     );
   }
+
+  static Widget buildHomeMainTitle(String title){
+    return Text(
+      title,
+      textAlign: TextAlign.center,
+      softWrap: true,
+      style: const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 24,
+        color: Color.fromRGBO(0, 0, 0, 1)
+      ),
+    );
+  }
 }
