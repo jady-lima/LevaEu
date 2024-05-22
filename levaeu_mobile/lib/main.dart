@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/model/userData.dart';
+import 'package:levaeu_mobile/screens/navigation/chats/chats.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/register/registration.dart';
@@ -30,12 +31,13 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
         useMaterial3: true,
       ),
-      initialRoute: '/userRegistration',
+      initialRoute: '/home',
       routes: {
         '/': (context) => const Start(),
         '/home': (context) => const HomeState(),
         '/profile': (context) => const Profile(),
         '/userRegistration': (context) => const Registration(),
+        '/chats': (context) => const Chats(),
       },
     );
   }
