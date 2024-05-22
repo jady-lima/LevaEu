@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/chats/chats.dart';
 import 'package:levaeu_mobile/screens/navigation/home/home_content.dart';
 import 'package:levaeu_mobile/screens/navigation/history/my_races.dart';
@@ -6,6 +7,7 @@ import 'package:levaeu_mobile/screens/navigation/new_races/new_race.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/settings.dart';
 import 'package:levaeu_mobile/utils/drawer_menu.dart';
 import 'package:levaeu_mobile/utils/navigation_bar_menu.dart';
+import 'package:provider/provider.dart';
 
 class HomeState extends StatefulWidget {
   const HomeState({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class HomeState extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeState> {
-   int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -25,6 +27,8 @@ class _HomeState extends State<HomeState> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context);
+    
     final List<Widget> _screens = [
       HomeContent(onItemTapped: _onItemTapped), //0
       const Chats(), //1

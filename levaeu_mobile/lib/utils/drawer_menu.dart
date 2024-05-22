@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:levaeu_mobile/model/userData.dart";
+import "package:levaeu_mobile/model/user_data.dart";
 import "package:levaeu_mobile/screens/navigation/settings/help.dart";
 import "package:levaeu_mobile/screens/navigation/home_state.dart";
 import "package:levaeu_mobile/screens/login/login.dart";

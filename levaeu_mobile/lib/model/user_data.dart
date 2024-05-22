@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/driver_license.dart';
+import 'package:levaeu_mobile/model/driver_user.dart';
 
 class UserData extends ChangeNotifier {
+  dynamic _user;
   String _name = '';
   String _email = '';
   String _matricula = '';
@@ -15,6 +18,37 @@ class UserData extends ChangeNotifier {
   String _pass = '';
   String _gender = '';
 
+  UserData({
+    String? name,
+    String? email,
+    String? matricula,
+    String? phone,
+    String? cep,
+    String? street,
+    String? number,
+    String? district,
+    String? city,
+    String? state,
+    String? country,
+    String? pass,
+    String? gender,
+  }) {
+    if (name != null) _name = name;
+    if (email != null) _email = email;
+    if (matricula != null) _matricula = matricula;
+    if (phone != null) _phone = phone;
+    if (cep != null) _cep = cep;
+    if (street != null) _street = street;
+    if (number != null) _number = number;
+    if (district != null) _district = district;
+    if (city != null) _city = city;
+    if (state != null) _state = state;
+    if (country != null) _country = country;
+    if (pass != null) _pass = pass;
+    if (gender != null) _gender = gender;
+  }
+
+  dynamic get user => _user;
   String get name => _name;
   String get phone => _phone;
   String get matricula => _matricula;
@@ -29,6 +63,33 @@ class UserData extends ChangeNotifier {
   String get email => _email;
   String get senha => _pass;
   String get number => _number;
+
+  void setUser(dynamic user) {
+    _user = user;
+    _name = user.name;
+    _email = user.email;
+    _matricula = user.matricula;
+    _phone = user.phone;
+    _cep = user.cep;
+    _street = user.street;
+    _number = user.number;
+    _district = user.district;
+    _city = user.city;
+    _state = user.state;
+    _country = user.country;
+    _pass = user.pass;
+    _gender = user.gender;
+
+    notifyListeners();
+  }
+
+
+  void updateDriverLicense(DriverLicense driverLicense) {
+    if (_user is DriverUser) {
+      (_user as DriverUser).updateDriverLicense(driverLicense);
+      notifyListeners();
+    }
+  }
 
   void updateName(String newName) {
     _name = newName;
@@ -109,6 +170,7 @@ class UserData extends ChangeNotifier {
     required String newCountry,
     required String newPass,
     required String newGender,
+    UserData? userData,
   }) {
     _name = newName ?? _name;
     _email = newEmail ?? _email;
@@ -123,6 +185,7 @@ class UserData extends ChangeNotifier {
     _country = newCountry ?? _country;
     _pass = newPass ?? _pass;
     _gender = newGender ?? _gender;
+    _user = userData ?? _user;
     notifyListeners();
   }
 }
