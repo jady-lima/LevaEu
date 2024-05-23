@@ -371,6 +371,7 @@ class _RegistrationState extends State<Registration> {
                         TextFieldsForms.saveFormFieldValue,
                       ),
                     ),
+                    /*
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
@@ -383,6 +384,7 @@ class _RegistrationState extends State<Registration> {
                         TextFieldsForms.saveFormFieldValue,
                       ),
                     ),
+                    */
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),

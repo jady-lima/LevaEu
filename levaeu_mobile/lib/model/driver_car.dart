@@ -7,25 +7,25 @@ class DriverCar extends ChangeNotifier{
   String _year = '';
   String _placa = '';
 
-  DriverLicense({
-    required String marca,
-    required String cor,
-    required String modelo,
-    required String year,
-    required String placa,
+  DriverCar({
+    String? marca,
+    String? cor,
+    String? modelo,
+    String? year,
+    String? placa,
   }) {
-    _marca = marca;
-    _cor = cor;
-    _modelo = modelo;
-    _year = year;
-    _placa = placa;
+    if (marca != null ) _marca = marca;
+    if (cor != null ) _cor = cor;
+    if (modelo != null ) _modelo = modelo;
+    if (year != null ) _year = year;
+    if (placa != null ) _placa = placa;
   }
 
   String get marca => _marca;
-  String get dataEmissao => _cor;
-  String get dataValidade => _modelo;
-  String get categoria => _year;
-  String get cpf => _placa;
+  String get cor => _cor;
+  String get modelo => _modelo;
+  String get year => _year;
+  String get placa => _placa;
 
   void updateMarca(String newMarca){
     _marca = newMarca;

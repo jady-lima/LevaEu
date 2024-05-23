@@ -8,17 +8,17 @@ class DriverLicense extends ChangeNotifier{
   String _cpf = '';
 
   DriverLicense({
-    required String registro,
-    required String dataEmissao,
-    required String dataValidade,
-    required String categoria,
-    required String cpf,
+    String? registro,
+    String? dataEmissao,
+    String? dataValidade,
+    String? categoria,
+    String? cpf,
   }) {
-    _registro = registro;
-    _dataEmissao = dataEmissao;
-    _dataValidade = dataValidade;
-    _categoria = categoria;
-    _cpf = cpf;
+    if (registro != null ) _registro = registro;
+    if (dataEmissao != null ) _dataEmissao = dataEmissao;
+    if (dataValidade != null ) _dataValidade = dataValidade;
+    if (categoria != null ) _categoria = categoria;
+    if (cpf != null )_cpf = cpf;
   }
 
   String get registro => _registro;

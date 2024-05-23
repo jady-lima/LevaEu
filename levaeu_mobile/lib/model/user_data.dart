@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/driver_car.dart';
 import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/driver_user.dart';
 
@@ -64,6 +65,20 @@ class UserData extends ChangeNotifier {
   String get senha => _pass;
   String get number => _number;
 
+  DriverLicense? get driverLicense {
+    if (_user is DriverUser) {
+      return (_user as DriverUser).driverLicense;
+    }
+    return null;
+  }
+
+  DriverCar? get driverCar {
+    if (_user is DriverUser) {
+      return (_user as DriverUser).driverCar;
+    }
+    return null;
+  }
+
   void setUser(dynamic user) {
     _user = user;
     _name = user.name;
@@ -83,10 +98,30 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void updateDriverLicense(DriverLicense driverLicense) {
     if (_user is DriverUser) {
       (_user as DriverUser).updateDriverLicense(driverLicense);
+      (_user as DriverUser).driverLicense?.updateAll(
+        newregistro: driverLicense.registro, 
+        newdataEmissao: driverLicense.dataEmissao, 
+        newdataValidade: driverLicense.dataValidade, 
+        newcategoria: driverLicense.categoria, 
+        newcpf: driverLicense.cpf
+      );
+      notifyListeners();
+    }
+  }
+
+  void updateDriverCar(DriverCar driverCar) {
+    if (_user is DriverUser) {
+      (_user as DriverUser).updateDriverCar(driverCar);
+      (_user as DriverUser).driverCar?.updateAll(
+        newMarca: driverCar.marca,
+        newModelo: driverCar.modelo,
+        newCor: driverCar.cor,
+        newPlaca: driverCar.placa,
+        newYear: driverCar.year,
+      );
       notifyListeners();
     }
   }

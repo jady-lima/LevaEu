@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/driver_car.dart';
+import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
@@ -8,8 +10,12 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserData(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserData()),
+        ChangeNotifierProvider(create: (_) => DriverLicense()),
+        ChangeNotifierProvider(create: (_) => DriverCar()),
+      ],
       child: MyApp(),
     ),
   );
