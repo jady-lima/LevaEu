@@ -1,12 +1,13 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/driver_car.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/login/start_login.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationCar extends StatefulWidget{
   const RegistrationCar({super.key});
@@ -17,15 +18,38 @@ class RegistrationCar extends StatefulWidget{
 
 class _RegistrationCarState extends State<RegistrationCar> {
 
- final _formKeyRegistration = GlobalKey<FormState>();
- final marcaController = TextEditingController();
- final corController = TextEditingController();
- final anoController = TextEditingController();
- final modeloController = TextEditingController();
- final placaController = TextEditingController();
+  final _formKeyRegistration = GlobalKey<FormState>();
+  final marcaController = TextEditingController();
+  final corController = TextEditingController();
+  final anoController = TextEditingController();
+  final modeloController = TextEditingController();
+  final placaController = TextEditingController();
 
- @override
- Widget build(BuildContext context) {
+  void _submitUserCar(BuildContext context){
+    final userData = Provider.of<UserData>(context, listen: false);
+    final driverCar = Provider.of<DriverCar>(context, listen: false);
+    
+    driverCar.updateAll(
+      newMarca: marcaController.text,
+      newModelo: modeloController.text,
+      newCor: corController.text,
+      newPlaca: placaController.text,
+      newYear: anoController.text,
+    );
+
+    userData.updateDriverCar(driverCar);
+    print(userData.driverCar?.placa);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomeState(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
 
@@ -111,12 +135,21 @@ class _RegistrationCarState extends State<RegistrationCar> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(
+                      child: ElevatedButtonsForms.buildElevatedButtonSubmitUserData(
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
-                        320, 50, "Criar conta", context, const HomeState(), 
-                        _formKeyRegistration)
+                        320, 
+                        50, 
+                        "Criar conta", 
+                        context, 
+                        _formKeyRegistration,
+                        () {
+                          if (_formKeyRegistration.currentState!.validate()) {
+                            _submitUserCar(context);
+                          }
+                        },
+                      ),
                     ),
 
                     //Container/ElevatedButton: Cancelar

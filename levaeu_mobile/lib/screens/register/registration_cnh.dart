@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/driver_license.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/register/registration_car.dart';
 import 'package:levaeu_mobile/screens/login/start_login.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationCNH extends StatefulWidget{
   const RegistrationCNH({super.key});
@@ -21,6 +24,29 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
   final cpfController = TextEditingController();
 
   final _formKeyRegistration = GlobalKey<FormState>();
+
+  void _submitUserCNH(BuildContext context){
+    final userData = Provider.of<UserData>(context, listen: false);
+    final driverLicense = Provider.of<DriverLicense>(context, listen: false);
+    
+    driverLicense.updateAll(
+      newregistro: registroController.text, 
+      newdataEmissao: dataEmissaoController.text, 
+      newdataValidade: dataValidadeController.text, 
+      newcategoria: categoriaController.text, 
+      newcpf: cpfController.text,
+    );
+
+    userData.updateDriverLicense(driverLicense);
+    print(userData.driverLicense?.registro);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RegistrationCar(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +132,21 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(
+                      child: ElevatedButtonsForms.buildElevatedButtonSubmitUserData(
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
-                        320, 50, "Continuar", context, const RegistrationCar(), 
-                        _formKeyRegistration)
+                        320, 
+                        50, 
+                        "Continuar", 
+                        context,
+                        _formKeyRegistration,
+                        () {
+                          if (_formKeyRegistration.currentState!.validate()) {
+                            _submitUserCNH(context);
+                          }
+                        },
+                      ),
                     ),
 
                     //Container/ElevatedButton: Cancelar
