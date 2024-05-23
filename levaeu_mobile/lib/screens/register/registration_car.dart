@@ -48,8 +48,6 @@ class _RegistrationCarState extends State<RegistrationCar> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

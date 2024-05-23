@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:levaeu_mobile/model/common_user.dart';
 import 'package:levaeu_mobile/model/driver_car.dart';
 import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/driver_user.dart';
@@ -131,7 +130,7 @@ class _RegistrationState extends State<Registration> {
         country: countryController.text,
         pass: passwordController.text,
         gender: genderController.text,
-        driverLicense: DriverLicense(registro: '', dataEmissao: '', dataValidade: '', categoria: '', cpf: ''),
+        driverLicense: DriverLicense(),
         driverCar: DriverCar(),
       );
 
@@ -144,23 +143,21 @@ class _RegistrationState extends State<Registration> {
         ),
       );
     } else {
-      final commonUser = CommonUser(
-        name: nameController.text,
-        email: emailController.text,
-        matricula: matriculaController.text,
-        phone: phoneController.text,
-        cep: zipcodeController.text,
-        street: streetController.text,
-        number: numberController.text,
-        district: districtController.text,
-        city: cityController.text,
-        state: stateController.text,
-        country: countryController.text,
-        pass: passwordController.text,
-        gender: genderController.text,
+      user.updateAll(
+        newName: nameController.text,
+        newEmail: emailController.text,
+        newMatricula: matriculaController.text,
+        newPhone: phoneController.text,
+        newCep: zipcodeController.text,
+        newStreet: streetController.text,
+        newNumber: numberController.text,
+        newDistrict: districtController.text,
+        newCity: cityController.text,
+        newState: stateController.text,
+        newCountry: countryController.text,
+        newPass: passwordController.text,
+        newGender: genderController.text,
       );
-
-      user.setUser(commonUser);
 
       Navigator.push(
         context,
@@ -432,8 +429,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
                     Container(
-                      constraints:
-                          const BoxConstraints(maxWidth: 300, minWidth: 250),
+                      constraints: const BoxConstraints(maxWidth: 300, minWidth: 250),
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
                       alignment: Alignment.center,
