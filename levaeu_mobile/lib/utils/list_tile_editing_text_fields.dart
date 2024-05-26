@@ -67,14 +67,18 @@ class _ListTileEditingTextFieldState extends State<ListTileEditingTextField> {
             : Text(widget.controller.text),
       ),
       trailing: _isEditing
-          ? TextButton(
-              onPressed: _submit,
-              child: const Text('Salvar'),
-            )
-          : IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: _toggleEditing,
+        ? TextButton(
+            onPressed: _submit,
+            child: const Text('Salvar'),
+          )
+        : IconButton(
+            icon: const Icon(
+              Icons.edit,
+              color: Color.fromRGBO(50, 54, 54, 0.808),
+              size: 18,
             ),
+            onPressed: _toggleEditing,
+          ),
     );
   }
 }

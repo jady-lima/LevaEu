@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
-import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/utils/list_tile_editing_text_fields.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserData>(context);
-
     return Scaffold(
       
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
@@ -38,16 +36,16 @@ class _ProfileState extends State<Profile> {
             children: <Widget> [
 
               Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(10),
-                constraints: const BoxConstraints(maxWidth: 100),
+                margin: const EdgeInsets.all(0),
+                padding: const EdgeInsets.only(top: 25),
+                constraints: const BoxConstraints(maxWidth: 100, maxHeight: 220, minHeight: 200),
                 child: Image.asset('img/user.png'),
               ),
 
               Card(
                 color: Colors.white,
                 child: Container(
-                  constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
+                  constraints: const BoxConstraints(maxWidth: 340, minWidth: 240),
                   child: Column(
 
                     children: <Widget>[
@@ -88,34 +86,49 @@ class _ProfileState extends State<Profile> {
                         validationType: ValidationType.phone,
                       ),
 
-                      ListTile(
-                        title: const Text("CEP: "),
-                        subtitle: Text(userData.cep),
+                      ListTileEditingTextField(
+                        title: "CEP", 
+                        user: userData.cep, 
+                        controller: TextEditingController(text: userData.cep), 
+                        function: userData.updateCep,
+                        inputType: TextInputType.number,
+                        validationType: ValidationType.zipcode,
                       ),
 
-                      ListTile(
-                        title: const Text("Rua: "),
-                        subtitle: Text(userData.street),
+                      ListTileEditingTextField(
+                        title: "Rua", 
+                        user: userData.street, 
+                        controller: TextEditingController(text: userData.street), 
+                        function: userData.updateStreet,
+                        inputType: TextInputType.text,
+                        validationType: ValidationType.address,
                       ),
 
-                      ListTile(
-                        title: const Text("Numero: "),
-                        subtitle: Text(userData.number),
+                      ListTileEditingTextField(
+                        title: "Cidade", 
+                        user: userData.city, 
+                        controller: TextEditingController(text: userData.city), 
+                        function: userData.updateCity,
+                        inputType: TextInputType.text,
+                        validationType: ValidationType.address,
                       ),
 
-                      ListTile(
-                        title: const Text("Bairro: "),
-                        subtitle: Text(userData.district),
+                      ListTileEditingTextField(
+                        title: "Estado", 
+                        user: userData.state, 
+                        controller: TextEditingController(text: userData.state), 
+                        function: userData.updateState,
+                        inputType: TextInputType.text,
+                        validationType: ValidationType.address,
                       ),
 
-                      ListTile(
-                        title: const Text("Estado: "),
-                        subtitle: Text(userData.state),
-                      ),
-
-                      ListTile(
-                        title: const Text("País: "),
-                        subtitle: Text(userData.country),
+                      ListTileEditingTextField(
+                        title: "País", 
+                        user: userData.country, 
+                        controller: TextEditingController(text: userData.country), 
+                        function: userData.updateCountry,
+                        inputType: TextInputType.text,
+                        validationType: ValidationType.address,
                       ),
 
                       ListTile(
