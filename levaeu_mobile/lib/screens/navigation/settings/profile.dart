@@ -50,6 +50,19 @@ class _ProfileState extends State<Profile> {
 
                     children: <Widget>[
 
+                      Container(
+                        constraints: const BoxConstraints(maxHeight: 30, minHeight: 10),
+                        margin: const EdgeInsets.only(top: 10),
+                        child: const Text(
+                          "Dados Pessoais",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            color: Color.fromRGBO(90, 87, 87, 0.711)
+                          ),
+                        ),
+                      ),
+
                       ListTileEditingTextField(
                         title: "Nome", 
                         user: userData.name, 
@@ -136,14 +149,131 @@ class _ProfileState extends State<Profile> {
                         subtitle: Text(userData.gender),
                       ),
 
+                      if (userData.driverCar != null)
+                        Container(
+                          constraints: const BoxConstraints(maxHeight: 30, minHeight: 10),
+                          margin: const EdgeInsets.only(top: 10),
+                          child: const Text(
+                            "Dados da CNH",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Color.fromRGBO(90, 87, 87, 0.711)
+                            ),
+                          ),
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Registro", 
+                          user: userData.driverLicense!.registro, 
+                          controller: TextEditingController(text: userData.driverLicense!.registro), 
+                          function: userData.driverLicense!.updateRegistro,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.registro,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Data de Emissão", 
+                          user: userData.driverLicense!.dataEmissao, 
+                          controller: TextEditingController(text: userData.driverLicense!.dataEmissao), 
+                          function: userData.driverLicense!.updateDataEmissao,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.data,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Data de Validade", 
+                          user: userData.driverLicense!.dataValidade, 
+                          controller: TextEditingController(text: userData.driverLicense!.dataValidade), 
+                          function: userData.driverLicense!.updateDataValidade,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.data,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "CPF", 
+                          user: userData.driverLicense!.cpf, 
+                          controller: TextEditingController(text: userData.driverLicense!.cpf), 
+                          function: userData.driverLicense!.updateCPF,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.cpf,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Categoria", 
+                          user: userData.driverLicense!.categoria, 
+                          controller: TextEditingController(text: userData.driverLicense!.categoria), 
+                          function: userData.driverLicense!.updateCategoria,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.name,
+                        ),
+                      
+                        Container(
+                          constraints: const BoxConstraints(maxHeight: 30, minHeight: 10),
+                          margin: const EdgeInsets.only(top: 10),
+                          child: const Text(
+                            "Dados do Veículo",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Color.fromRGBO(90, 87, 87, 0.711)
+                            ),
+                          ),
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Marca", 
+                          user: userData.driverCar!.marca, 
+                          controller: TextEditingController(text: userData.driverCar!.marca), 
+                          function: userData.driverCar!.updateMarca,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.name,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Modelo", 
+                          user: userData.driverCar!.modelo, 
+                          controller: TextEditingController(text: userData.driverCar!.modelo), 
+                          function: userData.driverCar!.updateModelo,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.name,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Cor", 
+                          user: userData.driverCar!.cor, 
+                          controller: TextEditingController(text: userData.driverCar!.cor), 
+                          function: userData.driverCar!.updateCor,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.name,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Placa", 
+                          user: userData.driverCar!.placa, 
+                          controller: TextEditingController(text: userData.driverCar!.placa), 
+                          function: userData.driverCar!.updatePlaca,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.placa,
+                        ),
+
+                        ListTileEditingTextField(
+                          title: "Ano", 
+                          user: userData.driverCar!.year, 
+                          controller: TextEditingController(text: userData.driverCar!.year), 
+                          function: userData.driverCar!.updateYear,
+                          inputType: TextInputType.text,
+                          validationType: ValidationType.ano,
+                        ),
+
                     ],
                   ),
                 )
               )
 
             ],
-          )        
-        )     
+          )
+        )
       )
     );
   }

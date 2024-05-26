@@ -118,12 +118,14 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
-                      child: DropDownMenus.buildDropDownButton(categoryList.first,
+                      child: DropDownMenus.buildDropDownButton(
+                        categoryList.first,
                         (String? value) {
                           setState(() {
                             categoryList.first = value!;
                           });
-                        }, ListType.categoryList,
+                        }, 
+                        ListType.categoryList,
                       ),
                     ),
 
