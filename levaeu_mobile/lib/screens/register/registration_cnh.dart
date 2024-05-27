@@ -25,6 +25,67 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
 
   final _formKeyRegistration = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    super.initState();
+    dataEmissaoController.addListener(formatDate);
+    dataValidadeController.addListener(formatDate);
+  }
+
+  @override
+  void dispose() {
+    dataEmissaoController.removeListener(formatDate);
+    dataValidadeController.removeListener(formatDate);
+    dataEmissaoController.dispose();
+    dataValidadeController.dispose();
+    super.dispose();
+  }
+
+  void formatDate() {
+    String emissao = _formatDate(dataEmissaoController.text, isEmissao: true);
+    dataEmissaoController.value = dataEmissaoController.value.copyWith(
+      text: emissao,
+      selection: TextSelection.collapsed(offset: emissao.length),
+    );
+    String validade = _formatDate(dataValidadeController.text, isEmissao: false);
+    dataValidadeController.value = dataValidadeController.value.copyWith(
+      text: validade,
+      selection: TextSelection.collapsed(offset: validade.length),
+    );
+  }
+
+  String _formatDate(String value, {required bool isEmissao}) {
+    String digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), ''); // Mantém apenas os dígitos
+
+    if (digitsOnly.length <= 2) {
+      return digitsOnly;
+    } else if (digitsOnly.length <= 4) {
+      return '${digitsOnly.substring(0, 2)}/${digitsOnly.substring(2)}';
+    } else if (digitsOnly.length <= 8) {
+      String day = digitsOnly.substring(0, 2);
+      String month = digitsOnly.substring(2, 4);
+      String year = digitsOnly.length > 4 ? digitsOnly.substring(4) : '';
+
+      if (isEmissao && year.length == 4) {
+        int yearInt = int.parse(year);
+        int currentYear = DateTime.now().year;
+        if (yearInt > currentYear) {
+          year = currentYear.toString();
+        }
+      }
+
+      if (year.isNotEmpty) {
+        return '$day/$month/$year';
+      } else {
+        return '$day/$month';
+      }
+    } else {
+      return '${digitsOnly.substring(0, 2)}/${digitsOnly.substring(2, 4)}/${digitsOnly.substring(4, 8)}';
+    }
+  }
+
+
+
   void _submitUserCNH(BuildContext context){
     final userData = Provider.of<UserData>(context, listen: false);
     final driverLicense = Provider.of<DriverLicense>(context, listen: false);
