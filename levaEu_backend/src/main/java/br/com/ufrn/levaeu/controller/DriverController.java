@@ -1,38 +1,38 @@
 package br.com.ufrn.levaeu.controller;
 
-import br.com.ufrn.levaeu.model.Motorista;
-import br.com.ufrn.levaeu.service.MotoristaService;
+import br.com.ufrn.levaeu.model.Driver;
+import br.com.ufrn.levaeu.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/motoristas")
-public class MotoristaController {
+public class DriverController {
 
     @Autowired
-    private MotoristaService motoristaService;
+    private DriverService driverService;
 
     //Cria um novo motorista no sistema.
     @PostMapping
-    public ResponseEntity<Motorista> criarMotorista(@RequestBody Motorista motorista) {
-        Motorista novoMotorista = motoristaService.salvarMotorista(motorista);
-        return ResponseEntity.ok(novoMotorista);
+    public ResponseEntity<Driver> criarMotorista(@RequestBody Driver driver) {
+        Driver novoDriver = driverService.salvarMotorista(driver);
+        return ResponseEntity.ok(novoDriver);
     }
 
     //Atualiza as informações de um motorista existente.
     @PutMapping("/{id}")
-    public ResponseEntity<Motorista> atualizarMotorista(@PathVariable Long id, @RequestBody Motorista motorista) {
-        motorista.setId(id);
-        Motorista atualizado = motoristaService.salvarMotorista(motorista);
+    public ResponseEntity<Driver> atualizarMotorista(@PathVariable Long id, @RequestBody Driver driver) {
+        driver.setId(id);
+        Driver atualizado = driverService.salvarMotorista(driver);
         return ResponseEntity.ok(atualizado);
     }
 
     // Retorna informações de um motorista específico.
 
     @GetMapping("/{id}")
-    public ResponseEntity<Motorista> obterMotorista(@PathVariable Long id) {
-        return motoristaService.buscarMotoristaPorId(id)
+    public ResponseEntity<Driver> obterMotorista(@PathVariable Long id) {
+        return driverService.buscarMotoristaPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -41,7 +41,7 @@ public class MotoristaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarMotorista(@PathVariable Long id) {
-        motoristaService.excluirMotorista(id);
+        driverService.excluirMotorista(id);
         return ResponseEntity.ok().build();
     }
 }

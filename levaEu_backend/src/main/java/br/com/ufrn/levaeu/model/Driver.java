@@ -4,31 +4,31 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "motoristas")
-public class Motorista extends Usuario {
+public class Driver extends User {
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "cnh_id", referencedColumnName = "id")
-    private CNH cnh;
+    private DriverLicense driverLicense;
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "veiculo_id", referencedColumnName = "id")
-    private Veiculo veiculo;
+    private Car car;
 
     // Métodos específicos para motoristas, como criar corridas
 
-    public CNH getCnh() {
-        return cnh;
+    public DriverLicense getDriverLicense() {
+        return driverLicense;
     }
 
-    public void setCnh(CNH cnh) {
-        this.cnh = cnh;
+    public void setDriverLicense(DriverLicense driverLicense) {
+        this.driverLicense = driverLicense;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
+    public Car getCar() {
+        return car;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
+    public void setCar(Car car) {
+        this.car = car;
     }
 }
