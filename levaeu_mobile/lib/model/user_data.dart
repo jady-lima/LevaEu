@@ -207,19 +207,19 @@ class UserData extends ChangeNotifier {
     required String newGender,
     UserData? userData,
   }) {
-    _name = newName ?? _name;
-    _email = newEmail ?? _email;
-    _matricula = newMatricula ?? _matricula;
-    _phone = newPhone ?? _phone;
-    _cep = newCep ?? _cep;
-    _street = newStreet ?? _street;
-    _number = newNumber ?? _number;
-    _district = newDistrict ?? _district;
-    _city = newCity ?? _city;
-    _state = newState ?? _state;
-    _country = newCountry ?? _country;
-    _pass = newPass ?? _pass;
-    _gender = newGender ?? _gender;
+    _name = newName ;
+    _email = newEmail ;
+    _matricula = newMatricula;
+    _phone = newPhone;
+    _cep = newCep ;
+    _street = newStreet;
+    _number = newNumber;
+    _district = newDistrict;
+    _city = newCity ;
+    _state = newState ;
+    _country = newCountry;
+    _pass = newPass ;
+    _gender = newGender ;
     _user = userData ?? _user;
     notifyListeners();
   }

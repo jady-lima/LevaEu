@@ -21,7 +21,7 @@ enum ValidationType {
 
 class TextFieldsForms {
 
-  static Widget buildTextFormField(String label, TextInputType inputType, TextEditingController controller, bool pass, ValidationType validationType, void Function(String?)? onSaved ) {
+  static Widget buildTextFormField(String? label, TextInputType inputType, TextEditingController controller, bool pass, ValidationType validationType, void Function(String?)? onSaved ) {
 
     String? Function(String?)? validator;
     switch (validationType) {

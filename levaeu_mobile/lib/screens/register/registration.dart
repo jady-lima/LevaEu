@@ -275,15 +275,15 @@ class _RegistrationState extends State<Registration> {
                           fontSize: 12.0,
                         ),
                         keyboardType: TextInputType.number,
-                        onSaved: TextFieldsForms.saveFormFieldValue,
-                        onEditingComplete: () {
-                          String zipcode = zipcodeController.text;
-                          if (zipcode.length == 8) {
-                            getAddress(zipcode);
+                        onChanged: (value) {
+                          if (value.length == 8) {
+                            getAddress(value);
                           }
                         },
+                        onSaved: TextFieldsForms.saveFormFieldValue,
                       ),
                     ),
+
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
