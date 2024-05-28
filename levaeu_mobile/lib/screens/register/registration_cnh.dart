@@ -55,7 +55,7 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
   }
 
   String _formatDate(String value, {required bool isEmissao}) {
-    String digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), ''); // Mantém apenas os dígitos
+    String digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
 
     if (digitsOnly.length <= 2) {
       return digitsOnly;
@@ -83,8 +83,6 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
       return '${digitsOnly.substring(0, 2)}/${digitsOnly.substring(2, 4)}/${digitsOnly.substring(4, 8)}';
     }
   }
-
-
 
   void _submitUserCNH(BuildContext context){
     final userData = Provider.of<UserData>(context, listen: false);

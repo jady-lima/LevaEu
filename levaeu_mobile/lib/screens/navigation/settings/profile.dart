@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
                         subtitle: Text(userData.gender),
                       ),
 
-                      if (userData.driverCar != null)
+                      if (userData.driverCar != null)...[
                         Container(
                           constraints: const BoxConstraints(maxHeight: 30, minHeight: 10),
                           margin: const EdgeInsets.only(top: 10),
@@ -266,8 +266,10 @@ class _ProfileState extends State<Profile> {
                           validationType: ValidationType.ano,
                         ),
 
-                    ],
+                      ],
+                    ]
                   ),
+            
                 )
               )
 
