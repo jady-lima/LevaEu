@@ -87,7 +87,7 @@ class _HomeContentState extends State<HomeContent> {
                         size: 16,
                       ),
                       onTap: () {
-                        widget.onItemTapped(3);
+                        widget.onItemTapped(2);
                       },
                     ),
                     ListTile(
@@ -99,7 +99,7 @@ class _HomeContentState extends State<HomeContent> {
                         size: 16,
                       ),
                       onTap: () {
-                        widget.onItemTapped(3);
+                        widget.onItemTapped(2);
                       },
                     ),
                   ],
