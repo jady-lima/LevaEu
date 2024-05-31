@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto',
         useMaterial3: true,
       ),
-      initialRoute: '/userRegistration',
+      initialRoute: '/',
       routes: {
         '/': (context) => const Start(),
         '/home': (context) => const HomeState(),

@@ -3,8 +3,8 @@ import "package:levaeu_mobile/model/user_data.dart";
 import "package:levaeu_mobile/screens/navigation/settings/help.dart";
 import "package:levaeu_mobile/screens/navigation/home_state.dart";
 import "package:levaeu_mobile/screens/login/login.dart";
-import "package:levaeu_mobile/screens/navigation/settings/payment/payment_screen.dart";
 import "package:levaeu_mobile/screens/navigation/settings/profile.dart";
+import "package:levaeu_mobile/screens/navigation/settings/share.dart";
 import "package:provider/provider.dart";
 
 class DrawerMenu{  
@@ -71,7 +71,7 @@ class DrawerMenu{
 
             buildListItem("Minha conta", context, const Profile()),
 
-            buildListItem("Formas de pagamento", context, const Payment()),
+            buildListItem("Indique um amigo", context, const Share()),
 
             buildListItem("Suporte", context, const Help()),
 
