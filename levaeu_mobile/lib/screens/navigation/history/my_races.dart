@@ -8,50 +8,83 @@ class MyRaces extends StatefulWidget{
 }
 
 class _MyRacesState extends State<MyRaces> {
+  bool driverUser = true;
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    final List<String> passageiroViagens = ['Passageiro 1', 'Passageiro 2', 'Passageiro 3'];
+    final List<String> motoristaViagens = [];
+
+    return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
 
-          Container(
-            constraints: const BoxConstraints(maxWidth: 300, minWidth: 240),
-            margin: const EdgeInsets.only(top: 20, left: 25, bottom: 10),
-            alignment: Alignment.centerLeft,
-            child: const Text(
-              "Histórico motorista",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
-                color: Color.fromRGBO(0, 0, 0, 1),
-              ),
-            ),
-          ),
-          
-           const Center(
-            child: Card(
-              color: Colors.white,
-              child: SizedBox(
-                width: 350,
-                height: 100,
-                child: Center(
-                  child: Text(
-                    "Sem históricos no momento",
-                    style: TextStyle(
-                      fontSize: 14,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget> [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      driverUser = false;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
                     ),
                   ),
+                  child: const Text("Passageiro"),
                 ),
               ),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      driverUser = true;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  child: const Text("Motorista"),
+                ),
+              ),
+            ],
+          ),
+
+          Expanded(
+            child: SingleChildScrollView(
+              child: _buildHistory( driverUser ? motoristaViagens : passageiroViagens),
             ),
           ),
 
 
         ],
-      ),
+      
     );
+  }
+
+  Widget _buildHistory(List<String> items){
+    if (items.isEmpty) {
+       return const Card(
+        margin: EdgeInsets.all(10.0),
+        child: ListTile(
+          title: Text("Não há histórico de corrida."),
+        ),
+      );
+    } else {
+      return Column(
+        children: items.map((item) => Card(
+          margin: const EdgeInsets.all(10.0),
+          child: ListTile(
+            title: Text(item),
+          ),
+        )).toList(),
+      );
+    }
   }
 }
