@@ -181,7 +181,7 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                         categoryList.first,
                         (String? value) {
                           setState(() {
-                            categoryList.first = value!;
+                            categoriaController.text = value!;
                           });
                         }, 
                         ListType.categoryList,

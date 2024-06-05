@@ -3,7 +3,6 @@ import 'package:levaeu_mobile/model/driver_car.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/login/start_login.dart';
-import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
@@ -118,17 +117,21 @@ class _RegistrationCarState extends State<RegistrationCar> {
                       child: TextFieldsForms.buildTextFormField("Cor", TextInputType.text, corController, false, ValidationType.name, TextFieldsForms.saveFormFieldValue),
                     ),
 
+                    /*
+
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
-                      child: DropDownMenus.buildDropDownButton(vehicleList.first,
+                      child: DropDownMenus.buildDropDownButton(
+                        vehicleList.first,
                         (String? value) {
                           setState(() {
-                            vehicleList.first = value!;
+                            tipoController.text = value!;
                           });
                         }, ListType.vehicleList,
                       ),
                     ),
+                    */
 
                     Container(
                       constraints: const BoxConstraints(maxWidth: 300),
