@@ -50,10 +50,11 @@ class _NewRaceState extends State<NewRace> {
       passageiros: passageiros2,
     );
 
-    final List<Race> races = [pass1, pass2, pass1, pass2, pass1, pass2, pass1];
+    final List<Race> races = [pass1, pass2];
 
     return Stack(
       children: <Widget>[
+
         Column(
           children: <Widget> [
             Expanded(
@@ -121,7 +122,7 @@ class _NewRaceState extends State<NewRace> {
           child: FloatingActionButton(
             backgroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewRace()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateNewRace()));
             },
             child: const Icon(
               Icons.add,
