@@ -15,7 +15,7 @@ class HomeState extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeState> {
-   int _selectedIndex = 0;
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -24,7 +24,7 @@ class _HomeState extends State<HomeState> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     final List<Widget> _screens = [
       HomeContent(onItemTapped: _onItemTapped), //0
       const Chats(), //1

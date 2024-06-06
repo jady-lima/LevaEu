@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/model/userData.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 import 'package:provider/provider.dart';
 
 class HomeContent extends StatefulWidget {
   final Function(int) onItemTapped;
-  
+
   const HomeContent({Key? key, required this.onItemTapped}) : super(key: key);
 
   @override
@@ -21,9 +21,7 @@ class _HomeContentState extends State<HomeContent> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: <Widget>[
-          
           Container(
             constraints: const BoxConstraints(maxWidth: 300, minWidth: 240),
             margin: const EdgeInsets.only(top: 20, left: 25, bottom: 10),
@@ -33,11 +31,10 @@ class _HomeContentState extends State<HomeContent> {
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 18,
-                color: Color.fromRGBO(0, 0, 0, 1)
+                color: Color.fromRGBO(0, 0, 0, 1),
               ),
             ),
           ),
-
           Container(
             margin: const EdgeInsets.only(left: 20),
             constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
@@ -45,13 +42,11 @@ class _HomeContentState extends State<HomeContent> {
             width: 350,
             height: 0.8,
           ),
-
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10),
             constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
             child: TitlesScreens.buildHomeMainTitle("Corrida marcada: "),
           ),
-
           const Center(
             child: Card(
               color: Colors.white,
@@ -64,18 +59,16 @@ class _HomeContentState extends State<HomeContent> {
                     style: TextStyle(
                       fontSize: 14,
                     ),
-                  )
+                  ),
                 ),
-              )
+              ),
             ),
           ),
-
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10),
-            constraints: const BoxConstraints(maxWidth: 350, minWidth: 190),
+            constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
             child: TitlesScreens.buildHomeMainTitle("Saindo logo: "),
           ),
-
           Center(
             child: Card(
               color: Colors.white,
@@ -85,7 +78,6 @@ class _HomeContentState extends State<HomeContent> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-
                     ListTile(
                       leading: const Icon(Icons.car_crash_rounded),
                       title: const Text('Tempo: 5 min. \nPara: Ponta Negra'),
@@ -95,10 +87,9 @@ class _HomeContentState extends State<HomeContent> {
                         size: 16,
                       ),
                       onTap: () {
-                        widget.onItemTapped(3);
+                        widget.onItemTapped(2);
                       },
                     ),
-
                     ListTile(
                       leading: const Icon(Icons.car_crash_rounded),
                       title: const Text('Tempo: 8 min. \nPara: Parnamirim'),
@@ -108,23 +99,20 @@ class _HomeContentState extends State<HomeContent> {
                         size: 16,
                       ),
                       onTap: () {
-                        widget.onItemTapped(3);
+                        widget.onItemTapped(2);
                       },
                     ),
-                      
-                  ]
+                  ],
                 ),
-              )
+              ),
             ),
           ),
-    
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
             padding: const EdgeInsets.only(left: 10),
             constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
             child: TitlesScreens.buildHomeMainTitle("Discussões recentes: "),
           ),
-
           Center(
             child: Card(
               color: Colors.white,
@@ -134,7 +122,6 @@ class _HomeContentState extends State<HomeContent> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-
                     ListTile(
                       leading: const Icon(Icons.car_crash_rounded),
                       title: const Text('Buscando carona para N34'),
@@ -147,7 +134,6 @@ class _HomeContentState extends State<HomeContent> {
                         widget.onItemTapped(1);
                       },
                     ),
-
                     ListTile(
                       leading: const Icon(Icons.car_crash_rounded),
                       title: const Text('Tenho 3 vagas para o M12'),
@@ -160,13 +146,11 @@ class _HomeContentState extends State<HomeContent> {
                         widget.onItemTapped(1);
                       },
                     ),
-                       
-                  ]
+                  ],
                 ),
-              )
+              ),
             ),
           ),
-
         ],
       ),
     );

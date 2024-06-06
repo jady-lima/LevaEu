@@ -21,7 +21,7 @@ enum ValidationType {
 
 class TextFieldsForms {
 
-  static Widget buildTextFormField(String label, TextInputType inputType, TextEditingController controller, bool pass, ValidationType validationType, void Function(String?)? onSaved ) {
+  static Widget buildTextFormField(String? label, TextInputType inputType, TextEditingController controller, bool pass, ValidationType validationType, void Function(String?)? onSaved ) {
 
     String? Function(String?)? validator;
     switch (validationType) {
@@ -242,11 +242,11 @@ class TextFieldsForms {
   static String? validateMatricula(String? value) {
     final phoneRegex = RegExp(r'^[0-9]{11}$');
     if (value == null || value.isEmpty) {
-      return 'Por favor, insira seu número de telefone';
+      return 'Por favor, insira seu número de Matricula';
     }
 
     if (!phoneRegex.hasMatch(value)) {
-      return 'Por favor, insira um telefone válido.';
+      return 'Por favor, insira uma matrícula válida.';
     }
 
     return null;

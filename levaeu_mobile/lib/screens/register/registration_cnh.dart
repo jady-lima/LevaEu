@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/driver_license.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/register/registration_car.dart';
 import 'package:levaeu_mobile/screens/login/start_login.dart';
 import 'package:levaeu_mobile/utils/drop_down_menu.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationCNH extends StatefulWidget{
   const RegistrationCNH({super.key});
@@ -21,6 +24,88 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
   final cpfController = TextEditingController();
 
   final _formKeyRegistration = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    dataEmissaoController.addListener(formatDate);
+    dataValidadeController.addListener(formatDate);
+  }
+
+  @override
+  void dispose() {
+    dataEmissaoController.removeListener(formatDate);
+    dataValidadeController.removeListener(formatDate);
+    dataEmissaoController.dispose();
+    dataValidadeController.dispose();
+    super.dispose();
+  }
+
+  void formatDate() {
+    String emissao = _formatDate(dataEmissaoController.text, isEmissao: true);
+    dataEmissaoController.value = dataEmissaoController.value.copyWith(
+      text: emissao,
+      selection: TextSelection.collapsed(offset: emissao.length),
+    );
+    String validade = _formatDate(dataValidadeController.text, isEmissao: false);
+    dataValidadeController.value = dataValidadeController.value.copyWith(
+      text: validade,
+      selection: TextSelection.collapsed(offset: validade.length),
+    );
+  }
+
+  String _formatDate(String value, {required bool isEmissao}) {
+    String digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (digitsOnly.length <= 2) {
+      return digitsOnly;
+    } else if (digitsOnly.length <= 4) {
+      return '${digitsOnly.substring(0, 2)}/${digitsOnly.substring(2)}';
+    } else if (digitsOnly.length <= 8) {
+      String day = digitsOnly.substring(0, 2);
+      String month = digitsOnly.substring(2, 4);
+      String year = digitsOnly.length > 4 ? digitsOnly.substring(4) : '';
+
+      if (isEmissao && year.length == 4) {
+        int yearInt = int.parse(year);
+        int currentYear = DateTime.now().year;
+        if (yearInt > currentYear) {
+          year = currentYear.toString();
+        }
+      }
+
+      if (year.isNotEmpty) {
+        return '$day/$month/$year';
+      } else {
+        return '$day/$month';
+      }
+    } else {
+      return '${digitsOnly.substring(0, 2)}/${digitsOnly.substring(2, 4)}/${digitsOnly.substring(4, 8)}';
+    }
+  }
+
+  void _submitUserCNH(BuildContext context){
+    final userData = Provider.of<UserData>(context, listen: false);
+    final driverLicense = Provider.of<DriverLicense>(context, listen: false);
+    
+    driverLicense.updateAll(
+      newregistro: registroController.text, 
+      newdataEmissao: dataEmissaoController.text, 
+      newdataValidade: dataValidadeController.text, 
+      newcategoria: categoriaController.text, 
+      newcpf: cpfController.text,
+    );
+
+    userData.updateDriverLicense(driverLicense);
+    print(userData.driverLicense?.registro);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RegistrationCar(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +177,14 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                     Container(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       constraints: const BoxConstraints(maxWidth: 320),
-                      child: DropDownMenus.buildDropDownButton(categoryList.first,
+                      child: DropDownMenus.buildDropDownButton(
+                        categoryList.first,
                         (String? value) {
                           setState(() {
                             categoryList.first = value!;
                           });
-                        }, ListType.categoryList,
+                        }, 
+                        ListType.categoryList,
                       ),
                     ),
 
@@ -106,12 +193,21 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
-                      child: ElevatedButtonsForms.buildElevatedButton(
+                      child: ElevatedButtonsForms.buildElevatedButtonSubmitUserData(
                         const Color.fromRGBO(57, 96, 143, 1.0), 
                         const Color.fromRGBO(255, 255, 255, 1), 
                         const Color.fromRGBO(57, 96, 143, 1.0), 
-                        320, 50, "Continuar", context, const RegistrationCar(), 
-                        _formKeyRegistration)
+                        320, 
+                        50, 
+                        "Continuar", 
+                        context,
+                        _formKeyRegistration,
+                        () {
+                          if (_formKeyRegistration.currentState!.validate()) {
+                            _submitUserCNH(context);
+                          }
+                        },
+                      ),
                     ),
 
                     //Container/ElevatedButton: Cancelar

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/navigation/settings/security/autentication.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/security/change_pass.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 
@@ -30,6 +29,7 @@ class SecurityState extends State<Security> {
         child: Column(
           children: <Widget>[
             
+            /*
             Container(
               constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
               alignment: Alignment.center,
@@ -42,6 +42,7 @@ class SecurityState extends State<Security> {
                 rootNavigator: true
               ),
             ),
+            */
 
             Container(
               constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
