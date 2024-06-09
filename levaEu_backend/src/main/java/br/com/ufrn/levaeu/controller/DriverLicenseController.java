@@ -1,10 +1,13 @@
 package br.com.ufrn.levaeu.controller;
 
+import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.model.DriverLicense;
 import br.com.ufrn.levaeu.service.DriverLicenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/cnhs")
@@ -14,9 +17,13 @@ public class DriverLicenseController {
     private DriverLicenseService driverLicenseService;
 
     @PostMapping
-    public ResponseEntity<DriverLicense> criarCNH(@RequestBody DriverLicense driverLicense) {
-        DriverLicense novaDriverLicense = driverLicenseService.salvarCNH(driverLicense);
-        return ResponseEntity.ok(novaDriverLicense);
+    public DriverLicense createDriverLicense(@RequestBody DriverLicense driverLicense) {
+        try {
+            driverLicenseService.validateDriverLicense(driverLicense);
+            return driverLicense;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
@@ -29,7 +36,7 @@ public class DriverLicenseController {
     @PutMapping("/{id}")
     public ResponseEntity<DriverLicense> atualizarCNH(@PathVariable Long id, @RequestBody DriverLicense driverLicense) {
         driverLicense.setId(id);
-        DriverLicense atualizada = driverLicenseService.salvarCNH(driverLicense);
+        DriverLicense atualizada = driverLicenseService.save(driverLicense);
         return ResponseEntity.ok(atualizada);
     }
 

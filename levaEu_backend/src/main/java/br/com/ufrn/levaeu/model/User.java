@@ -1,6 +1,9 @@
 package br.com.ufrn.levaeu.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -11,9 +14,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
+    @Email
     private String email;
     private String phone;
+    @NotBlank
     private String pass;
     private String cep;
     private String street;
@@ -23,6 +29,9 @@ public class User {
     private String state;
     private String country;
     private String gender;
+    @NotBlank
+    private String enrollment;
+    @NotNull
     private TypeUser typeUser;
 
     // Getters and setters
@@ -133,6 +142,14 @@ public class User {
 
     public TypeUser getTypeUser() {
         return typeUser;
+    }
+
+    public String getEnrollment() {
+        return enrollment;
+    }
+
+    public void setEnrollment(String enrollment) {
+        this.enrollment = enrollment;
     }
 
     public void setTypeUser(TypeUser typeUser) {

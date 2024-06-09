@@ -1,10 +1,13 @@
 package br.com.ufrn.levaeu.controller;
 
+import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.model.Driver;
 import br.com.ufrn.levaeu.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/motoristas")
@@ -15,17 +18,26 @@ public class DriverController {
 
     //Cria um novo motorista no sistema.
     @PostMapping
-    public ResponseEntity<Driver> criarMotorista(@RequestBody Driver driver) {
-        Driver novoDriver = driverService.salvarMotorista(driver);
-        return ResponseEntity.ok(novoDriver);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Driver criarMotorista(@RequestBody Driver driver) {
+        try {
+            Driver newDriver = driverService.save(driver);
+            return newDriver;
+        } catch (DuplicatedEntryException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
     }
 
     //Atualiza as informações de um motorista existente.
     @PutMapping("/{id}")
-    public ResponseEntity<Driver> atualizarMotorista(@PathVariable Long id, @RequestBody Driver driver) {
+    public Driver atualizarMotorista(@PathVariable Long id, @RequestBody Driver driver) {
         driver.setId(id);
-        Driver atualizado = driverService.salvarMotorista(driver);
-        return ResponseEntity.ok(atualizado);
+        try {
+            return driverService.save(driver);
+        } catch (DuplicatedEntryException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     // Retorna informações de um motorista específico.

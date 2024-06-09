@@ -1,8 +1,10 @@
 package br.com.ufrn.levaeu.service;
 
+import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.model.DriverLicense;
 import br.com.ufrn.levaeu.model.Driver;
 import br.com.ufrn.levaeu.model.Car;
+import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.repository.DriverRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,20 @@ public class DriverService {
 
     @Autowired
     private CarService carService;
+    @Autowired
+    private UserService userService;
 
     @Transactional
-    public Driver salvarMotorista(Driver driver) {
-        // Verificar e processar CNH
-        DriverLicense driverLicense = driverLicenseService.validarECriar(driver.getDriverLicense());
+    public Driver save(Driver driver, DriverLicense driverLicense, Car car) {
         driver.setDriverLicense(driverLicense);
-
-        // Verificar e processar veículo
-        Car car = carService.validarECriar(driver.getCar());
         driver.setCar(car);
 
         // Salvar motorista
+        return driverRepository.save(driver);
+    }
+
+    public Driver save(Driver driver) throws DuplicatedEntryException {
+        userService.validateUser(driver);
         return driverRepository.save(driver);
     }
 
@@ -42,4 +46,6 @@ public class DriverService {
 
     public void excluirMotorista(Long id) { driverRepository.deleteById(id);
     }
+
+
 }

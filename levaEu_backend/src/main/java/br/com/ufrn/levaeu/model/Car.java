@@ -1,6 +1,7 @@
 package br.com.ufrn.levaeu.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "veiculos")
@@ -13,6 +14,7 @@ public class Car {
     private String brand;
     private String model;
     private Integer year;
+    @NotBlank
     private String plate;
     private String color;
 

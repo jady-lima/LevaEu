@@ -1,11 +1,11 @@
 package br.com.ufrn.levaeu.controller;
 
 import br.com.ufrn.levaeu.DTO.AuthDTO;
+import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.service.TokenService;
 import br.com.ufrn.levaeu.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,12 +50,17 @@ public class AuthController {
         String encryptedPassword = new BCryptPasswordEncoder().encode(user.getPass());
         user.setPass(encryptedPassword);
 
+        try {
+            userService.validateUser(user);
+        } catch (DuplicatedEntryException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        if(user.getTypeUser().getName().equalsIgnoreCase("driver")) {
+            return user;
+        }
+
         userService.createUser(user);
-//        Caso deseje fazer o login automaticamente após o cadastro
-//        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPass());
-//        Authentication auth = authenticationManager.authenticate(usernamePassword);
-//
-//        String token = tokenService.generateToken((User) auth.getPrincipal());
         return user;
     }
 

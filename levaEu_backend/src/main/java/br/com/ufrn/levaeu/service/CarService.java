@@ -1,5 +1,6 @@
 package br.com.ufrn.levaeu.service;
 
+import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.model.Car;
 import br.com.ufrn.levaeu.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CarService {
         return car;
     }
 
-    public Car salvarVeiculo(Car car) {
+    public Car save(Car car) {
         return carRepository.save(car);
     }
 
@@ -28,5 +29,11 @@ public class CarService {
 
     public void excluirVeiculo(Long id) {
         carRepository.deleteById(id);
+    }
+
+    public void validateCar(Car car) throws DuplicatedEntryException {
+        if(carRepository.findByPlate(car.getPlate()).isPresent()){
+            throw new DuplicatedEntryException("Já existe um veículo cadastrado com a placa informada!");
+        }
     }
 }
