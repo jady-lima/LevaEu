@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/chats/chat_page.dart';
+import 'package:provider/provider.dart';
 
 class Chats extends StatefulWidget{
   const Chats({super.key});
@@ -9,25 +11,29 @@ class Chats extends StatefulWidget{
 }
 
 class _ChatsState extends State<Chats> {
-  final List<Map<String, String>> discussions = [
-    {'title': 'Buscando caronas para 35T56', 'author': 'Edvaldo Silva'},
-    {'title': 'Alguém saindo de PN de seg a qui?', 'author': 'César Silvirino'},
+
+  final List<Map<String, dynamic>> discussions = [
+    {'title': 'Buscando caronas para 35T56', 'author': 'Edvaldo Silva', 'createdAt': DateTime.now().subtract(Duration(days: 1))},
+    {'title': 'Alguém saindo de PN de seg a qui?', 'author': 'César Silvirino', 'createdAt': DateTime.now().subtract(Duration(days: 2))},
     // Add more discussions as needed
   ];
   
-  get itemBuilder => null;
 
-   void _openNewDiscussion() {
+  void _openNewDiscussion(String author) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, 
+      isScrollControlled: true,
       builder: (context) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: NewDiscussionForm(
-            onCreate: (title, author) {
+            onCreate: (title) {
               setState(() {
-                discussions.add({'title': title, 'author': author});
+                discussions.add({
+                  'title': title,
+                  'author': author,
+                  'createdAt': DateTime.now(),
+                });
               });
               Navigator.pop(context);
             },
@@ -37,17 +43,22 @@ class _ChatsState extends State<Chats> {
     );
   }
 
-  void _openChatPage(String title, String author) {
+  void _openChatPage(Map<String, dynamic> discussion) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ChatPage(title: title, author: author),
+        builder: (context) => ChatPage(
+          title: discussion['title'],
+          author: discussion['author'],
+          createdAt: discussion['createdAt'],),
       ),
     );
   }
   
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context);
+
     return Column(
       children: <Widget>[
         Padding(
@@ -68,7 +79,7 @@ class _ChatsState extends State<Chats> {
                   title: Text(discussion['title']!),
                   subtitle: Text('Autor: ${discussion['author']}'),
                   onTap: () {
-                    _openChatPage(discussion['title']!, discussion['author']!);
+                    _openChatPage(discussion);
                   },
                 ),
               );
@@ -77,11 +88,15 @@ class _ChatsState extends State<Chats> {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: ElevatedButton.icon(
-            onPressed: _openNewDiscussion,
-            icon: Icon(Icons.add),
-            label: Text('Abrir nova discussão'),
-          ),
+          child: Builder(
+            builder: (context) {
+              return ElevatedButton.icon(
+                onPressed: () => _openNewDiscussion(userData.name),
+                icon: Icon(Icons.add),
+                label: Text('Abrir nova discussão'),
+              );
+            },
+          )
         ),
       ],
     );
@@ -90,7 +105,7 @@ class _ChatsState extends State<Chats> {
 
 
 class NewDiscussionForm extends StatefulWidget {
-  final void Function(String title, String author) onCreate;
+  final void Function(String title) onCreate;
 
   NewDiscussionForm({required this.onCreate});
 
@@ -101,18 +116,18 @@ class NewDiscussionForm extends StatefulWidget {
 class _NewDiscussionFormState extends State<NewDiscussionForm> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
-  final _authorController = TextEditingController();
+  //final _authorController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
-    _authorController.dispose();
+    //_authorController.dispose();
     super.dispose();
   }
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      widget.onCreate(_titleController.text, _authorController.text);
+      widget.onCreate(_titleController.text);
     }
   }
 
@@ -139,16 +154,15 @@ class _NewDiscussionFormState extends State<NewDiscussionForm> {
                   return null;
                 },
               ),
-              TextFormField(
-                controller: _authorController,
-                decoration: InputDecoration(labelText: 'Autor'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira o autor';
-                  }
-                  return null;
-                },
-              ),
+              // TextFormField(
+              // controller: _authorController,
+              // decoration: InputDecoration(labelText: 'Autor'),
+              // validator: (value) {
+              //   if (value == null || value.isEmpty) {
+              //     return 'Por favor, insira um autor';
+              //   }
+              //   return null;
+              // },
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _submitForm,
