@@ -33,6 +33,9 @@ dependencies:
   http: ^1.2.1
   provider: ^6.0.0
   intl: ^0.17.0
+  flutter_chat_types: ^3.6.2
+  flutter_chat_ui: ^1.6.13
+  uuid: ^4.4.0
 flu  cupertino_icons: ^1.0.6
 
 
