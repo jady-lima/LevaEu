@@ -81,7 +81,7 @@ class _NewRaceState extends State<NewRace> {
                       itemCount: races.length,
                       itemBuilder: (context, index) {
                         final race = races[index];
-
+                        
                         return Container(
                           width: MediaQuery.of(context).size.width * 0.5,
                           margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20.0),
