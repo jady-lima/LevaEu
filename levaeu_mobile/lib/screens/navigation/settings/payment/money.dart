@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Money extends StatefulWidget {
-  const Money({Key? key}) : super(key: key);
+  const Money({super.key});
 
   @override
   _MoneyState createState() => _MoneyState();

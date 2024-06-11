@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class HomeContent extends StatefulWidget {
   final Function(int) onItemTapped;
 
-  const HomeContent({Key? key, required this.onItemTapped}) : super(key: key);
+  const HomeContent({super.key, required this.onItemTapped});
 
   @override
   _HomeContentState createState() => _HomeContentState();

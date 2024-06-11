@@ -8,7 +8,7 @@ class ParticipantsList extends StatelessWidget {
   final DateTime createdAt;
   final List<types.User> participants;
 
-  ParticipantsList({
+  const ParticipantsList({super.key, 
     required this.title,
     required this.author,
     required this.createdAt,
@@ -21,7 +21,7 @@ class ParticipantsList extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Participantes'),
+        title: const Text('Participantes'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -30,18 +30,18 @@ class ParticipantsList extends StatelessWidget {
           children: <Widget>[
             Text(
               'Título: $title',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(
               'Autor: $author',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
             Text(
               'Criado em: $formattedDate',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Participantes:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),

@@ -13,8 +13,8 @@ class Chats extends StatefulWidget{
 class _ChatsState extends State<Chats> {
 
   final List<Map<String, dynamic>> discussions = [
-    {'title': 'Buscando caronas para 35T56', 'author': 'Edvaldo Silva', 'createdAt': DateTime.now().subtract(Duration(days: 1))},
-    {'title': 'Alguém saindo de PN de seg a qui?', 'author': 'César Silvirino', 'createdAt': DateTime.now().subtract(Duration(days: 2))},
+    {'title': 'Buscando caronas para 35T56', 'author': 'Edvaldo Silva', 'createdAt': DateTime.now().subtract(const Duration(days: 1))},
+    {'title': 'Alguém saindo de PN de seg a qui?', 'author': 'César Silvirino', 'createdAt': DateTime.now().subtract(const Duration(days: 2))},
     // Add more discussions as needed
   ];
   
@@ -61,8 +61,8 @@ class _ChatsState extends State<Chats> {
 
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
+        const Padding(
+          padding: EdgeInsets.all(16.0),
           child: Text(
             'Discussões abertas',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -105,8 +105,8 @@ class _ChatsState extends State<Chats> {
             builder: (context) {
               return ElevatedButton.icon(
                 onPressed: () => _openNewDiscussion(userData.name),
-                icon: Icon(Icons.add),
-                label: Text('Abrir nova discussão'),
+                icon: const Icon(Icons.add),
+                label: const Text('Abrir nova discussão'),
               );
             },
           )
@@ -120,7 +120,7 @@ class _ChatsState extends State<Chats> {
 class NewDiscussionForm extends StatefulWidget {
   final void Function(String title) onCreate;
 
-  NewDiscussionForm({required this.onCreate});
+  const NewDiscussionForm({super.key, required this.onCreate});
 
   @override
   _NewDiscussionFormState createState() => _NewDiscussionFormState();
@@ -159,7 +159,7 @@ class _NewDiscussionFormState extends State<NewDiscussionForm> {
             children: <Widget>[
               TextFormField(
                 controller: _titleController,
-                decoration: InputDecoration(labelText: 'Título'),
+                decoration: const InputDecoration(labelText: 'Título'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira um título';
@@ -176,10 +176,10 @@ class _NewDiscussionFormState extends State<NewDiscussionForm> {
               //   }
               //   return null;
               // },
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Criar Discussão'),
+                child: const Text('Criar Discussão'),
               ),
             ],
           ),

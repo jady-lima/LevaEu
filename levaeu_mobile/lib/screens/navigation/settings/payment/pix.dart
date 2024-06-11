@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Pix extends StatefulWidget {
-  const Pix({Key? key}) : super(key: key);
+  const Pix({super.key});
 
   @override
   _PixState createState() => _PixState();

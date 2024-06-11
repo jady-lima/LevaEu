@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Share extends StatefulWidget {
-  const Share({Key? key}) : super(key: key);
+  const Share({super.key});
 
   @override
   _ShareState createState() => _ShareState();

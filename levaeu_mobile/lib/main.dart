@@ -20,7 +20,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => DriverCar()),
         ChangeNotifierProvider(create: (_) => RaceController()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }

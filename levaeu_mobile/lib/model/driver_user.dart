@@ -3,7 +3,9 @@ import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 
 class DriverUser extends UserData{
+  @override
   final DriverLicense? driverLicense;
+  @override
   final DriverCar? driverCar;
 
   DriverUser({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChangePass extends StatefulWidget {
-  const ChangePass({Key? key}) : super(key: key);
+  const ChangePass({super.key});
 
   @override
   _ChangePassState createState() => _ChangePassState();

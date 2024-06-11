@@ -5,10 +5,10 @@ class NavigationBarMenu extends StatefulWidget {
   final Function(int) onItemTapped;
 
   const NavigationBarMenu({
-    Key? key,
+    super.key,
     required this.initialIndex,
     required this.onItemTapped,
-  }) : super(key: key);
+  });
 
   @override
   _NavigationBarMenuState createState() => _NavigationBarMenuState();

@@ -3,7 +3,7 @@ import 'package:levaeu_mobile/screens/navigation/settings/security/change_pass.d
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 
 class Security extends StatefulWidget {
-  const Security({Key? key}) : super(key: key);
+  const Security({super.key});
 
   @override
   SecurityState createState() => SecurityState();

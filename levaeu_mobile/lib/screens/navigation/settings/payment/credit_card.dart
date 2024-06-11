@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CreditCard extends StatefulWidget {
-  const CreditCard({Key? key}) : super(key: key);
+  const CreditCard({super.key});
 
   @override
   _CreditCardState createState() => _CreditCardState();

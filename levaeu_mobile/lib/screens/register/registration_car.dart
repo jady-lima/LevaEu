@@ -64,10 +64,10 @@ class _RegistrationCarState extends State<RegistrationCar> {
           Column(
             children: <Widget>[
               
-              Container(
+              const SizedBox(
                 width: 120,
                 height: 120,
-                child: const Icon(Icons.drive_eta_rounded, color: Color.fromRGBO(57, 96, 143, 1.0), size: 100,)
+                child: Icon(Icons.drive_eta_rounded, color: Color.fromRGBO(57, 96, 143, 1.0), size: 100,)
               ),
 
               Container(

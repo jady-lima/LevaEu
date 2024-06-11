@@ -8,7 +8,7 @@ import 'package:levaeu_mobile/utils/drawer_menu.dart';
 import 'package:levaeu_mobile/utils/navigation_bar_menu.dart';
 
 class HomeState extends StatefulWidget {
-  const HomeState({Key? key}) : super(key: key);
+  const HomeState({super.key});
 
   @override
   _HomeState createState() => _HomeState();
@@ -25,7 +25,7 @@ class _HomeState extends State<HomeState> {
 
   @override
   Widget build(BuildContext context) {    
-    final List<Widget> _screens = [
+    final List<Widget> screens = [
       HomeContent(onItemTapped: _onItemTapped), //0
       const Chats(), //1
       const NewRace(), //2
@@ -46,7 +46,7 @@ class _HomeState extends State<HomeState> {
       ),
       body:IndexedStack(
         index: _selectedIndex,
-        children: _screens,
+        children: screens,
       ), 
     );
   }

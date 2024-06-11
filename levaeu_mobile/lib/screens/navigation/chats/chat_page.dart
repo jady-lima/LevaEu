@@ -9,7 +9,7 @@ class ChatPage extends StatefulWidget {
   final String author;
   final DateTime createdAt;
 
-  ChatPage({required this.title, required this.author, required this.createdAt});
+  const ChatPage({super.key, required this.title, required this.author, required this.createdAt});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -17,9 +17,9 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
-  final _user = types.User(id: 'user-id', firstName: 'Current User');
-  final _otherUser = types.User(id: 'other-user-id', firstName: 'Other User');
-  final _anotherUser = types.User(id: 'another-user-id', firstName: 'Another User');
+  final _user = const types.User(id: 'user-id', firstName: 'Current User');
+  final _otherUser = const types.User(id: 'other-user-id', firstName: 'Other User');
+  final _anotherUser = const types.User(id: 'another-user-id', firstName: 'Another User');
 
 
   @override
@@ -34,19 +34,19 @@ class _ChatPageState extends State<ChatPage> {
         types.TextMessage(
           author: _anotherUser,
           createdAt: DateTime.now().millisecondsSinceEpoch,
-          id: Uuid().v4(),
+          id: const Uuid().v4(),
           text: 'Não quero muita conversa com vcs não e.e',
         ),
         types.TextMessage(
           author: _user,
           createdAt: DateTime.now().millisecondsSinceEpoch,
-          id: Uuid().v4(),
+          id: const Uuid().v4(),
           text: 'Estou bem, obrigado!',
         ),
         types.TextMessage(
           author: _otherUser,
           createdAt: DateTime.now().millisecondsSinceEpoch,
-          id: Uuid().v4(),
+          id: const Uuid().v4(),
           text: 'Olá, como você está?',
         ),
       ];
@@ -57,7 +57,7 @@ class _ChatPageState extends State<ChatPage> {
     final textMessage = types.TextMessage(
       author: _user,
       createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: Uuid().v4(),
+      id: const Uuid().v4(),
       text: message.text,
     );
 
@@ -87,7 +87,7 @@ class _ChatPageState extends State<ChatPage> {
         title: Text(widget.title),
         actions: [
           IconButton(
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
             onPressed: _openParticipantsPage,
           ),
         ],
