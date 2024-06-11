@@ -73,14 +73,27 @@ class _ChatsState extends State<Chats> {
             itemCount: discussions.length,
             itemBuilder: (context, index) {
               final discussion = discussions[index];
-              return Card(
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: ListTile(
-                  title: Text(discussion['title']!),
-                  subtitle: Text('Autor: ${discussion['author']}'),
-                  onTap: () {
-                    _openChatPage(discussion);
-                  },
+
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+                child: Card(
+                  color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  margin: const EdgeInsets.all(10.0),
+                  child: ListTile(
+                    trailing: const CircleAvatar(
+                      backgroundColor: Color.fromRGBO(57, 96, 143, 1.0),
+                      child: Icon(
+                        Icons.message_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text(discussion['title']!),
+                    subtitle: Text('Autor: ${discussion['author']}'),
+                    onTap: () {
+                      _openChatPage(discussion);
+                    },
+                  ),
                 ),
               );
             },

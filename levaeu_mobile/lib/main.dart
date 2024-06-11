@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/controllers/race_controller.dart';
 import 'package:levaeu_mobile/model/driver_car.dart';
 import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/chats/chats.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
+import 'package:levaeu_mobile/screens/navigation/new_races/create_new_race.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/screens/start.dart';
@@ -16,6 +18,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => UserData()),
         ChangeNotifierProvider(create: (_) => DriverLicense()),
         ChangeNotifierProvider(create: (_) => DriverCar()),
+        ChangeNotifierProvider(create: (_) => RaceController()),
       ],
       child: MyApp(),
     ),
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const Profile(),
         '/userRegistration': (context) => const Registration(),
         '/chats': (context) => const Chats(),
+        '/createNewRace': (context) => const CreateNewRace(),
       },
     );
   }

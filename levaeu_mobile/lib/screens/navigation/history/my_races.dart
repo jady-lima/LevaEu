@@ -106,6 +106,7 @@ class _MyRacesState extends State<MyRaces> {
   Widget _buildHistory(List<HistoryData> items) {
     if (items.isEmpty) {
       return const Card(
+        color: Color.fromRGBO(255, 255, 255, 1.0),
         margin: EdgeInsets.all(10.0),
         child: ListTile(
           title: Text("Não há histórico de corrida."),
@@ -114,6 +115,7 @@ class _MyRacesState extends State<MyRaces> {
     } else {
       return Column(
         children: items.map((item) => Card(
+          color: const Color.fromRGBO(255, 255, 255, 1.0),
           margin: const EdgeInsets.all(10.0),
           child: ListTile(
             title: Text("Destino: ${item.destino}"),
