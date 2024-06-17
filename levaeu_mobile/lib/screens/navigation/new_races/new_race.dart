@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/model/race.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/new_races/create_new_race.dart';
+import 'package:levaeu_mobile/screens/navigation/new_races/select_destination.dart';
 import 'package:provider/provider.dart';
 
 class NewRace extends StatefulWidget{
@@ -100,7 +101,11 @@ class _NewRaceState extends State<NewRace> {
                                 ),
                               ),
                               title: Text("${race.motorista.name}\n${race.saida} \u2192 ${race.destino}"),
-                              subtitle: Text("Horário: ${race.horario.format(context)}")
+                              subtitle: Text("Horário: ${race.horario.format(context)}"),
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SelectDestinationPage()),
+                                );
+                              },
                             ),
 
                           ),
