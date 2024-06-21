@@ -1,5 +1,7 @@
 package br.com.ufrn.levaeu.model;
 
+import java.util.ArrayList;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -33,7 +35,9 @@ public class User {
     private String enrollment;
     @NotNull
     private TypeUser typeUser;
-
+    @OneToMany
+    private ArrayList<User> Friends = new ArrayList<>();
+    
     // Getters and setters
 
     public Long getId() {
