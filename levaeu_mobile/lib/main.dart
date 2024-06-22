@@ -10,6 +10,7 @@ import 'package:levaeu_mobile/screens/navigation/new_races/create_new_race.dart'
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/screens/start.dart';
+import 'package:levaeu_mobile/model/map_state.dart';
 import 'package:provider/provider.dart';
 
 void main()  {
@@ -21,6 +22,7 @@ void main()  {
         ChangeNotifierProvider(create: (_) => DriverLicense()),
         ChangeNotifierProvider(create: (_) => DriverCar()),
         ChangeNotifierProvider(create: (_) => RaceController()),
+        ChangeNotifierProvider(create: (_) => MapState()),
       ],
       child: const MyApp(),
     ),
