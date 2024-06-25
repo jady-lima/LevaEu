@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "LevaEu",
       //home: Start(),
       theme: ThemeData(
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromRGBO(240, 240, 247, 1),
         fontFamily: 'Roboto',
         useMaterial3: true,
+        
       ),
       initialRoute: '/home',
       routes: {

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:levaeu_mobile/api/api_client.dart';
-import 'package:levaeu_mobile/api/google_places_service.dart';
-import 'package:levaeu_mobile/service/place_service.dart';
 import 'package:uuid/uuid.dart';
+import 'package:levaeu_mobile/api/google_places_service.dart';
 import 'package:levaeu_mobile/model/place.dart';
-import 'package:levaeu_mobile/model/place_details.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -17,19 +14,15 @@ class _MapScreenState extends State<MapScreen> {
   final TextEditingController _startController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
   List<Place> _places = [];
-  late ApiClient apiClient;
+  bool _isLoading = false;
   late GooglePlacesService googlePlacesService;
-  late PlaceService placeService;
+  late String sessionToken;
 
   @override
   void initState() {
     super.initState();
-    apiClient = ApiClient(
-      baseUrl: 'https://maps.googleapis.com/maps/api',
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY', // Insira sua chave de API aqui
-    );
-    googlePlacesService = GooglePlacesService(apiClient: apiClient);
-    placeService = PlaceService(googlePlacesService: googlePlacesService);
+    googlePlacesService = GooglePlacesService(apiKey: 'API VAI AQUI');
+    sessionToken = Uuid().v4();
   }
 
   @override
@@ -40,15 +33,23 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
-  void _searchPlaces() async {
+  void _searchPlaces(String query) async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
-      placeService.createSessionToken();
-      final places = await placeService.searchPlaces(_startController.text);
+      print("Searching for places with query: $query");
+      final places = await googlePlacesService.fetchPlaces(query, sessionToken);
+      print("Received places: $places");
       setState(() {
         _places = places;
+        _isLoading = false;
       });
     } catch (e) {
-      print(e);
+      print("Error fetching places: $e");
+      setState(() {
+        _isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load places')));
     }
   }
@@ -106,11 +107,11 @@ class _MapScreenState extends State<MapScreen> {
                       controller: _startController,
                       decoration: InputDecoration(
                         labelText: 'De:',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: _searchPlaces,
-                        ),
+                        suffixIcon: Icon(Icons.search),
                       ),
+                      onChanged: (value) {
+                        _searchPlaces(value);
+                      },
                     ),
                     SizedBox(height: 10),
                     TextField(
@@ -119,6 +120,9 @@ class _MapScreenState extends State<MapScreen> {
                         labelText: 'Para:',
                         suffixIcon: Icon(Icons.search),
                       ),
+                      onChanged: (value) {
+                        _searchPlaces(value);
+                      },
                     ),
                     SizedBox(height: 10),
                     ElevatedButton(
@@ -128,23 +132,26 @@ class _MapScreenState extends State<MapScreen> {
                         backgroundColor: Colors.blue,
                       ),
                     ),
-                    // Adicionando a lista de sugestões de lugares
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: _places.length,
-                      itemBuilder: (context, index) {
-                        final place = _places[index];
-                        return ListTile(
-                          title: Text(place.description),
-                          onTap: () async {
-                            // Fetch place details and do something with them
-                            final details = await placeService.getPlaceDetails(place.placeId);
-                            print(details.formattedAddress);
-                          },
-                        );
-                      },
-                    ),
+                    if (_isLoading)
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    else
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: _places.length,
+                        itemBuilder: (context, index) {
+                          final place = _places[index];
+                          return ListTile(
+                            title: Text(place.description),
+                            onTap: () async {
+                              // Fetch place details and do something with them
+                              print('Selected place: ${place.description}');
+                            },
+                          );
+                        },
+                      ),
                   ],
                 ),
               );

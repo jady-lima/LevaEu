@@ -1,51 +1,25 @@
-import 'package:dio/dio.dart';
-import 'package:uuid/uuid.dart';
-import '../model/place.dart';
-import '../model/place_details.dart';
-import 'api_client.dart';
+import 'dart:convert';
+import 'package:levaeu_mobile/model/place.dart';
+import 'package:http/http.dart' as http;
 
 class GooglePlacesService {
-  final ApiClient apiClient;
-  String? _sessionToken;
-  final Uuid _uuid = Uuid();
+  final String apiKey;
 
-  GooglePlacesService({required this.apiClient});
+  GooglePlacesService({required this.apiKey});
 
-  void createSessionToken() {
-    _sessionToken = _uuid.v4();
-  }
-
-  Future<List<Place>> fetchPlaces(String query) async {
-    if (_sessionToken == null) {
-      createSessionToken();
-    }
-    final response = await apiClient.get('/place/autocomplete/json', queryParameters: {
-      'input': query,
-      'sessiontoken': _sessionToken,
-    });
+  Future<List<Place>> fetchPlaces(String query, String sessionToken) async {
+    final url =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$query&key=$apiKey&sessiontoken=$sessionToken';
+    print('Fetching places with URL: $url');
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = response.data['predictions'];
+      final List<dynamic> data = jsonDecode(response.body)['predictions'];
+      print('Response data: ${jsonDecode(response.body)}');
       return data.map((json) => Place.fromJson(json)).toList();
     } else {
+      print('Failed to load places. Status code: ${response.statusCode}');
       throw Exception('Failed to load places');
-    }
-  }
-
-  Future<PlaceDetails> fetchPlaceDetails(String placeId) async {
-    if (_sessionToken == null) {
-      createSessionToken();
-    }
-    final response = await apiClient.get('/place/details/json', queryParameters: {
-      'place_id': placeId,
-      'sessiontoken': _sessionToken,
-    });
-
-    if (response.statusCode == 200) {
-      final json = response.data['result'];
-      return PlaceDetails.fromJson(json);
-    } else {
-      throw Exception('Failed to load place details');
     }
   }
 }
