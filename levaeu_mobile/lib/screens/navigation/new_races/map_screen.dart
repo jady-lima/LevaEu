@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:levaeu_mobile/api/google_places_service.dart';
 import 'package:levaeu_mobile/model/place.dart';
+import 'package:levaeu_mobile/model/place_details.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -13,15 +14,18 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _mapController;
   final TextEditingController _startController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
+  TextEditingController? _activeController;
+
   List<Place> _places = [];
   bool _isLoading = false;
   late GooglePlacesService googlePlacesService;
   late String sessionToken;
+  Set<Marker> _markers = {};
 
   @override
   void initState() {
     super.initState();
-    googlePlacesService = GooglePlacesService(apiKey: 'API VAI AQUI');
+    googlePlacesService = GooglePlacesService(apiKey: 'API AQUI');
     sessionToken = Uuid().v4();
   }
 
@@ -54,6 +58,37 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  void _fetchPlaceDetails(String placeId) async {
+    try {
+      final placeDetails = await googlePlacesService.fetchPlaceDetails(placeId, sessionToken);
+      print('Selected place: ${placeDetails.formattedAddress}, Postal Code: ${placeDetails.postalCode}');
+      setState(() {
+        _activeController?.text  = '${placeDetails.formattedAddress}';
+        _addMarker(placeDetails.lat, placeDetails.lng, placeDetails.formattedAddress);
+      });
+    } catch (e) {
+      print("Error fetching place details: $e");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load place details')));
+    }
+  }
+
+  void _addMarker(double lat, double lng, String address) {
+    final markerId = MarkerId(lat.toString() + lng.toString());
+    final marker = Marker(
+      markerId: markerId,
+      position: LatLng(lat, lng),
+      infoWindow: InfoWindow(
+        title: address,
+        snippet: 'Lat: $lat, Lng: $lng',
+        ),
+    );
+
+    setState(() {
+      _markers.add(marker);
+      _mapController?.animateCamera(CameraUpdate.newLatLng(LatLng(lat, lng)));
+    });
+  }
+
   void _confirmLocations() {
     print("Start: ${_startController.text}");
     print("Destination: ${_destinationController.text}");
@@ -78,9 +113,10 @@ class _MapScreenState extends State<MapScreen> {
             ),
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
+            markers: _markers,
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.3, // Altura inicial da folha
+            initialChildSize: 0.4, // Altura inicial da folha
             minChildSize: 0.1, // Altura mínima da folha
             maxChildSize: 1.0, // Altura máxima da folha
             builder: (BuildContext context, ScrollController scrollController) {
@@ -110,6 +146,7 @@ class _MapScreenState extends State<MapScreen> {
                         suffixIcon: Icon(Icons.search),
                       ),
                       onChanged: (value) {
+                        _activeController = _startController;
                         _searchPlaces(value);
                       },
                     ),
@@ -121,6 +158,7 @@ class _MapScreenState extends State<MapScreen> {
                         suffixIcon: Icon(Icons.search),
                       ),
                       onChanged: (value) {
+                        _activeController = _destinationController;
                         _searchPlaces(value);
                       },
                     ),
@@ -145,9 +183,11 @@ class _MapScreenState extends State<MapScreen> {
                           final place = _places[index];
                           return ListTile(
                             title: Text(place.description),
-                            onTap: () async {
-                              // Fetch place details and do something with them
-                              print('Selected place: ${place.description}');
+                            leading: Icon(Icons.location_on),
+                            onTap: () {
+                              print('Selected place: ${place.description}, placeId: ${place.placeId}');
+                              // Determine qual campo de texto está sendo editado
+                              _fetchPlaceDetails(place.placeId);
                             },
                           );
                         },
