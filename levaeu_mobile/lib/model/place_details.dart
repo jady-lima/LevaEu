@@ -1,10 +1,11 @@
 class PlaceDetails {
+  final String name;
   final String formattedAddress;
   final String postalCode;
   final double lat;
   final double lng;
 
-  PlaceDetails({required this.formattedAddress, required this.postalCode, required this.lat, required this.lng});
+  PlaceDetails({required this.name ,required this.formattedAddress, required this.postalCode, required this.lat, required this.lng});
 
   factory PlaceDetails.fromJson(Map<String, dynamic> json) {
     String postalCode = '';
@@ -16,6 +17,7 @@ class PlaceDetails {
       }
     });
     return PlaceDetails(
+      name: json['name'],
       formattedAddress: json['formatted_address'],
       postalCode: postalCode,
       lat: lat,

@@ -95,8 +95,50 @@ class UserData extends ChangeNotifier {
     _pass = user.pass;
     _gender = user.gender;
 
+    if (user is DriverUser) {
+      _user = DriverUser(
+        name: _name,
+        email: _email,
+        matricula: _matricula,
+        phone: _phone,
+        cep: _cep,
+        street: _street,
+        number: _number,
+        district: _district,
+        city: _city,
+        state: _state,
+        country: _country,
+        pass: _pass,
+        gender: _gender,
+        driverLicense: user.driverLicense,
+        driverCar: user.driverCar,
+      );
+   }
     notifyListeners();
   }
+
+
+  void convertToDriver(DriverLicense driverLicense, DriverCar driverCar) {
+  _user = DriverUser(
+    name: _name,
+    email: _email,
+    matricula: _matricula,
+    phone: _phone,
+    cep: _cep,
+    street: _street,
+    number: _number,
+    district: _district,
+    city: _city,
+    state: _state,
+    country: _country,
+    pass: _pass,
+    gender: _gender,
+    driverLicense: driverLicense,
+    driverCar: driverCar,
+  );
+  notifyListeners();
+}
+
 
   void updateDriverLicense(DriverLicense driverLicense) {
     if (_user is DriverUser) {

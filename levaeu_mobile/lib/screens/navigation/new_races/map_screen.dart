@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart'; 
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
 import 'package:levaeu_mobile/api/google_places_service.dart';
 import 'package:levaeu_mobile/api/directions_service.dart';
+import 'package:levaeu_mobile/model/race.dart';
 import 'package:levaeu_mobile/model/place.dart';
 import 'package:levaeu_mobile/model/place_details.dart';
-
+import 'package:levaeu_mobile/controllers/race_controller.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -18,6 +21,10 @@ class _MapScreenState extends State<MapScreen> {
   final TextEditingController _startController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
   TextEditingController? _activeController;
+  TimeOfDay? _selectedTime;
+
+  String? _startName;
+  String? _destinationName;
 
   List<Place> _places = [];
   bool _isLoading = false;
@@ -49,15 +56,12 @@ class _MapScreenState extends State<MapScreen> {
       _isLoading = true;
     });
     try {
-      print("Searching for places with query: $query");
       final places = await googlePlacesService.fetchPlaces(query, sessionToken);
-      print("Received places: $places");
       setState(() {
         _places = places;
         _isLoading = false;
       });
     } catch (e) {
-      print("Error fetching places: $e");
       setState(() {
         _isLoading = false;
       });
@@ -68,13 +72,17 @@ class _MapScreenState extends State<MapScreen> {
   void _fetchPlaceDetails(String placeId) async {
     try {
       final placeDetails = await googlePlacesService.fetchPlaceDetails(placeId, sessionToken);
-      print('Selected place: ${placeDetails.formattedAddress}, Postal Code: ${placeDetails.postalCode}');
       setState(() {
-        _activeController?.text  = '${placeDetails.formattedAddress}';
+        _activeController?.text = '${placeDetails.name}, ${placeDetails.formattedAddress}';
         _addMarker(placeDetails.lat, placeDetails.lng, placeDetails.formattedAddress);
+
+        if (_activeController == _startController) {
+          _startName = placeDetails.name;
+        } else if (_activeController == _destinationController) {
+          _destinationName = placeDetails.name;
+        }
       });
     } catch (e) {
-      print("Error fetching place details: $e");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load place details')));
     }
   }
@@ -87,7 +95,7 @@ class _MapScreenState extends State<MapScreen> {
       infoWindow: InfoWindow(
         title: address,
         snippet: 'Lat: $lat, Lng: $lng',
-        ),
+      ),
     );
 
     setState(() {
@@ -101,15 +109,30 @@ class _MapScreenState extends State<MapScreen> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selecione os pontos de partida e destino')));
       return;
     }
-    
+
     String origin = '${_markers.elementAt(0).position.latitude},${_markers.elementAt(0).position.longitude}';
     String destination = '${_markers.elementAt(1).position.latitude},${_markers.elementAt(1).position.longitude}';
-    
+
     try {
       final directions = await directionsService.fetchDirections(origin, destination, []);
       _drawPolyline(directions['routes'][0]['overview_polyline']['points']);
+
+      // Adicionar corrida ao estado
+      final user = Provider.of<UserData>(context, listen: false);
+      final raceController = Provider.of<RaceController>(context, listen: false);
+      final newRace = Race(
+        saida: _startController.text,
+        destino: _destinationController.text,
+        data: DateTime.now(),
+        horario: _selectedTime ?? TimeOfDay.now(),
+        passageiros: [],
+        motorista: user,
+        saidaName: _startName,
+        destinoName: _destinationName,
+      );
+      raceController.setActiveRace(newRace);
+      Navigator.pop(context); // Voltar para a tela anterior
     } catch (e) {
-      print("Error fetching directions: $e");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load directions')));
     }
   }
@@ -131,11 +154,23 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Placeholder'),
+        title: Text('Criar Corrida'),
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       ),
       body: Stack(
@@ -201,6 +236,22 @@ class _MapScreenState extends State<MapScreen> {
                       },
                     ),
                     SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            _selectedTime == null
+                                ? 'Selecione o horário'
+                                : 'Horário: ${_selectedTime?.format(context)}',
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.access_time),
+                          onPressed: () => _selectTime(context),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: _confirmLocations,
                       child: Text('Confirmar'),
@@ -223,8 +274,6 @@ class _MapScreenState extends State<MapScreen> {
                             title: Text(place.description),
                             leading: Icon(Icons.location_on),
                             onTap: () {
-                              print('Selected place: ${place.description}, placeId: ${place.placeId}');
-                              // Determine qual campo de texto está sendo editado
                               _fetchPlaceDetails(place.placeId);
                             },
                           );
