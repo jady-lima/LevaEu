@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:levaeu_mobile/controllers/race_controller.dart';
 import 'package:levaeu_mobile/model/driver_car.dart';
 import 'package:levaeu_mobile/model/driver_license.dart';
@@ -12,7 +12,8 @@ import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/screens/start.dart';
 import 'package:provider/provider.dart';
 
-void main()  {
+void main()  async{
+  await dotenv.load(fileName: ".env");
 
   runApp(
     MultiProvider(

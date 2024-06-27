@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:uuid/uuid.dart';
@@ -38,8 +39,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    googlePlacesService = GooglePlacesService(apiKey: 'AIzaSyAunD4b6bopXL2T2uSMe_pfE7jHLGTPvJQ');
-    directionsService = DirectionsService(apiKey: 'AIzaSyAunD4b6bopXL2T2uSMe_pfE7jHLGTPvJQ');
+    googlePlacesService = GooglePlacesService(apiKey: dotenv.env['GOOGLE_MAPS_API_KEY']!);
+    directionsService = DirectionsService(apiKey: dotenv.env['GOOGLE_MAPS_API_KEY']!);
     sessionToken = Uuid().v4();
   }
 
