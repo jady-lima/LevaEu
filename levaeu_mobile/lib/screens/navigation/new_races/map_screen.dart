@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart'; 
 import 'package:uuid/uuid.dart';
 import 'package:levaeu_mobile/api/google_places_service.dart';
+import 'package:levaeu_mobile/api/directions_service.dart';
 import 'package:levaeu_mobile/model/place.dart';
 import 'package:levaeu_mobile/model/place_details.dart';
+
 
 class MapScreen extends StatefulWidget {
   @override
@@ -19,13 +22,17 @@ class _MapScreenState extends State<MapScreen> {
   List<Place> _places = [];
   bool _isLoading = false;
   late GooglePlacesService googlePlacesService;
+  late DirectionsService directionsService;
   late String sessionToken;
   Set<Marker> _markers = {};
+  List<LatLng> _polylineCoordinates = [];
+  Polyline? _polyline;
 
   @override
   void initState() {
     super.initState();
-    googlePlacesService = GooglePlacesService(apiKey: 'API AQUI');
+    googlePlacesService = GooglePlacesService(apiKey: 'AIzaSyAunD4b6bopXL2T2uSMe_pfE7jHLGTPvJQ');
+    directionsService = DirectionsService(apiKey: 'AIzaSyAunD4b6bopXL2T2uSMe_pfE7jHLGTPvJQ');
     sessionToken = Uuid().v4();
   }
 
@@ -89,9 +96,39 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  void _confirmLocations() {
-    print("Start: ${_startController.text}");
-    print("Destination: ${_destinationController.text}");
+  void _confirmLocations() async {
+    if (_markers.length < 2) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selecione os pontos de partida e destino')));
+      return;
+    }
+    
+    String origin = '${_markers.elementAt(0).position.latitude},${_markers.elementAt(0).position.longitude}';
+    String destination = '${_markers.elementAt(1).position.latitude},${_markers.elementAt(1).position.longitude}';
+    
+    try {
+      final directions = await directionsService.fetchDirections(origin, destination, []);
+      _drawPolyline(directions['routes'][0]['overview_polyline']['points']);
+    } catch (e) {
+      print("Error fetching directions: $e");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load directions')));
+    }
+  }
+
+  void _drawPolyline(String encodedPolyline) {
+    PolylinePoints polylinePoints = PolylinePoints();
+    List<PointLatLng> result = polylinePoints.decodePolyline(encodedPolyline);
+
+    if (result.isNotEmpty) {
+      setState(() {
+        _polylineCoordinates = result.map((point) => LatLng(point.latitude, point.longitude)).toList();
+        _polyline = Polyline(
+          polylineId: PolylineId('route'),
+          points: _polylineCoordinates,
+          color: Colors.blue,
+          width: 5,
+        );
+      });
+    }
   }
 
   @override
@@ -114,6 +151,7 @@ class _MapScreenState extends State<MapScreen> {
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             markers: _markers,
+            polylines: _polyline != null ? Set<Polyline>.of([_polyline!]) : Set<Polyline>(),
           ),
           DraggableScrollableSheet(
             initialChildSize: 0.4, // Altura inicial da folha
