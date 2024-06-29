@@ -23,20 +23,11 @@ public class User {
     private String phone;
     @NotBlank
     private String pass;
-    private String cep;
-    private String street;
-    private String number;
-    private String district;
-    private String city;
-    private String state;
-    private String country;
-    private String gender;
     @NotBlank
     private String enrollment;
     @NotNull
     private TypeUser typeUser;
-    @OneToMany
-    private ArrayList<User> Friends = new ArrayList<>();
+    private String gender;
     
     // Getters and setters
 
@@ -72,60 +63,20 @@ public class User {
         this.phone = telefone;
     }
 
-    public String getCep() {
-        return cep;
+    public TypeUser getTypeUser() {
+        return typeUser;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public String getEnrollment() {
+        return enrollment;
     }
 
-    public String getStreet() {
-        return street;
+    public void setEnrollment(String enrollment) {
+        this.enrollment = enrollment;
     }
 
-    public void setStreet(String rua) {
-        this.street = rua;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String numero) {
-        this.number = numero;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String bairro) {
-        this.district = bairro;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String cidade) {
-        this.city = cidade;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String estado) {
-        this.state = estado;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String pais) {
-        this.country = pais;
+    public void setTypeUser(TypeUser typeUser) {
+        this.typeUser = typeUser;
     }
 
     public String getPass() {
@@ -142,21 +93,5 @@ public class User {
 
     public void setGender(String genero) {
         this.gender = genero;
-    }
-
-    public TypeUser getTypeUser() {
-        return typeUser;
-    }
-
-    public String getEnrollment() {
-        return enrollment;
-    }
-
-    public void setEnrollment(String enrollment) {
-        this.enrollment = enrollment;
-    }
-
-    public void setTypeUser(TypeUser typeUser) {
-        this.typeUser = typeUser;
     }
 }
