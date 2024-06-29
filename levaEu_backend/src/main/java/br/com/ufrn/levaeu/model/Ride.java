@@ -2,18 +2,19 @@ package br.com.ufrn.levaeu.model;
 
 import java.util.HashMap;
 
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
+@Entity
 public class Ride {
-	private User driver;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "id_driver", referencedColumnName = "id")
+	private Driver driver;
     private String arrivalLocal;
     private	String leavingLocal;
-    
-    @OneToMany 	
-    private HashMap< Long, String > requesters = new HashMap< Long, String>();
-    
-    @OneToMany
-    private HashMap< Long, String > confirmeds = new HashMap< Long, String >(); 
 
     public String getArrivalLocal() {
     	return this.arrivalLocal;
