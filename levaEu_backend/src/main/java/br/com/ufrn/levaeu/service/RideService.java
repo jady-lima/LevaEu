@@ -14,8 +14,7 @@ public class RideService {
 	private RideRepository rideRepository;
 	
 	public Ride validarECriar(Ride ride) {
-		rideRepository.save(ride);
-		return ride;
+		return rideRepository.save(ride);
 	}
 	
 	public void validateRide(Ride ride) throws Exception{

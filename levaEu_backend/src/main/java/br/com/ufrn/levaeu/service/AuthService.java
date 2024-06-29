@@ -28,15 +28,8 @@ public class AuthService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuário não encontrado!");
         }
 
-        Collection<GrantedAuthority> authorities;
-        if(user.getTypeUser().getName().equals("admin")){
-            authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_DRIVER"), new SimpleGrantedAuthority("ROLE_DEFAULT"));
-        } else if (user.getTypeUser().getName().equals("motorista")) {
-            authorities = List.of(new SimpleGrantedAuthority("ROLE_DRIVER"), new SimpleGrantedAuthority("ROLE_DEFAULT"));
-        } else {
-            authorities = List.of(new SimpleGrantedAuthority("ROLE_DEFAULT"));
-        }
+        Collection<GrantedAuthority> authorities = user.getAuthorities();
 
-        return new org.springframework.security.core.userdetails.User(emailOrPhone, user.getPass(), authorities);
+        return user;
     }
 }

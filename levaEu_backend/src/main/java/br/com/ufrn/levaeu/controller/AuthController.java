@@ -32,13 +32,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody AuthDTO authDTO){
-        String token = "";
         try {
-            String emailOrPhone = !authDTO.email().equals("") ? authDTO.email() : authDTO.phone();
+            String emailOrPhone = authDTO.email() != null ? authDTO.email() : authDTO.phone();
             UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(emailOrPhone, authDTO.pass());
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-            token = tokenService.generateToken((User) auth.getPrincipal());
+            String token = tokenService.generateToken((User) auth.getPrincipal());
             return token;
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -60,8 +59,7 @@ public class AuthController {
             return user;
         }
 
-        userService.createUser(user);
-        return user;
+        return userService.createUser(user);
     }
 
 //    @PostMapping("/logout")
