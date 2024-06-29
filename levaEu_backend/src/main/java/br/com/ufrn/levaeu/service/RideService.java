@@ -13,11 +13,11 @@ public class RideService {
 	@Autowired
 	private RideRepository rideRepository;
 	
-	public Ride validarECriar(Ride ride) {
+	public Ride createRide(Ride ride) {
 		return rideRepository.save(ride);
 	}
 	
-	public void validateRide(Ride ride) throws Exception{
+	public void validateRide(Ride ride) throws EmptyEntryException, DuplicatedEntryException{
 		if(ride.getArrivalLocal() == null) {
 			throw new EmptyEntryException("Adicione um local de Destino.");
 			}

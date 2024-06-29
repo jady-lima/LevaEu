@@ -1,5 +1,7 @@
 package br.com.ufrn.levaeu.controller;
 
+import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
+import br.com.ufrn.levaeu.errors.EmptyEntryException;
 import br.com.ufrn.levaeu.model.Ride;
 import br.com.ufrn.levaeu.service.DriverLicenseService;
 import br.com.ufrn.levaeu.service.RideService;
@@ -20,10 +22,10 @@ public class RideController {
 		public Ride createRide(@RequestBody Ride ride) {
 			try {
 				rideService.validateRide(ride);
-				return ride;
-			} catch (Exception e) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+				return rideService.createRide(ride);
+			} catch (DuplicatedEntryException | EmptyEntryException err) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
 			}
-		}
+        }
 
 }
