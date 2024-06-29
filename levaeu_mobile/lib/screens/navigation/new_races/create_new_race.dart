@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:levaeu_mobile/screens/navigation/new_races/map_screen.dart';
 
 class CreateNewRace extends StatefulWidget {
@@ -44,7 +43,7 @@ class _CreateNewRaceState extends State<CreateNewRace> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MapScreen(),
+        builder: (context) => const MapScreen(),
       ),
     );
 
@@ -63,7 +62,7 @@ class _CreateNewRaceState extends State<CreateNewRace> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar Nova Corrida'),
+        title: const Text('Criar Nova Corrida'),
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       ),
       body: Padding(
@@ -76,24 +75,24 @@ class _CreateNewRaceState extends State<CreateNewRace> {
               decoration: InputDecoration(
                 labelText: 'Saída',
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.location_on),
+                  icon: const Icon(Icons.location_on),
                   onPressed: () => _selectLocation('departure'),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _destinationController,
               readOnly: true,
               decoration: InputDecoration(
                 labelText: 'Destino',
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.location_on),
+                  icon: const Icon(Icons.location_on),
                   onPressed: () => _selectLocation('destination'),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -104,18 +103,18 @@ class _CreateNewRaceState extends State<CreateNewRace> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.access_time),
+                  icon: const Icon(Icons.access_time),
                   onPressed: () => _selectTime(context),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _confirmCreation,
-              child: Text('Confirmar'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
               ),
+              child: const Text('Confirmar'),
             ),
           ],
         ),

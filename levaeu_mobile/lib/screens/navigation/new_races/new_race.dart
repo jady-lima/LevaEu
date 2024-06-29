@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/model/driver_car.dart';
-import 'package:levaeu_mobile/model/driver_license.dart';
-import 'package:levaeu_mobile/model/driver_user.dart';
 import 'package:levaeu_mobile/model/race.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/controllers/race_controller.dart';
-import 'package:levaeu_mobile/screens/navigation/new_races/create_new_race.dart';
 import 'package:levaeu_mobile/screens/navigation/new_races/map_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -19,30 +15,30 @@ class NewRace extends StatefulWidget {
 class _NewRaceState extends State<NewRace> {
   @override
   void initState() {
-    super.initState();
-    _initializeUserAsDriver();
+    //super.initState();
+    //_initializeUserAsDriver();
   }
 
-  void _initializeUserAsDriver() async {
-    await Future.delayed(Duration.zero); // Aguarda a construção inicial dos widgets
-    final userData = Provider.of<UserData>(context, listen: false);
-    final driverLicense = DriverLicense(
-      registro: '123456',
-      dataEmissao: DateTime.now().toString(),
-      dataValidade: DateTime.now().add(Duration(days: 365)).toString(),
-      categoria: 'B',
-      cpf: '123.456.789-00',
-    );
-    final driverCar = DriverCar(
-      marca: 'Toyota',
-      modelo: 'Corolla',
-      cor: 'Prata',
-      placa: 'ABC-1234',
-      year: '2020',
-    );
+  // void _initializeUserAsDriver() async {
+  //   await Future.delayed(Duration.zero); // Aguarda a construção inicial dos widgets
+  //   final userData = Provider.of<UserData>(context, listen: false);
+  //   final driverLicense = DriverLicense(
+  //     registro: '123456',
+  //     dataEmissao: DateTime.now().toString(),
+  //     dataValidade: DateTime.now().add(Duration(days: 365)).toString(),
+  //     categoria: 'B',
+  //     cpf: '123.456.789-00',
+  //   );
+  //   final driverCar = DriverCar(
+  //     marca: 'Toyota',
+  //     modelo: 'Corolla',
+  //     cor: 'Prata',
+  //     placa: 'ABC-1234',
+  //     year: '2020',
+  //   );
 
-    userData.convertToDriver(driverLicense, driverCar);
-  }
+  //   userData.convertToDriver(driverLicense, driverCar);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +149,7 @@ class _NewRaceState extends State<NewRace> {
                 child: FloatingActionButton(
                   backgroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MapScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MapScreen()));
                   },
                   child: const Icon(
                     Icons.add,
@@ -171,7 +167,7 @@ class _NewRaceState extends State<NewRace> {
 class RaceCard extends StatelessWidget {
   final Race race;
 
-  const RaceCard({Key? key, required this.race}) : super(key: key);
+  const RaceCard({super.key, required this.race});
 
   @override
   Widget build(BuildContext context) {

@@ -265,4 +265,23 @@ class UserData extends ChangeNotifier {
     _user = userData ?? _user;
     notifyListeners();
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "name": _name,
+      "email": _email,
+      "phone": _phone,
+      "pass": _pass,
+      "cep": _cep,
+      "street": _street,
+      "number": _number,
+      "district": _district,
+      "city": _city,
+      "state": _state,
+      "country": _country,
+      "gender": _gender,
+      "enrollment": _matricula,
+      "typeUser": (_user is DriverUser) ? "DRIVER" : "DEFAULT",
+    };
+  }
 }

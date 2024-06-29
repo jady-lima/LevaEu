@@ -1,23 +1,44 @@
+// api_client.dart
 import 'package:dio/dio.dart';
 
 class ApiClient {
-  final Dio dio;
+  final Dio _dio = Dio();
 
-  ApiClient({required String baseUrl, required String apiKey})
-      : dio = Dio(BaseOptions(
-          baseUrl: baseUrl,
-          queryParameters: {
-            'key': apiKey,
-          },
-        ));
+  final String baseUrl = 'http://192.168.1.10:8080';
 
-  Future<Response> get(String endpoint, {Map<String, dynamic>? queryParameters}) async {
-    final response = await dio.get(endpoint, queryParameters: queryParameters);
-    return response;
+  Future<Response> register(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('$baseUrl/auth/register', data: data);
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao cadastrar usuário');
+    }
   }
 
-  Future<Response> post(String endpoint, Map<String, dynamic> data) async {
-    final response = await dio.post(endpoint, data: data);
-    return response;
+  Future<Response> registerCNH(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('$baseUrl/api/cnhs', data: data);
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao cadastrar CNH');
+    }
+  }
+
+  Future<Response> registerVehicle(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('$baseUrl/api/veiculos', data: data);
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao cadastrar veículo');
+    }
+  }
+
+  Future<Response> registerComplete(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('$baseUrl/api/veiculo', data: data);
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao cadastrar completo');
+    }
   }
 }

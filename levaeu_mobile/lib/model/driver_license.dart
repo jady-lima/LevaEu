@@ -66,4 +66,14 @@ class DriverLicense extends ChangeNotifier{
     _cpf = newcpf;
     notifyListeners();
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "registrationNumber": registro,
+      "cpf": cpf,
+      "issuanceDate": dataEmissao,
+      "expirationDate": dataValidade,
+      "category": categoria
+    };
+  }
 }

@@ -13,7 +13,7 @@ import 'package:levaeu_mobile/screens/start.dart';
 import 'package:provider/provider.dart';
 
 void main()  async{
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName:"lib/.env");
 
   runApp(
     MultiProvider(
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => const Start(),
         '/home': (context) => const HomeState(),

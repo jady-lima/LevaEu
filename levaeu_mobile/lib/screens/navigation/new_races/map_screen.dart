@@ -8,11 +8,12 @@ import 'package:levaeu_mobile/api/google_places_service.dart';
 import 'package:levaeu_mobile/api/directions_service.dart';
 import 'package:levaeu_mobile/model/race.dart';
 import 'package:levaeu_mobile/model/place.dart';
-import 'package:levaeu_mobile/model/place_details.dart';
 import 'package:levaeu_mobile/controllers/race_controller.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
@@ -32,7 +33,7 @@ class _MapScreenState extends State<MapScreen> {
   late GooglePlacesService googlePlacesService;
   late DirectionsService directionsService;
   late String sessionToken;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   List<LatLng> _polylineCoordinates = [];
   Polyline? _polyline;
 
@@ -41,7 +42,7 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     googlePlacesService = GooglePlacesService(apiKey: dotenv.env['GOOGLE_MAPS_API_KEY']!);
     directionsService = DirectionsService(apiKey: dotenv.env['GOOGLE_MAPS_API_KEY']!);
-    sessionToken = Uuid().v4();
+    sessionToken = const Uuid().v4();
   }
 
   @override
@@ -66,7 +67,7 @@ class _MapScreenState extends State<MapScreen> {
       setState(() {
         _isLoading = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load places')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load places')));
     }
   }
 
@@ -84,7 +85,7 @@ class _MapScreenState extends State<MapScreen> {
         }
       });
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load place details')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load place details')));
     }
   }
 
@@ -107,7 +108,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void _confirmLocations() async {
     if (_markers.length < 2) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Selecione os pontos de partida e destino')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Selecione os pontos de partida e destino')));
       return;
     }
 
@@ -134,7 +135,7 @@ class _MapScreenState extends State<MapScreen> {
       raceController.setActiveRace(newRace);
       Navigator.pop(context); // Voltar para a tela anterior
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to load directions')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load directions')));
     }
   }
 
@@ -146,7 +147,7 @@ class _MapScreenState extends State<MapScreen> {
       setState(() {
         _polylineCoordinates = result.map((point) => LatLng(point.latitude, point.longitude)).toList();
         _polyline = Polyline(
-          polylineId: PolylineId('route'),
+          polylineId: const PolylineId('route'),
           points: _polylineCoordinates,
           color: Colors.blue,
           width: 5,
@@ -171,7 +172,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar Corrida'),
+        title: const Text('Criar Corrida'),
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       ),
       body: Stack(
@@ -180,14 +181,14 @@ class _MapScreenState extends State<MapScreen> {
             onMapCreated: (controller) {
               _mapController = controller;
             },
-            initialCameraPosition: CameraPosition(
+            initialCameraPosition: const CameraPosition(
               target: LatLng(-5.7945, -35.211), // Exemplo: Centralizado em Natal, RN, Brasil
               zoom: 13.0,
             ),
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             markers: _markers,
-            polylines: _polyline != null ? Set<Polyline>.of([_polyline!]) : Set<Polyline>(),
+            polylines: _polyline != null ? <Polyline>{_polyline!} : <Polyline>{},
           ),
           DraggableScrollableSheet(
             initialChildSize: 0.4, // Altura inicial da folha
@@ -195,8 +196,8 @@ class _MapScreenState extends State<MapScreen> {
             maxChildSize: 1.0, // Altura máxima da folha
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(16.0),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16.0),
@@ -215,7 +216,7 @@ class _MapScreenState extends State<MapScreen> {
                   children: [
                     TextField(
                       controller: _startController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'De:',
                         suffixIcon: Icon(Icons.search),
                       ),
@@ -224,10 +225,10 @@ class _MapScreenState extends State<MapScreen> {
                         _searchPlaces(value);
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextField(
                       controller: _destinationController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Para:',
                         suffixIcon: Icon(Icons.search),
                       ),
@@ -236,7 +237,7 @@ class _MapScreenState extends State<MapScreen> {
                         _searchPlaces(value);
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(
@@ -247,33 +248,33 @@ class _MapScreenState extends State<MapScreen> {
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.access_time),
+                          icon: const Icon(Icons.access_time),
                           onPressed: () => _selectTime(context),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: _confirmLocations,
-                      child: Text('Confirmar'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                       ),
+                      child: const Text('Confirmar'),
                     ),
                     if (_isLoading)
-                      Center(
+                      const Center(
                         child: CircularProgressIndicator(),
                       )
                     else
                       ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: _places.length,
                         itemBuilder: (context, index) {
                           final place = _places[index];
                           return ListTile(
                             title: Text(place.description),
-                            leading: Icon(Icons.location_on),
+                            leading: const Icon(Icons.location_on),
                             onTap: () {
                               _fetchPlaceDetails(place.placeId);
                             },

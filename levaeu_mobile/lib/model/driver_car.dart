@@ -66,4 +66,14 @@ class DriverCar extends ChangeNotifier{
     _placa = newPlaca;
     notifyListeners();
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "brand": marca,
+      "model": modelo,
+      "year": year,
+      "plate": placa,
+      "color": cor,
+    };
+  }
 }
