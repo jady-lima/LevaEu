@@ -58,8 +58,7 @@ class _RegistrationCarState extends State<RegistrationCar> {
       "driverLicense": 
         driverLicense.toMap(),
       "car": 
-      driverCar.toMap()
-      
+        driverCar.toMap()
     };
 
     setState(() {

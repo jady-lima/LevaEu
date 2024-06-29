@@ -29,16 +29,16 @@ class ApiClient {
       final response = await _dio.post('$baseUrl/api/veiculos', data: data);
       return response;
     } catch (e) {
-      throw Exception('Erro ao cadastrar veículo');
+      throw Exception('Erro ao cadastrar veículo: ${e.toString()}');
     }
   }
 
   Future<Response> registerComplete(Map<String, dynamic> data) async {
     try {
-      final response = await _dio.post('$baseUrl/api/veiculo', data: data);
+      final response = await _dio.post('$baseUrl/api/veiculos', data: data);
       return response;
     } catch (e) {
-      throw Exception('Erro ao cadastrar completo');
+      throw Exception('Erro ao cadastrar completo: ${e.toString()}');
     }
   }
 }
