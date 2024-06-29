@@ -13,6 +13,7 @@ import br.com.ufrn.levaeu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,8 +33,12 @@ public class CarController {
     @PostMapping
     public Car createCar(@RequestBody DriverDTO driverDTO) {
         Driver driver = driverDTO.driver();
+        String encryptedPassword = new BCryptPasswordEncoder().encode(driver.getPass());
+        driver.setPass(encryptedPassword);
+
         DriverLicense driverLicense = driverDTO.driverLicense();
         Car car = driverDTO.car();
+
         try {
             carService.validateCar(car);
             Car newCar = carService.save(car);

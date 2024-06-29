@@ -1,5 +1,6 @@
 package br.com.ufrn.levaeu.service;
 
+import br.com.ufrn.levaeu.errors.InvalidEntryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
@@ -17,7 +18,7 @@ public class RideService {
 		return rideRepository.save(ride);
 	}
 	
-	public void validateRide(Ride ride) throws EmptyEntryException, DuplicatedEntryException{
+	public void validateRide(Ride ride) throws EmptyEntryException, InvalidEntryException{
 		if(ride.getArrivalLocal() == null) {
 			throw new EmptyEntryException("Adicione um local de Destino.");
 			}
@@ -28,7 +29,7 @@ public class RideService {
 			throw new EmptyEntryException( "Defina um horario de partida");
 			}
 		if(ride.getArrivalLocal().equalsIgnoreCase(ride.getLeavingLocal())){
-			throw new DuplicatedEntryException("o local de chegada deve ser diferente do local de partida.");
+			throw new InvalidEntryException("o local de chegada deve ser diferente do local de partida.");
 			}
 		}
 }

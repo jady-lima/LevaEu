@@ -51,7 +51,8 @@ public class Ride {
     public String getLeavingLocal() {
     	return this.leavingLocal;
     }
+
     public void setLeavingLocal(String leavingLocal) {
-    	this.leavingLocal = arrivalLocal;
+    	this.leavingLocal = leavingLocal;
     }
 }

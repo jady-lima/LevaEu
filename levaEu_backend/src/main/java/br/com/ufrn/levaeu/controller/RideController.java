@@ -1,9 +1,14 @@
 package br.com.ufrn.levaeu.controller;
 
+import br.com.ufrn.levaeu.DTO.RideDTO;
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.errors.EmptyEntryException;
+import br.com.ufrn.levaeu.errors.InvalidEntryException;
+import br.com.ufrn.levaeu.errors.NotFoundException;
+import br.com.ufrn.levaeu.model.Driver;
 import br.com.ufrn.levaeu.model.Ride;
 import br.com.ufrn.levaeu.service.DriverLicenseService;
+import br.com.ufrn.levaeu.service.DriverService;
 import br.com.ufrn.levaeu.service.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +20,23 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/rides")
 public class RideController {
 		
-		@Autowired
-	    private RideService rideService;
-		
-		@PostMapping 
-		public Ride createRide(@RequestBody Ride ride) {
+	@Autowired
+	private RideService rideService;
+    @Autowired
+    private DriverService driverService;
+
+	@PostMapping
+		public Ride createRide(@RequestBody RideDTO rideDTO) {
 			try {
-				rideService.validateRide(ride);
-				return rideService.createRide(ride);
-			} catch (DuplicatedEntryException | EmptyEntryException err) {
+				rideService.validateRide(rideDTO.ride());
+				Driver driver = driverService.findById(rideDTO.idDriver());
+				rideDTO.ride().setDriver(driver);
+				return rideService.createRide(rideDTO.ride());
+			} catch (InvalidEntryException | EmptyEntryException err) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
-			}
-        }
+			} catch (NotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            }
+    }
 
 }
