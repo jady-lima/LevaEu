@@ -1,6 +1,7 @@
 package br.com.ufrn.levaeu.service;
 
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
+import br.com.ufrn.levaeu.errors.InvalidEntryException;
 import br.com.ufrn.levaeu.model.DriverLicense;
 import br.com.ufrn.levaeu.repository.DriverLicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class DriverLicenseService {
         return driverLicenseRepository.save(driverLicense);
     }
 
-    public void validateDriverLicense(DriverLicense driverLicense) throws Exception {
+    public void validateDriverLicense(DriverLicense driverLicense) throws DuplicatedEntryException, InvalidEntryException {
         if(driverLicenseRepository.findBycpf(driverLicense.getCPF()).isPresent()){
             throw new DuplicatedEntryException("Já existe uma CNH cadastrada com esse CPF");
         }
@@ -32,7 +33,7 @@ public class DriverLicenseService {
             throw new DuplicatedEntryException("Essa CNH já está vinculada a outro usuário");
         }
         if(driverLicense.getExpirationDate().isBefore(LocalDate.now())){
-            throw new Exception("A CNH está vencida");
+            throw new InvalidEntryException("A CNH está vencida");
         }
     }
 
