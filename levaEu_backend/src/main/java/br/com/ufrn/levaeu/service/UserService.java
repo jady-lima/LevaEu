@@ -42,4 +42,8 @@ public class UserService {
             throw new DuplicatedEntryException("Já existe um usuário cadastrado com essa matrícula");
         }
     }
+
+    public User findByEmailOrPhone(String emailOrPhone) {
+        return userRepository.findByPhoneOrEmail(emailOrPhone, emailOrPhone);
+    }
 }

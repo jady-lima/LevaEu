@@ -8,6 +8,8 @@ import br.com.ufrn.levaeu.errors.EmptyEntryException;
 import br.com.ufrn.levaeu.model.Ride;
 import br.com.ufrn.levaeu.repository.RideRepository;
 
+import java.util.List;
+
 @Service
 public class RideService {
 	
@@ -32,4 +34,8 @@ public class RideService {
 			throw new InvalidEntryException("o local de chegada deve ser diferente do local de partida.");
 			}
 		}
+
+	public List<Ride> findAllRides() {
+		return rideRepository.findAll();
+	}
 }

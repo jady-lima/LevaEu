@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/rides")
 public class RideController {
@@ -26,17 +28,22 @@ public class RideController {
     private DriverService driverService;
 
 	@PostMapping
-		public Ride createRide(@RequestBody RideDTO rideDTO) {
-			try {
-				rideService.validateRide(rideDTO.ride());
-				Driver driver = driverService.findById(rideDTO.idDriver());
-				rideDTO.ride().setDriver(driver);
-				return rideService.createRide(rideDTO.ride());
-			} catch (InvalidEntryException | EmptyEntryException err) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
-			} catch (NotFoundException e) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-            }
+	public Ride createRide(@RequestBody RideDTO rideDTO) {
+		try {
+			rideService.validateRide(rideDTO.ride());
+			Driver driver = driverService.findById(rideDTO.idDriver());
+			rideDTO.ride().setDriver(driver);
+			return rideService.createRide(rideDTO.ride());
+		} catch (InvalidEntryException | EmptyEntryException err) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
+		} catch (NotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
     }
+
+	@GetMapping
+	public List<Ride> findAllRides(){
+		return rideService.findAllRides();
+	}
 
 }
