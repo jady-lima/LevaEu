@@ -1,8 +1,9 @@
 package br.com.ufrn.levaeu.model;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,10 +14,19 @@ public class Ride {
 
     @ManyToOne
     @JoinColumn(name = "id_driver", referencedColumnName = "id")
-	private Driver driver;
-    private String arrivalLocal;
-    private	String leavingLocal;
-    private LocalDateTime leavingTime;
+	@JsonIgnore
+    private Driver driver;
+
+    @OneToOne
+    @JoinColumn(name = "id_departure_location", referencedColumnName = "id")
+    private Location departureLocation;
+
+    @OneToOne
+    @JoinColumn(name = "id_destination_location", referencedColumnName = "id")
+    private	Location destinationLocation;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime departureTime;
 
     public Long getId() {
         return id;
@@ -34,25 +44,25 @@ public class Ride {
         this.driver = driver;
     }
 
-    public LocalDateTime getLeavingTime() {
-        return leavingTime;
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
     }
 
-    public void setLeavingTime(LocalDateTime leavingTime) {
-        this.leavingTime = leavingTime;
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
     }
 
-    public String getArrivalLocal() {
-    	return this.arrivalLocal;
+    public Location getDepartureLocation() {
+    	return this.departureLocation;
     }
-    public void setArrivalLocal(String arrivalLocal) {
-    	this.arrivalLocal = arrivalLocal;
+    public void setDepartureLocation(Location departureLocation) {
+    	this.departureLocation = departureLocation;
     }
-    public String getLeavingLocal() {
-    	return this.leavingLocal;
+    public Location getDestinationLocation() {
+    	return this.destinationLocation;
     }
 
-    public void setLeavingLocal(String leavingLocal) {
-    	this.leavingLocal = leavingLocal;
+    public void setDestinationLocation(Location destinationLocation) {
+    	this.destinationLocation = destinationLocation;
     }
 }

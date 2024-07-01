@@ -1,6 +1,9 @@
 package br.com.ufrn.levaeu.controller;
 
+import br.com.ufrn.levaeu.DTO.DriverDTO;
+import br.com.ufrn.levaeu.DTO.DriverResponseDTO;
 import br.com.ufrn.levaeu.DTO.RideDTO;
+import br.com.ufrn.levaeu.DTO.RideResponseDTO;
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.errors.EmptyEntryException;
 import br.com.ufrn.levaeu.errors.InvalidEntryException;
@@ -31,12 +34,14 @@ public class RideController {
     private UserService userService;
 
 	@PostMapping
-	public Ride createRide(@RequestBody RideDTO rideDTO) {
+	public RideResponseDTO createRide(@RequestBody RideDTO rideDTO) {
 		try {
 			rideService.validateRide(rideDTO.ride());
 			Driver driver = driverService.findById(rideDTO.idDriver());
 			rideDTO.ride().setDriver(driver);
-			return rideService.createRide(rideDTO.ride());
+			Ride ride = rideService.createRide(rideDTO.ride());
+			DriverResponseDTO driverDTO = new DriverResponseDTO(driver, driver.getDriverLicense(), driver.getCar());
+			return new RideResponseDTO(driverDTO, ride);
 		} catch (InvalidEntryException | EmptyEntryException err) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
 		} catch (NotFoundException e) {

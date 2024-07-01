@@ -40,6 +40,24 @@ public class UserDTO {
         this.typeUser = user.getTypeUser();
     }
 
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.pass = user.getPass();
+        this.enrollment = user.getEnrollment();
+        this.gender = user.getGender();
+        this.cep = user.getCep();
+        this.street = user.getStreet();
+        this.number = user.getNumber();
+        this.district = user.getDistrict();
+        this.city = user.getCity();
+        this.state = user.getState();
+        this.country = user.getCountry();
+        this.typeUser = user.getTypeUser();
+    }
+
     public Long getId() {
         return id;
     }

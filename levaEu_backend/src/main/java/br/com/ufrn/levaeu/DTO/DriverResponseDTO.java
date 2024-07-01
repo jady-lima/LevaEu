@@ -15,6 +15,12 @@ public class DriverResponseDTO extends UserDTO{
         this.car = car;
     }
 
+    public DriverResponseDTO(User user, DriverLicense driverLicense, Car car) {
+        super(user);
+        this.driverLicense = driverLicense;
+        this.car = car;
+    }
+
     public DriverLicense getDriverLicense() {
         return driverLicense;
     }
