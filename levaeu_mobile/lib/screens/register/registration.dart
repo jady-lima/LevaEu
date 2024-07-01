@@ -191,6 +191,7 @@ class _RegistrationState extends State<Registration> {
           );
 
           user.updateIdUser(responseData['id'].toString());
+          user.updateToken(responseData['token']);
           Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeState()));
         }
       } else {

@@ -71,8 +71,8 @@ class _RegistrationCarState extends State<RegistrationCar> {
       print('User and vehicle registered successfully: ${response.data}');
       if (response.statusCode == 200) {
 
-        //userData.updateIdUser(newIdUser)
-
+        userData.updateIdUser(response.data['id'].toString());
+        userData.updateToken(response.data['token']);
 
         Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeState()));
       } else {
