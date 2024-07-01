@@ -43,7 +43,17 @@ public class RideController {
 		}
     }
 
-	@GetMapping("/{idUser}")
+	@GetMapping("/{idRide}")
+	public RideResponseDTO getRide(@PathVariable Long idRide){
+        try {
+            Ride ride = rideService.findById(idRide);
+			return new RideResponseDTO(ride);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+	@GetMapping("/list/{idUser}")
 	public List<RideResponseDTO> findAllRides(@PathVariable Long idUser){
         try {
             User user = userService.findById(idUser);
