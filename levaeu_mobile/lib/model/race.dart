@@ -13,7 +13,7 @@ class Race extends ChangeNotifier {
   static const String columnSaidaName = "columnSaidaName";
   static const String columnDestinoName = "columnDestinoName";
 
-  String _idRace = '';
+  late String _idRace ;
   String _saida = '';
   String _destino = '';
   String _saidaName = '';

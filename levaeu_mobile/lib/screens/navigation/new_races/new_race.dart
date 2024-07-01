@@ -21,42 +21,37 @@ class _NewRaceState extends State<NewRace> {
     _fetchOpenRaces();
   }
 
-  Future<void> _fetchOpenRaces() async {
-    final user = Provider.of<UserData>(context, listen: false);
-    final raceController = Provider.of<RaceController>(context, listen: false);
+Future<void> _fetchOpenRaces() async {
+  final user = Provider.of<UserData>(context, listen: false);
+  final raceController = Provider.of<RaceController>(context, listen: false);
 
+  try {
+    await raceController.fetchOpenRaces(user.token);
+
+    // Verificar se há uma corrida ativa do usuário
+    Race? activeRace;
     try {
-      await raceController.fetchOpenRaces(user.token);
-
-      // Verificar se há uma corrida ativa do usuário
-      final activeRace = raceController.openRaces.firstWhere(
-        (race) => race.motoristaID == user.idUser,
-        orElse: () => Race( // Valores padrão
-          idRace: null,
-          saida: '',
-          destino: '',
-          data: DateTime.now(),
-          horario: TimeOfDay.now(),
-          passageiros: [],
-          motorista: user,
-          saidaName: '',
-          destinoName: '',
-        ),
+      activeRace = raceController.openRaces.firstWhere(
+        (race) => race.motorista.idUser == user.idUser,
       );
-
-      if (activeRace.idRace != null) {
-        raceController.setActiveRace(activeRace);
-      } else {
-        raceController.clearActiveRace();
-      }
     } catch (e) {
-      print('Erro ao buscar corridas abertas: $e');
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      activeRace = null;
     }
+
+    if (activeRace != null) {
+      raceController.setActiveRace(activeRace);
+    } else {
+      raceController.clearActiveRace();
+    }
+  } catch (e) {
+    print('Erro ao buscar corridas abertas: $e');
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

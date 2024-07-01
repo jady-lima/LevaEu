@@ -35,9 +35,12 @@ class RaceController extends ChangeNotifier {
 
   Future<void> fetchOpenRaces(String token) async {
     try {
-      final races = await ApiClient().fetchOpenRaces(token);
-      _openRaces = races;
-      notifyListeners();
+      final response = await ApiClient().fetchOpenRaces(token);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data as List<dynamic>;
+        final List<Race> fetchedRaces = data.map((json) => Race.fromJson(json)).toList();
+        setOpenRaces(fetchedRaces);
+      }
     } catch (e) {
       print('Failed to fetch open races: $e');
     }

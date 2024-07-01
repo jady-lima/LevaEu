@@ -69,19 +69,15 @@ class ApiClient {
     }
   }
 
-  Future<List<Race>> fetchOpenRaces(String token) async {
+  Future<Response> fetchOpenRaces(String token) async {
     try {
       final response = await _dio.get(
         '$baseUrl/api/rides/open',
         options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
+          headers: {'Authorization': 'Bearer $token'},
         ),
       );
-
-      List<dynamic> data = response.data;
-      return data.map((json) => Race.fromJson(json)).toList();
+      return response;
     } catch (e) {
       throw Exception('Erro ao buscar corridas abertas');
     }
