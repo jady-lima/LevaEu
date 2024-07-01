@@ -12,7 +12,7 @@ class ApiClient {
       final response = await _dio.post('$baseUrl/auth/register', data: data);
       return response;
     } catch (e) {
-      throw Exception('Erro ao cadastrar usuário');
+      throw Exception('Erro ao cadastrar usuário ${e.toString()}');
     }
   }
 
