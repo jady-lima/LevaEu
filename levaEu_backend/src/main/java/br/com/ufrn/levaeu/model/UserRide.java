@@ -2,8 +2,6 @@ package br.com.ufrn.levaeu.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 public class UserRide {
     @Id
@@ -16,7 +14,7 @@ public class UserRide {
 
     private Boolean isConfirmed;
 
-    private Boolean isDeparture;
+    private Boolean isPickup;
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id")
@@ -30,7 +28,7 @@ public class UserRide {
         this.ride = ride;
         this.user = user;
         this.stopPoint = location;
-        this.isDeparture = departure;
+        this.isPickup = departure;
         this.isConfirmed = false;
     }
 
@@ -63,11 +61,11 @@ public class UserRide {
     }
 
     public Boolean getDeparture() {
-        return isDeparture;
+        return isPickup;
     }
 
     public void setDeparture(Boolean departure) {
-        isDeparture = departure;
+        isPickup = departure;
     }
 
     public User getRequester() {
