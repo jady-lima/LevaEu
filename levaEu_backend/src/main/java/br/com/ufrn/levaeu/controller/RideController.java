@@ -26,10 +26,6 @@ public class RideController {
     private DriverService driverService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRideService userRideService;
-    @Autowired
-    private LocationService locationService;
 
 	@PostMapping
 	public RideResponseDTO createRide(@RequestBody RideDTO rideDTO) {
@@ -64,24 +60,6 @@ public class RideController {
         } catch (NotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
-	}
-
-	@PostMapping("/request")
-	public String addUserToRide(@RequestBody RequestRideDTO requestRideDTO) {
-        try {
-			Ride ride = rideService.findById(requestRideDTO.idRide());
-			User user = userService.findById(requestRideDTO.idUser());
-
-			Location stopPoint = locationService.create(requestRideDTO.stopPoint());
-
-			UserRide userRide = new UserRide(ride, user, stopPoint, requestRideDTO.isDeparture());
-
-			userRideService.addUserToRide(userRide);
-
-			return "Deu certo";
-		} catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
 	}
 
 	@GetMapping("/driver/{idDriver}")
