@@ -64,7 +64,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user){
+    public UserDTO register(@RequestBody User user){
+        String password = user.getPass();
         String encryptedPassword = new BCryptPasswordEncoder().encode(user.getPass());
         user.setPass(encryptedPassword);
 
@@ -75,10 +76,20 @@ public class AuthController {
         }
 
         if(user.getTypeUser().getName().equalsIgnoreCase("driver")) {
-            return user;
+            return new UserDTO(user, "");
         }
 
-        return userService.createUser(user);
+        userService.createUser(user);
+
+        String emailOrPhone = user.getEmail() != null ? user.getEmail() : user.getPhone();
+
+        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(emailOrPhone, password);
+        Authentication auth = authenticationManager.authenticate(usernamePassword);
+
+        String token = tokenService.generateToken((User) auth.getPrincipal());
+
+        UserDTO userDTO = new UserDTO(user, token);
+        return userDTO;
     }
 
 //    @PostMapping("/logout")

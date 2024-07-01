@@ -10,6 +10,7 @@ import br.com.ufrn.levaeu.model.Ride;
 import br.com.ufrn.levaeu.service.DriverLicenseService;
 import br.com.ufrn.levaeu.service.DriverService;
 import br.com.ufrn.levaeu.service.RideService;
+import br.com.ufrn.levaeu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,8 @@ public class RideController {
 	private RideService rideService;
     @Autowired
     private DriverService driverService;
+    @Autowired
+    private UserService userService;
 
 	@PostMapping
 	public Ride createRide(@RequestBody RideDTO rideDTO) {
@@ -41,9 +44,14 @@ public class RideController {
 		}
     }
 
-	@GetMapping
-	public List<Ride> findAllRides(){
-		return rideService.findAllRides();
+	@GetMapping("/{idUser}")
+	public List<Ride> findAllRides(@PathVariable Long idUser){
+        try {
+            userService.findById(idUser);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        return rideService.findAllRides();
 	}
 
 }
