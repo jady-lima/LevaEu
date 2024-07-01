@@ -12,6 +12,10 @@ public class RideResponseDTO {
         this.ride = ride;
     }
 
+    public RideResponseDTO(Ride ride) {
+        this.ride = ride;
+    }
+
     public DriverResponseDTO getDriver() {
         return driver;
     }

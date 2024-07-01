@@ -41,7 +41,7 @@ public class RideController {
 			rideDTO.ride().setDriver(driver);
 			Ride ride = rideService.createRide(rideDTO.ride());
 			DriverResponseDTO driverDTO = new DriverResponseDTO(driver, driver.getDriverLicense(), driver.getCar());
-			return new RideResponseDTO(driverDTO, ride);
+			return new RideResponseDTO(ride);
 		} catch (InvalidEntryException | EmptyEntryException err) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
 		} catch (NotFoundException e) {
