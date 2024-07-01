@@ -113,11 +113,11 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
 
       if (response.statusCode == 200) {
         driverLicense.updateAll(
-          newregistro: registroController.text, 
-          newdataEmissao: dataEmissaoController.text, 
-          newdataValidade: dataValidadeController.text, 
-          newcategoria: categoriaController.text, 
-          newcpf: cpfController.text,
+          newRegistro: registroController.text, 
+          newDataEmissao: dataEmissaoController.text, 
+          newDataValidade: dataValidadeController.text, 
+          newCategoria: categoriaController.text, 
+          newCpf: cpfController.text,
         );
         userData.updateDriverLicense(driverLicense);
         Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationCar()));

@@ -111,6 +111,10 @@ class _MapScreenState extends State<MapScreen> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Selecione os pontos de partida e destino')));
       return;
     }
+    if(_selectedTime == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Selecione o horário da corrida')));
+      return;
+    }
 
     String origin = '${_markers.elementAt(0).position.latitude},${_markers.elementAt(0).position.longitude}';
     String destination = '${_markers.elementAt(1).position.latitude},${_markers.elementAt(1).position.longitude}';
@@ -122,17 +126,30 @@ class _MapScreenState extends State<MapScreen> {
       // Adicionar corrida ao estado
       final user = Provider.of<UserData>(context, listen: false);
       final raceController = Provider.of<RaceController>(context, listen: false);
+
+      DateTime now = DateTime.now();
+      DateTime combinedDate = DateTime(now.year, now.month, now.day, _selectedTime!.hour, _selectedTime!.minute);
+
       final newRace = Race(
+        motoristaID: user.idUser,
         saida: _startController.text,
         destino: _destinationController.text,
-        data: DateTime.now(),
-        horario: _selectedTime ?? TimeOfDay.now(),
+        data: combinedDate,
+        horario: _selectedTime,
         passageiros: [],
         motorista: user,
+        motoristaName: user.name,
         saidaName: _startName,
         destinoName: _destinationName,
+        saidaLat: _markers.elementAt(0).position.latitude,
+        saidaLng: _markers.elementAt(0).position.longitude,
+        destinoLat: _markers.elementAt(1).position.latitude,
+        destinoLng: _markers.elementAt(1).position.longitude,
       );
-      raceController.setActiveRace(newRace);
+
+      await raceController.createRace(newRace, user.token);
+
+      print('JSON a ser enviado ao backend: ${newRace.toJson()}');
       Navigator.pop(context); // Voltar para a tela anterior
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load directions')));

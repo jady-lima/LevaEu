@@ -190,6 +190,7 @@ class _RegistrationState extends State<Registration> {
             newGender: responseData['gender'],
           );
 
+          user.updateIdUser(responseData['id'].toString());
           Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeState()));
         }
       } else {

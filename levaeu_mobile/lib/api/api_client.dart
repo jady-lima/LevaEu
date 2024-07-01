@@ -1,5 +1,6 @@
 // api_client.dart
 import 'package:dio/dio.dart';
+import 'package:levaeu_mobile/model/race.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
@@ -39,6 +40,50 @@ class ApiClient {
       return response;
     } catch (e) {
       throw Exception('Erro ao cadastrar completo: ${e.toString()}');
+    }
+  }
+
+  Future<Response> login(Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.post('$baseUrl/auth/login', data: data);
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao fazer login');
+    }
+  }
+
+  Future<Response> createRace(Map<String, dynamic> data, String token) async {
+    try {
+      final response = await _dio.post(
+        '$baseUrl/api/rides',
+         data: data,
+         options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          )
+         );
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao criar corrida');
+    }
+  }
+
+  Future<List<Race>> fetchOpenRaces(String token) async {
+    try {
+      final response = await _dio.get(
+        '$baseUrl/api/rides/open',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      List<dynamic> data = response.data;
+      return data.map((json) => Race.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Erro ao buscar corridas abertas');
     }
   }
 }

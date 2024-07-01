@@ -127,7 +127,7 @@ class _HomeContentState extends State<HomeContent> {
               color: Colors.white,
               child: SizedBox(
                 width: 350,
-                height: 150,
+                
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -154,6 +154,18 @@ class _HomeContentState extends State<HomeContent> {
                       ),
                       onTap: () {
                         widget.onItemTapped(1);
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.car_crash_rounded),
+                      title: const Text('Botao teste'),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
+                      onTap: () {
+                        print(userData.idUser);
+                        print(userData.token);
                       },
                     ),
                   ],

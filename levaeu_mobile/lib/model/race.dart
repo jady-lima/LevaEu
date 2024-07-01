@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
+import 'package:intl/intl.dart';
 
 class Race extends ChangeNotifier {
   static const String columnId = "columnId";
@@ -12,18 +13,24 @@ class Race extends ChangeNotifier {
   static const String columnSaidaName = "columnSaidaName";
   static const String columnDestinoName = "columnDestinoName";
 
-  int _idRace = 0;
+  String _idRace = '';
   String _saida = '';
   String _destino = '';
   String _saidaName = '';
   String _destinoName = '';
-  DateTime _data = DateTime.now();
+  DateTime _dataHora = DateTime.now();
   TimeOfDay _horario = TimeOfDay.now();
   List<UserData> _passageiros = [];
   UserData _motorista = UserData();
+  String _motoristaID = '';
+  String _motoristaName = '';
+  double _saidaLat = 0.0;
+  double _saidaLng = 0.0;
+  double _destinoLat = 0.0;
+  double _destinoLng = 0.0;
 
   Race({
-    int? idRace,
+    String? idRace,
     String? saida,
     String? destino,
     String? saidaName,
@@ -32,27 +39,40 @@ class Race extends ChangeNotifier {
     TimeOfDay? horario,
     List<UserData>? passageiros,
     UserData? motorista,
+    String? motoristaID,
+    String? motoristaName,
+    double? saidaLat,
+    double? saidaLng,
+    double? destinoLat,
+    double? destinoLng,
   }) {
     if (idRace != null) _idRace = idRace;
     if (saida != null) _saida = saida;
     if (destino != null) _destino = destino;
     if (saidaName != null) _saidaName = saidaName;
     if (destinoName != null) _destinoName = destinoName;
-    if (data != null) _data = data;
+    if (data != null) _dataHora = data;
     if (horario != null) _horario = horario;
     if (passageiros != null) _passageiros = passageiros;
     if (motorista != null) _motorista = motorista;
+    if (motoristaID != null) _motoristaID = motoristaID;
+    if (motoristaName != null) _motoristaName = motoristaName;
+    if (saidaLat != null) _saidaLat = saidaLat;
+    if (saidaLng != null) _saidaLng = saidaLng;
+    if (destinoLat != null) _destinoLat = destinoLat;
+    if (destinoLng != null) _destinoLng = destinoLng;
   }
 
-  int get idRace => _idRace;
+  String get idRace => _idRace;
   String get saida => _saida;
   String get destino => _destino;
   String get saidaName => _saidaName;
   String get destinoName => _destinoName;
-  DateTime get data => _data;
+  DateTime get data => _dataHora;
   TimeOfDay get horario => _horario;
   List<UserData> get passageiros => _passageiros;
   UserData get motorista => _motorista;
+  String get motoristaID => _motoristaID;
 
   void updateSaida(String newSaida) {
     _saida = newSaida;
@@ -75,7 +95,7 @@ class Race extends ChangeNotifier {
   }
 
   void updateData(DateTime newData) {
-    _data = newData;
+    _dataHora = newData;
     notifyListeners();
   }
 
@@ -108,7 +128,7 @@ class Race extends ChangeNotifier {
     _destino = newDestino;
     _saidaName = newSaidaName;
     _destinoName = newDestinoName;
-    _data = newData;
+    _dataHora = newData;
     _horario = newHorario;
     _passageiros = newPassageiros;
     _motorista = newMotorista;
@@ -122,10 +142,27 @@ class Race extends ChangeNotifier {
       columnDestino: _destino,
       columnSaidaName: _saidaName,
       columnDestinoName: _destinoName,
-      columnData: _data,
+      columnData: _dataHora,
       columnHorario: _horario,
       columnPassageiros: _passageiros,
       columnMotorista: _motorista,
+    };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'driverId': _motoristaID,
+      'departureTime': DateFormat('yyyy-MM-dd HH:mm').format(_dataHora),
+      'departureLocation': {
+        'name': _saidaName,
+        'latitude': _saidaLat,
+        'longitude': _saidaLng,
+      },
+      'destinationLocation': {
+        'name': _destinoName,
+        'latitude': _destinoLat,
+        'longitude': _destinoLng,
+      },
     };
   }
 
@@ -142,4 +179,18 @@ class Race extends ChangeNotifier {
       motorista: map[columnMotorista],
     );
   }
+
+  factory Race.fromJson(Map<String, dynamic> json) {
+    return Race(
+        idRace: json[columnId],
+        saida: json[columnSaida],
+        destino: json[columnDestino],
+        saidaName: json[columnSaidaName],
+        destinoName: json[columnDestinoName],
+        data: DateTime.parse(json[columnData]),
+        horario: TimeOfDay.fromDateTime(DateTime.parse(json[columnData])),
+        passageiros: [],
+        motorista: UserData(),
+      );
+    }
 }

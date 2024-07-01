@@ -70,6 +70,10 @@ class _RegistrationCarState extends State<RegistrationCar> {
       final response = await _authController.registerComplete(completeData);
       print('User and vehicle registered successfully: ${response.data}');
       if (response.statusCode == 200) {
+
+        //userData.updateIdUser(newIdUser)
+
+
         Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeState()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register vehicle')));

@@ -13,69 +13,61 @@ class NewRace extends StatefulWidget {
 }
 
 class _NewRaceState extends State<NewRace> {
+  bool _isLoading = true;
+
   @override
-  void initState() {
-    //super.initState();
-    //_initializeUserAsDriver();
+  void initState(){
+    super.initState();
+    _fetchOpenRaces();
   }
 
-  // void _initializeUserAsDriver() async {
-  //   await Future.delayed(Duration.zero); // Aguarda a construção inicial dos widgets
-  //   final userData = Provider.of<UserData>(context, listen: false);
-  //   final driverLicense = DriverLicense(
-  //     registro: '123456',
-  //     dataEmissao: DateTime.now().toString(),
-  //     dataValidade: DateTime.now().add(Duration(days: 365)).toString(),
-  //     categoria: 'B',
-  //     cpf: '123.456.789-00',
-  //   );
-  //   final driverCar = DriverCar(
-  //     marca: 'Toyota',
-  //     modelo: 'Corolla',
-  //     cor: 'Prata',
-  //     placa: 'ABC-1234',
-  //     year: '2020',
-  //   );
+  Future<void> _fetchOpenRaces() async {
+    final user = Provider.of<UserData>(context, listen: false);
+    final raceController = Provider.of<RaceController>(context, listen: false);
 
-  //   userData.convertToDriver(driverLicense, driverCar);
-  // }
+    try {
+      await raceController.fetchOpenRaces(user.token);
+
+      // Verificar se há uma corrida ativa do usuário
+      final activeRace = raceController.openRaces.firstWhere(
+        (race) => race.motoristaID == user.idUser,
+        orElse: () => Race( // Valores padrão
+          idRace: null,
+          saida: '',
+          destino: '',
+          data: DateTime.now(),
+          horario: TimeOfDay.now(),
+          passageiros: [],
+          motorista: user,
+          saidaName: '',
+          destinoName: '',
+        ),
+      );
+
+      if (activeRace.idRace != null) {
+        raceController.setActiveRace(activeRace);
+      } else {
+        raceController.clearActiveRace();
+      }
+    } catch (e) {
+      print('Erro ao buscar corridas abertas: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<UserData, RaceController>(
       builder: (context, user, raceController, child) {
-        final user1 = UserData(
-          name: "Hermonie",
-          email: "hermonie@gmail.com",
-          matricula: "123456",
-          phone: "99999999999",
-          cep: "55555555",
-          street: "Alguma",
-          number: "10",
-          district: "cidade ai",
-          city: "cidade ai",
-          state: "Algum",
-          country: "dos bobos",
-          pass: "password",
-          gender: "Feminino",
-        );
 
-        final List<UserData> passageiros = [user1, user1, user1];
-
-        final pass1 = Race(
-          saida: "IMD",
-          destino: "Natal Shopping",
-          data: DateTime(2024, 12, 25),
-          horario: const TimeOfDay(hour: 15, minute: 30),
-          motorista: user1,
-          passageiros: passageiros,
-        );
-
-        final List<Race> openRaces = [pass1];
         final Race? activeRace = raceController.activeRace;
 
-
-        return Stack(
+        return _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Stack(
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -130,9 +122,9 @@ class _NewRaceState extends State<NewRace> {
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: openRaces.length,
+                          itemCount: raceController.openRaces.length,
                           itemBuilder: (context, index) {
-                            final race = openRaces[index];
+                            final race = raceController.openRaces[index];
                             return RaceCard(race: race);
                           },
                         ),

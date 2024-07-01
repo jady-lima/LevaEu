@@ -22,4 +22,9 @@ class AuthController {
   Future<Response> registerComplete(Map<String, dynamic> data) async {
     return await apiClient.registerComplete(data);
   }
+
+  Future<Response> loginUser(Map<String, dynamic> userData) async {
+    final response = await apiClient.login(userData);
+    return response;
+  }
 }
