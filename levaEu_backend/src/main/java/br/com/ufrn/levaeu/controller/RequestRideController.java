@@ -1,6 +1,8 @@
 package br.com.ufrn.levaeu.controller;
 
 import br.com.ufrn.levaeu.DTO.RequestRideDTO;
+import br.com.ufrn.levaeu.DTO.RequestRideResponseDTO;
+import br.com.ufrn.levaeu.DTO.UserDTO;
 import br.com.ufrn.levaeu.errors.NotFoundException;
 import br.com.ufrn.levaeu.model.Location;
 import br.com.ufrn.levaeu.model.Ride;
@@ -11,11 +13,11 @@ import br.com.ufrn.levaeu.service.RideService;
 import br.com.ufrn.levaeu.service.UserRideService;
 import br.com.ufrn.levaeu.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/request-ride")
@@ -47,6 +49,25 @@ public class RequestRideController {
             userRideService.addUserToRide(userRide);
 
             return "Deu certo";
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @GetMapping("/{idRide}")
+    public List<RequestRideResponseDTO> findAll(@PathVariable Long idRide){
+        try {
+            Ride ride = rideService.findById(idRide);
+            List<UserRide> userRides = userRideService.findAllUserRideByRide(ride);
+
+            List<RequestRideResponseDTO> requestRide = new ArrayList<>();
+
+            for(UserRide userRide : userRides){
+                UserDTO userDTO = new UserDTO(userRide.getUser());
+                requestRide.add(new RequestRideResponseDTO(userRide, userDTO));
+            }
+
+            return requestRide;
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

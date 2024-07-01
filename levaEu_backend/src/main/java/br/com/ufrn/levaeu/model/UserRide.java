@@ -1,5 +1,6 @@
 package br.com.ufrn.levaeu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,7 @@ public class UserRide {
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
@@ -68,12 +70,12 @@ public class UserRide {
         isPickup = departure;
     }
 
-    public User getRequester() {
+    public User getUser() {
         return user;
     }
 
-    public void setRequester(User requester) {
-        this.user = requester;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Ride getRide() {
