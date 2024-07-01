@@ -1,18 +1,14 @@
 package br.com.ufrn.levaeu.controller;
 
 import br.com.ufrn.levaeu.DTO.DriverResponseDTO;
+import br.com.ufrn.levaeu.DTO.RequestRideDTO;
 import br.com.ufrn.levaeu.DTO.RideDTO;
 import br.com.ufrn.levaeu.DTO.RideResponseDTO;
 import br.com.ufrn.levaeu.errors.EmptyEntryException;
 import br.com.ufrn.levaeu.errors.InvalidEntryException;
 import br.com.ufrn.levaeu.errors.NotFoundException;
-import br.com.ufrn.levaeu.model.Driver;
-import br.com.ufrn.levaeu.model.Ride;
-import br.com.ufrn.levaeu.model.TypeUser;
-import br.com.ufrn.levaeu.model.User;
-import br.com.ufrn.levaeu.service.DriverService;
-import br.com.ufrn.levaeu.service.RideService;
-import br.com.ufrn.levaeu.service.UserService;
+import br.com.ufrn.levaeu.model.*;
+import br.com.ufrn.levaeu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +26,10 @@ public class RideController {
     private DriverService driverService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRideService userRideService;
+    @Autowired
+    private LocationService locationService;
 
 	@PostMapping
 	public RideResponseDTO createRide(@RequestBody RideDTO rideDTO) {
@@ -62,6 +62,24 @@ public class RideController {
         } catch (NotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
 		}
+	}
+
+	@PostMapping("/request")
+	public String addUserToRide(@RequestBody RequestRideDTO requestRideDTO) {
+        try {
+			Ride ride = rideService.findById(requestRideDTO.idRide());
+			User user = userService.findById(requestRideDTO.idUser());
+
+			Location stopPoint = locationService.create(requestRideDTO.stopPoint());
+
+			UserRide userRide = new UserRide(ride, user, stopPoint, requestRideDTO.isDeparture());
+
+			userRideService.addUserToRide(userRide);
+
+			return "Deu certo";
+		} catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
 	}
 
 }

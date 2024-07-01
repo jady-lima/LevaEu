@@ -3,6 +3,7 @@ package br.com.ufrn.levaeu.service;
 import br.com.ufrn.levaeu.DTO.DriverResponseDTO;
 import br.com.ufrn.levaeu.DTO.RideResponseDTO;
 import br.com.ufrn.levaeu.errors.InvalidEntryException;
+import br.com.ufrn.levaeu.errors.NotFoundException;
 import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,7 @@ import br.com.ufrn.levaeu.repository.RideRepository;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RideService {
@@ -73,5 +71,13 @@ public class RideService {
 		ridesResponseDTOS.sort(Comparator.comparing(ride -> Duration.between(LocalDateTime.now(), ride.getRide().getDepartureTime()).toMinutes()));
 
 		return ridesResponseDTOS;
+	}
+
+	public Ride findById(Long idRide) throws NotFoundException {
+		Optional<Ride> ride = rideRepository.findById(idRide);
+		if(!ride.isPresent()){
+			throw new NotFoundException("Corrida não encontrada");
+		}
+		return ride.get();
 	}
 }
