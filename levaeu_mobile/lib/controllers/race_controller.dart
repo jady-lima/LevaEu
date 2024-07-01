@@ -24,6 +24,7 @@ class RaceController extends ChangeNotifier {
     try {
       final response = await ApiClient().createRace(race.toJson(), token);
       if (response.statusCode == 200) {
+        print('response.data: ${response.data}');
         _activeRace = race;
         //_openRaces.add(race);
         notifyListeners();

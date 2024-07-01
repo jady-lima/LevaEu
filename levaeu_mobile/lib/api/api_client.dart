@@ -65,7 +65,7 @@ class ApiClient {
          );
       return response;
     } catch (e) {
-      throw Exception('Erro ao criar corrida');
+      throw Exception('Erro ao criar corrida: ${e}');
     }
   }
 

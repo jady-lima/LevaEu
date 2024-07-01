@@ -147,9 +147,9 @@ class _MapScreenState extends State<MapScreen> {
         destinoLng: _markers.elementAt(1).position.longitude,
       );
 
-      await raceController.createRace(newRace, user.token);
-
       print('JSON a ser enviado ao backend: ${newRace.toJson()}');
+      await raceController.createRace(newRace, user.token);
+      
       Navigator.pop(context); // Voltar para a tela anterior
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load directions')));

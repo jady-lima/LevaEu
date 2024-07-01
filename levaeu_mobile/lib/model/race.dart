@@ -151,18 +151,20 @@ class Race extends ChangeNotifier {
 
   Map<String, dynamic> toJson() {
     return {
-      'driverId': _motoristaID,
-      'departureTime': DateFormat('yyyy-MM-dd HH:mm').format(_dataHora),
-      'departureLocation': {
-        'name': _saidaName,
-        'latitude': _saidaLat,
-        'longitude': _saidaLng,
-      },
-      'destinationLocation': {
-        'name': _destinoName,
-        'latitude': _destinoLat,
-        'longitude': _destinoLng,
-      },
+      'idDriver': _motoristaID,
+      'ride':{
+        'departureTime': DateFormat('yyyy-MM-dd HH:mm').format(_dataHora),
+        'departureLocation': {
+          'name': _saidaName,
+          'latitude': _saidaLat,
+          'longitude': _saidaLng,
+        },
+        'destinationLocation': {
+          'name': _destinoName,
+          'latitude': _destinoLat,
+          'longitude': _destinoLng,
+        },
+      }
     };
   }
 
