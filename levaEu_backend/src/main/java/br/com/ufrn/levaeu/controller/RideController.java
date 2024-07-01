@@ -1,22 +1,20 @@
 package br.com.ufrn.levaeu.controller;
 
-import br.com.ufrn.levaeu.DTO.DriverDTO;
 import br.com.ufrn.levaeu.DTO.DriverResponseDTO;
 import br.com.ufrn.levaeu.DTO.RideDTO;
 import br.com.ufrn.levaeu.DTO.RideResponseDTO;
-import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
 import br.com.ufrn.levaeu.errors.EmptyEntryException;
 import br.com.ufrn.levaeu.errors.InvalidEntryException;
 import br.com.ufrn.levaeu.errors.NotFoundException;
 import br.com.ufrn.levaeu.model.Driver;
 import br.com.ufrn.levaeu.model.Ride;
-import br.com.ufrn.levaeu.service.DriverLicenseService;
+import br.com.ufrn.levaeu.model.TypeUser;
+import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.service.DriverService;
 import br.com.ufrn.levaeu.service.RideService;
 import br.com.ufrn.levaeu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -50,13 +48,20 @@ public class RideController {
     }
 
 	@GetMapping("/{idUser}")
-	public List<Ride> findAllRides(@PathVariable Long idUser){
+	public List<RideResponseDTO> findAllRides(@PathVariable Long idUser){
         try {
-            userService.findById(idUser);
+            User user = userService.findById(idUser);
+
+			List<Ride> rides = rideService.findAllRides();
+
+			rides = rideService.filterRides(user, rides);
+
+			List<RideResponseDTO> ridesResponseDTO = rideService.convertRidesToResponseDTO(rides);
+
+			return ridesResponseDTO;
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-        return rideService.findAllRides();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
 	}
 
 }

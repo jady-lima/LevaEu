@@ -1,6 +1,9 @@
 package br.com.ufrn.levaeu.service;
 
+import br.com.ufrn.levaeu.DTO.DriverResponseDTO;
+import br.com.ufrn.levaeu.DTO.RideResponseDTO;
 import br.com.ufrn.levaeu.errors.InvalidEntryException;
+import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,11 @@ import br.com.ufrn.levaeu.errors.EmptyEntryException;
 import br.com.ufrn.levaeu.model.Ride;
 import br.com.ufrn.levaeu.repository.RideRepository;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -41,5 +49,29 @@ public class RideService {
 
 	public List<Ride> findAllRides() {
 		return rideRepository.findAll();
+	}
+
+	public List<Ride> filterRides(User user, List<Ride> rides) {
+		Iterator<Ride> iterator = rides.iterator();
+		while (iterator.hasNext()) {
+			Ride ride = iterator.next();
+			if (ride.getDriver().getId() == user.getId() || ride.getDepartureTime().isBefore(LocalDateTime.now())) {
+				iterator.remove();
+			}
+		}
+		return rides;
+	}
+
+	public List<RideResponseDTO> convertRidesToResponseDTO(List<Ride> rides) {
+		List<RideResponseDTO> ridesResponseDTOS = new ArrayList<>();
+		for(Ride ride : rides){
+			DriverResponseDTO driver = new DriverResponseDTO(ride.getDriver(), ride.getDriver().getDriverLicense(), ride.getDriver().getCar());
+			RideResponseDTO rideResponseDTO = new RideResponseDTO(driver, ride);
+			ridesResponseDTOS.add(rideResponseDTO);
+		}
+
+		ridesResponseDTOS.sort(Comparator.comparing(ride -> Duration.between(LocalDateTime.now(), ride.getRide().getDepartureTime()).toMinutes()));
+
+		return ridesResponseDTOS;
 	}
 }
