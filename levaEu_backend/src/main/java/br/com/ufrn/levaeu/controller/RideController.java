@@ -54,7 +54,9 @@ public class RideController {
 
 			List<Ride> rides = rideService.findAllRides();
 
-			rides = rideService.filterRides(user, rides);
+			rides = rideService.filterRidesByTime(rides);
+
+			rides = rideService.filterRidesByDrives(user, rides);
 
 			List<RideResponseDTO> ridesResponseDTO = rideService.convertRidesToResponseDTO(rides);
 
@@ -81,5 +83,18 @@ public class RideController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 	}
+
+	@GetMapping("/driver/{idDriver}")
+	public List<RideResponseDTO> findRidesByDriver(@PathVariable Long idDriver) {
+        try {
+            Driver driver = driverService.findById(idDriver);
+			List<Ride> rides = rideService.findRidesByDriver(driver);
+			rides = rideService.filterRidesByTime(rides);
+
+			return rideService.convertRidesToResponseDTO(rides);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
 }

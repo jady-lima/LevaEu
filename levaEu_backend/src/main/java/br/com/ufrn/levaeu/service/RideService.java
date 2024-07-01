@@ -4,6 +4,7 @@ import br.com.ufrn.levaeu.DTO.DriverResponseDTO;
 import br.com.ufrn.levaeu.DTO.RideResponseDTO;
 import br.com.ufrn.levaeu.errors.InvalidEntryException;
 import br.com.ufrn.levaeu.errors.NotFoundException;
+import br.com.ufrn.levaeu.model.Driver;
 import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +50,24 @@ public class RideService {
 		return rideRepository.findAll();
 	}
 
-	public List<Ride> filterRides(User user, List<Ride> rides) {
+
+
+	public List<Ride> filterRidesByTime(List<Ride> rides) {
 		Iterator<Ride> iterator = rides.iterator();
 		while (iterator.hasNext()) {
 			Ride ride = iterator.next();
-			if (ride.getDriver().getId() == user.getId() || ride.getDepartureTime().isBefore(LocalDateTime.now())) {
+			if (ride.getDepartureTime().isBefore(LocalDateTime.now())) {
+				iterator.remove();
+			}
+		}
+		return rides;
+	}
+
+	public List<Ride> filterRidesByDrives(User user, List<Ride> rides) {
+		Iterator<Ride> iterator = rides.iterator();
+		while (iterator.hasNext()) {
+			Ride ride = iterator.next();
+			if (ride.getDriver().getId() == user.getId()) {
 				iterator.remove();
 			}
 		}
@@ -79,5 +93,9 @@ public class RideService {
 			throw new NotFoundException("Corrida não encontrada");
 		}
 		return ride.get();
+	}
+
+	public List<Ride> findRidesByDriver(Driver driver) {
+		return rideRepository.findByDriver(driver);
 	}
 }
