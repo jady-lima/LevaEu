@@ -34,9 +34,9 @@ class RaceController extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchOpenRaces(String token) async {
+  Future<void> fetchOpenRaces(String token, String id) async {
     try {
-      final response = await ApiClient().fetchOpenRaces(token);
+      final response = await ApiClient().fetchOpenRaces(token, id);
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data as List<dynamic>;
         final List<Race> fetchedRaces = data.map((json) => Race.fromJson(json)).toList();
@@ -44,6 +44,18 @@ class RaceController extends ChangeNotifier {
       }
     } catch (e) {
       print('Failed to fetch open races: $e');
+    }
+  }
+
+  Future<void> submitUserRequest(Map<String, dynamic> data, String token) async {
+    try {
+      final response = await ApiClient().submitUserRequest(data, token);
+      if (response.statusCode == 200) {
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Failed to submit user request: $e');
+      throw e;
     }
   }
 

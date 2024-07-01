@@ -26,7 +26,7 @@ class GooglePlacesService {
 
   Future<PlaceDetails> fetchPlaceDetails(String placeId, String sessionToken) async {
     final url =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey&sessiontoken=$sessionToken';
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey&sessiontoken=$sessionToken&language=pt_BR';
     print('Fetching place details with URL: $url');
     final response = await http.get(Uri.parse(url));
 

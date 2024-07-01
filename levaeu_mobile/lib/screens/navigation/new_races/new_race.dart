@@ -3,6 +3,7 @@ import 'package:levaeu_mobile/model/race.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/controllers/race_controller.dart';
 import 'package:levaeu_mobile/screens/navigation/new_races/map_screen.dart';
+import 'package:levaeu_mobile/screens/navigation/new_races/race_details.dart';
 import 'package:provider/provider.dart';
 
 class NewRace extends StatefulWidget {
@@ -26,7 +27,7 @@ Future<void> _fetchOpenRaces() async {
   final raceController = Provider.of<RaceController>(context, listen: false);
 
   try {
-    await raceController.fetchOpenRaces(user.token);
+    await raceController.fetchOpenRaces(user.token, user.idUser);
 
     // Verificar se há uma corrida ativa do usuário
     Race? activeRace;
@@ -173,11 +174,15 @@ class RaceCard extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          title: Text("${race.motorista.name}\n${race.saidaName} \u2192 ${race.destinoName}"),
+          title: Text("${race.motoristaName}\n${race.saidaName} \u2192 ${race.destinoName}"),
           subtitle: Text("Horário: ${race.horario.format(context)}"),
           onTap: () {
-            // Lógica para abrir detalhes da corrida
-            //Navigator.push();
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RaceDetailsScreen(race: race),
+              ),
+            );
           },
         ),
       ),

@@ -48,7 +48,7 @@ class ApiClient {
       final response = await _dio.post('$baseUrl/auth/login', data: data);
       return response;
     } catch (e) {
-      throw Exception('Erro ao fazer login');
+      throw Exception('Erro ao fazer login: ${e.toString()}');
     }
   }
 
@@ -69,10 +69,10 @@ class ApiClient {
     }
   }
 
-  Future<Response> fetchOpenRaces(String token) async {
+  Future<Response> fetchOpenRaces(String token, String id) async {
     try {
       final response = await _dio.get(
-        '$baseUrl/api/rides/open',
+        '$baseUrl/api/rides/list/${id}',
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
@@ -80,6 +80,23 @@ class ApiClient {
       return response;
     } catch (e) {
       throw Exception('Erro ao buscar corridas abertas');
+    }
+  }
+
+  Future<Response> submitUserRequest(Map<String, dynamic> data, String token) async {
+    try {
+      final response = await _dio.post(
+        '$baseUrl/api/request-ride',
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao enviar requisição do usuário: ${e.toString()}');
     }
   }
 }
