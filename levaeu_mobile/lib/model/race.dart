@@ -208,4 +208,11 @@ import 'package:levaeu_mobile/model/user_request.dart';
         motoristaName: json['driver']['name'],
       );
     }
+
+    factory Race.fromJsonDriver(Map<String, dynamic> json) {
+      return Race(
+        idRace: json['ride']['id'].toString(),
+         
+      );
+    }
   }

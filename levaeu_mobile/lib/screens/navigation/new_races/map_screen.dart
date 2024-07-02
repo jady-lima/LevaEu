@@ -150,6 +150,7 @@ class _MapScreenState extends State<MapScreen> {
       print('JSON a ser enviado ao backend: ${newRace.toJson()}');
       await raceController.createRace(newRace, user.token);
       
+      await raceController.fetchDriverRaces(user.token, user.idUser);
       Navigator.pop(context); // Voltar para a tela anterior
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load directions')));

@@ -6,9 +6,11 @@ class RaceController extends ChangeNotifier {
 
   Race? _activeRace;
   List<Race> _openRaces = [];
+  List<Race> _driverRaces = [];
 
   Race? get activeRace => _activeRace;
   List<Race> get openRaces => _openRaces;
+  List<Race> get driverRaces => _driverRaces;
 
   void setActiveRace(Race race) {
     _activeRace = race;
@@ -17,6 +19,11 @@ class RaceController extends ChangeNotifier {
 
   void setOpenRaces(List<Race> races) {
     _openRaces = races;
+    notifyListeners();
+  }
+
+  void setDriverRaces(List<Race> races) {
+    _driverRaces = races;
     notifyListeners();
   }
 
@@ -56,6 +63,18 @@ class RaceController extends ChangeNotifier {
     } catch (e) {
       print('Failed to submit user request: $e');
       throw e;
+    }
+  }
+
+  Future<void> fetchDriverRaces(String token, String driverId) async {
+    try {
+      final response = await ApiClient().fetchDriverRaces(token, driverId);
+      if (response.statusCode == 200) {
+        List<Race> races = (response.data as List).map((e) => Race.fromJson(e)).toList();
+        setDriverRaces(races);
+      }
+    } catch (e) {
+      print('Failed to fetch driver races: $e');
     }
   }
 

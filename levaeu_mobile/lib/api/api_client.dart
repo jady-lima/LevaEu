@@ -83,6 +83,18 @@ class ApiClient {
     }
   }
 
+  Future<Response> fetchDriverRaces(String token, String driverId) async {
+    try {
+      final response = await _dio.get(
+        '$baseUrl/api/rides/driver/$driverId',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Erro ao buscar corridas do motorista');
+    }
+  }
+
   Future<Response> submitUserRequest(Map<String, dynamic> data, String token) async {
     try {
       final response = await _dio.post(

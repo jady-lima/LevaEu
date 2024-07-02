@@ -6,7 +6,6 @@ import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/chats/chats.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
-import 'package:levaeu_mobile/screens/navigation/new_races/create_new_race.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/register/registration.dart';
 import 'package:levaeu_mobile/screens/start.dart';
@@ -51,7 +50,6 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const Profile(),
         '/userRegistration': (context) => const Registration(),
         '/chats': (context) => const Chats(),
-        '/createNewRace': (context) => const CreateNewRace(),
       },
     );
   }
