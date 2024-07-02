@@ -8,7 +8,7 @@ class DirectionsService {
 
   Future<Map<String, dynamic>> fetchDirections(String origin, String destination, List<String> waypoints) async {
     final waypointStr = waypoints.join('|');
-    final url = 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=$waypointStr&key=$apiKey';
+    final url = 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=optimize:true|$waypointStr&key=$apiKey';
     print('Fetching directions with URL: $url');
     final response = await http.get(Uri.parse(url));
 

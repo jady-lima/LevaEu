@@ -18,7 +18,6 @@ class AddUsersRace extends StatefulWidget {
 
 class _AddUsersRaceState extends State<AddUsersRace> {
   bool _isLoading = true;
-  List<Map<String, dynamic>> acceptedPassengers = [];
 
   @override
   void initState() {
@@ -36,12 +35,9 @@ class _AddUsersRaceState extends State<AddUsersRace> {
 
     try {
       await raceController.fetchPassengerRequests(user.token, int.parse(widget.race.idRace));
-      setState(() {
-        acceptedPassengers = List.from(raceController.acceptedPassengers);
-        _isLoading = false;
-      });
     } catch (e) {
       print('Erro ao buscar passageiros: $e');
+    } finally {
       setState(() {
         _isLoading = false;
       });
@@ -49,19 +45,32 @@ class _AddUsersRaceState extends State<AddUsersRace> {
   }
 
   void _togglePassenger(Map<String, dynamic> passengerData) {
+    final raceController = Provider.of<RaceController>(context, listen: false);
     setState(() {
-      if (acceptedPassengers.any((p) => p['user']['id'] == passengerData['user']['id'])) {
-        acceptedPassengers.removeWhere((p) => p['user']['id'] == passengerData['user']['id']);
+      if (raceController.acceptedPassengers.contains(passengerData)) {
+        raceController.removeAcceptedPassenger(passengerData);
       } else {
-        if (acceptedPassengers.length >= 4) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Número máximo de passageiros atingido')),
-          );
-        } else {
-          acceptedPassengers.add(passengerData);
-        }
+        raceController.addAcceptedPassenger(passengerData);
       }
     });
+  }
+
+  void _confirmRoute() {
+    final raceController = Provider.of<RaceController>(context, listen: false);
+
+    // Coletar waypoints dos passageiros aceitos
+    final List<LatLng> waypoints = raceController.acceptedPassengers.map((passengerData) {
+      final stopPoint = passengerData['userRide']['stopPoint'];
+      return LatLng(stopPoint['latitude'], stopPoint['longitude']);
+    }).toList();
+
+    // Navegar para a tela de rota final
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RouteMapScreen(race: widget.race, waypoints: waypoints),
+      ),
+    );
   }
 
   @override
@@ -118,9 +127,9 @@ class _AddUsersRaceState extends State<AddUsersRace> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: acceptedPassengers.length,
+                    itemCount: raceController.acceptedPassengers.length,
                     itemBuilder: (context, index) {
-                      final passengerData = acceptedPassengers[index];
+                      final passengerData = raceController.acceptedPassengers[index];
                       final passenger = UserData.fromJson(passengerData['user']);
                       return ListTile(
                         title: Text(passenger.name),
@@ -172,22 +181,8 @@ class _AddUsersRaceState extends State<AddUsersRace> {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RouteMapScreen(
-                          initialLocation: LatLng(widget.race.saidaLat, widget.race.saidaLng),
-                          finalLocation: LatLng(widget.race.destinoLat, widget.race.destinoLng),
-                          waypoints: acceptedPassengers.map((passengerData) {
-                            final stopPoint = passengerData['userRide']['stopPoint'];
-                            return LatLng(stopPoint['latitude'], stopPoint['longitude']);
-                          }).toList(),
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text('Visualizar Rota'),
+                  onPressed: _confirmRoute,
+                  child: const Text('Continuar'),
                 ),
               ],
             ),
