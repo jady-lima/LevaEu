@@ -1,7 +1,7 @@
 package br.com.ufrn.levaeu.controller;
 
 import br.com.ufrn.levaeu.DTO.RequestRideDTO;
-import br.com.ufrn.levaeu.DTO.RequestRideResponseDTO;
+import br.com.ufrn.levaeu.DTO.RequesterRideDTO;
 import br.com.ufrn.levaeu.DTO.UserDTO;
 import br.com.ufrn.levaeu.errors.NotFoundException;
 import br.com.ufrn.levaeu.model.Location;
@@ -69,19 +69,43 @@ public class RequestRideController {
     }
 
     @GetMapping("/{idRide}")
-    public List<RequestRideResponseDTO> findAll(@PathVariable Long idRide){
+    public List<RequesterRideDTO> findAll(@PathVariable Long idRide){
         try {
             Ride ride = rideService.findById(idRide);
             List<UserRide> userRides = userRideService.findAllUserRideByRide(ride);
 
-            List<RequestRideResponseDTO> requestRide = new ArrayList<>();
+            userRides = userRideService.filterByTime(userRides);
+
+            List<RequesterRideDTO> requestersRide = new ArrayList<>();
 
             for(UserRide userRide : userRides){
                 UserDTO userDTO = new UserDTO(userRide.getUser());
-                requestRide.add(new RequestRideResponseDTO(userRide, userDTO));
+                requestersRide.add(new RequesterRideDTO(userRide, userDTO));
             }
 
-            return requestRide;
+            return requestersRide;
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @GetMapping("/user/{idUser}")
+    public List<RequesterRideDTO> findAllRequestRidesByUser(@PathVariable Long idUser) {
+        try {
+            User user = userService.findById(idUser);
+
+            List<UserRide> userRides = userRideService.findAllUserRideByUser(user);
+
+            userRides = userRideService.filterByTime(userRides);
+
+            List<RequesterRideDTO> requestersRide = new ArrayList<>();
+
+            for(UserRide userRide : userRides){
+                UserDTO userDTO = new UserDTO(userRide.getUser());
+                requestersRide.add(new RequesterRideDTO(userRide, userDTO));
+            }
+
+            return requestersRide;
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

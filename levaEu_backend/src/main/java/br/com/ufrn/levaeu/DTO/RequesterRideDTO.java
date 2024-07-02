@@ -2,11 +2,11 @@ package br.com.ufrn.levaeu.DTO;
 
 import br.com.ufrn.levaeu.model.UserRide;
 
-public class RequestRideResponseDTO {
+public class RequesterRideDTO {
     private UserRide userRide;
     private UserDTO user;
 
-    public RequestRideResponseDTO(UserRide userRide, UserDTO user) {
+    public RequesterRideDTO(UserRide userRide, UserDTO user) {
         this.userRide = userRide;
         this.user = user;
     }

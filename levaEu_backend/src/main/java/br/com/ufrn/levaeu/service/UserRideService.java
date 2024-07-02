@@ -7,6 +7,8 @@ import br.com.ufrn.levaeu.model.UserRide;
 import br.com.ufrn.levaeu.repository.UserRideRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +35,20 @@ public class UserRideService {
             throw new NotFoundException("Solicitação de usuário não foi encontrada, atualize a lista de solicitações!");
         }
         return userRide.get();
+    }
+
+    public List<UserRide> findAllUserRideByUser(User user) {
+        return userRideRepository.findAllUserRideByUser(user);
+    }
+
+    public List<UserRide> filterByTime(List<UserRide> userRides) {
+        Iterator<UserRide> iterator = userRides.iterator();
+        while (iterator.hasNext()) {
+            UserRide userRide = iterator.next();
+            if (userRide.getRide().getDepartureTime().isBefore(LocalDateTime.now())) {
+                iterator.remove();
+            }
+        }
+        return userRides;
     }
 }

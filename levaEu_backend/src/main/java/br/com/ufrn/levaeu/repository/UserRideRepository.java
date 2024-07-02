@@ -12,4 +12,6 @@ public interface UserRideRepository extends JpaRepository<UserRide, Long> {
     List<UserRide> findAllUserRideByRide(Ride ride);
 
     Optional<UserRide> findByRideAndUser(Ride ride, User user);
+
+    List<UserRide> findAllUserRideByUser(User user);
 }
