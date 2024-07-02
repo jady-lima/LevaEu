@@ -33,6 +33,7 @@ class _ProfileState extends State<Profile> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
 
               Container(
@@ -45,7 +46,7 @@ class _ProfileState extends State<Profile> {
               Card(
                 color: Colors.white,
                 child: Container(
-                  constraints: const BoxConstraints(maxWidth: 340, minWidth: 240),
+                  constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
                   child: Column(
 
                     children: <Widget>[
