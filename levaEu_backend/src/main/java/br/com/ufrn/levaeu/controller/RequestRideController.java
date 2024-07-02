@@ -110,4 +110,32 @@ public class RequestRideController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
+    @DeleteMapping("/user/{idUser}/{idRide}")
+    public UserRide removeUserRequestFromRide(@PathVariable Long idUser, @PathVariable Long idRide) {
+        try {
+            User user = userService.findById(idUser);
+            Ride ride = rideService.findById(idRide);
+            UserRide userRide = userRideService.findUserRideByRideAndUser(ride, user);
+            userRideService.removeUserRequestFromRide(userRide);
+
+            return userRide;
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/confirm/{idUser}/{idRide}")
+    public UserRide disconfirmUserInRide(@PathVariable Long idUser, @PathVariable Long idRide) {
+        try {
+            User user = userService.findById(idUser);
+            Ride ride = rideService.findById(idRide);
+            UserRide userRide = userRideService.findUserRideByRideAndUser(ride, user);
+            userRide.setConfirmed(false);
+
+            return userRideService.addUserToRide(userRide);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 }

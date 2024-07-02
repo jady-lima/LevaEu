@@ -51,4 +51,8 @@ public class UserRideService {
         }
         return userRides;
     }
+
+    public void removeUserRequestFromRide(UserRide userRide) {
+        userRideRepository.deleteById(userRide.getId());
+    }
 }
