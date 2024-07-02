@@ -44,13 +44,14 @@ class _NavigationBarMenuState extends State<NavigationBarMenu> {
           ),
           label: 'Home',
         ),
+        /*
         BottomNavigationBarItem(
           icon: Icon(
             Icons.chat_bubble,
             color: Color.fromRGBO(57, 96, 143, 1.0),
           ),
           label: 'Fóruns',
-        ),
+        ),*/
         BottomNavigationBarItem(
           icon: Icon(
             Icons.drive_eta,
