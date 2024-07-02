@@ -69,6 +69,7 @@ class LoginState extends State<Login> {
         backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
         centerTitle: true,
         iconTheme: const IconThemeData(color: Color.fromRGBO(57, 96, 143, 1.0)),
+        automaticallyImplyLeading: false,
       ),
       body: ListView(
         scrollDirection: Axis.vertical,

@@ -199,8 +199,13 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Criar Corrida'),
-        backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+        title: const Text(
+          'Criar Corrida',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
       ),
       body: Stack(
         children: [

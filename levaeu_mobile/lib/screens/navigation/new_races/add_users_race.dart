@@ -80,8 +80,13 @@ class _AddUsersRaceState extends State<AddUsersRace> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aceitar Passageiros'),
-        backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+        centerTitle: true,
+        backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
+        title: const Text(
+          'Aceitar Passageiros',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

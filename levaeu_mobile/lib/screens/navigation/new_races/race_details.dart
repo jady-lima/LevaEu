@@ -127,7 +127,13 @@ class _RaceDetailsScreenState extends State<RaceDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes da Corrida'),
+        title: const Text(
+          'Detalhes da Corrida',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
