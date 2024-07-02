@@ -62,12 +62,12 @@ public class UserRide {
         isConfirmed = confirmed;
     }
 
-    public Boolean getDeparture() {
+    public Boolean getPickup() {
         return isPickup;
     }
 
-    public void setDeparture(Boolean departure) {
-        isPickup = departure;
+    public void setPickup(Boolean isPickup) {
+        isPickup = isPickup;
     }
 
     public User getUser() {
