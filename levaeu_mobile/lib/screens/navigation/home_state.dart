@@ -27,10 +27,10 @@ class _HomeState extends State<HomeState> {
   Widget build(BuildContext context) {    
     final List<Widget> screens = [
       HomeContent(onItemTapped: _onItemTapped), //0
-      const Chats(), //1
-      const NewRace(), //2
-      const MyRaces(), //3
-      const Settings(), //4
+      //const Chats(), //1
+      const NewRace(), //1
+      const MyRaces(), //2
+      const Settings(), //3
     ];
   
     return Scaffold(
