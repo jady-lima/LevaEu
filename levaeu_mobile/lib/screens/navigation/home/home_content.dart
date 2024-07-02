@@ -24,7 +24,7 @@ class _HomeContentState extends State<HomeContent> {
         children: <Widget>[
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 300, minWidth: 240),
+            constraints: const BoxConstraints(maxWidth: 300, minWidth: 220),
             margin: const EdgeInsets.only(top: 20, left: 25, bottom: 10),
             alignment: Alignment.centerLeft,
             child: Text(
@@ -39,7 +39,7 @@ class _HomeContentState extends State<HomeContent> {
 
           Container(
             margin: const EdgeInsets.only(left: 20),
-            constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
+            constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
             color: Colors.black,
             width: 350,
             height: 0.8,
@@ -47,7 +47,7 @@ class _HomeContentState extends State<HomeContent> {
           
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10),
-            constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
+            constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
             child: TitlesScreens.buildHomeMainTitle("Corrida marcada: "),
           ),
 
@@ -55,7 +55,7 @@ class _HomeContentState extends State<HomeContent> {
             child: Card(
               color: Colors.white,
               child: SizedBox(
-                width: 350,
+                width: 320,
                 height: 100,
                 child: Center(
                   child: Text(
@@ -71,7 +71,8 @@ class _HomeContentState extends State<HomeContent> {
 
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10),
-            constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
+            //padding: const EdgeInsets.only(left: 10),
+            constraints: const BoxConstraints(maxWidth: 300, minWidth: 220),
             child: TitlesScreens.buildHomeMainTitle("Saindo logo: "),
           ),
 
@@ -79,7 +80,7 @@ class _HomeContentState extends State<HomeContent> {
             child: Card(
               color: Colors.white,
               child: SizedBox(
-                width: 350,
+                width: 320,
                 height: 175,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -118,7 +119,7 @@ class _HomeContentState extends State<HomeContent> {
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
             padding: const EdgeInsets.only(left: 10),
-            constraints: const BoxConstraints(maxWidth: 350, minWidth: 240),
+            constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
             child: TitlesScreens.buildHomeMainTitle("Discussões recentes: "),
           ),
 
@@ -126,7 +127,7 @@ class _HomeContentState extends State<HomeContent> {
             child: Card(
               color: Colors.white,
               child: SizedBox(
-                width: 350,
+                width: 320,
                 
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
