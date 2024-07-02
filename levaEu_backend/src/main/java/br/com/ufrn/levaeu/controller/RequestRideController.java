@@ -54,6 +54,20 @@ public class RequestRideController {
         }
     }
 
+    @PostMapping("/confirm/{idUser}/{idRide}")
+    public UserRide confirmUserInRide(@PathVariable Long idUser, @PathVariable Long idRide) {
+        try {
+            User user = userService.findById(idUser);
+            Ride ride = rideService.findById(idRide);
+            UserRide userRide = userRideService.findUserRideByRideAndUser(ride, user);
+            userRide.setConfirmed(true);
+
+            return userRideService.addUserToRide(userRide);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     @GetMapping("/{idRide}")
     public List<RequestRideResponseDTO> findAll(@PathVariable Long idRide){
         try {
