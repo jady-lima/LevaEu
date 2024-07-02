@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/api/api_client.dart';
 import 'package:levaeu_mobile/model/race.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 
 class RaceController extends ChangeNotifier {
 
   Race? _activeRace;
   List<Race> _openRaces = [];
   List<Race> _driverRaces = [];
+  List<Map<String, dynamic>> _acceptedPassengers = [];
+  List<Map<String, dynamic>> _pendingPassengers = [];
 
   Race? get activeRace => _activeRace;
   List<Race> get openRaces => _openRaces;
   List<Race> get driverRaces => _driverRaces;
+  List<Map<String,dynamic>> get acceptedPassengers => _acceptedPassengers;
+  List<Map<String,dynamic>> get pendingPassengers => _pendingPassengers;
 
   void setActiveRace(Race race) {
     _activeRace = race;
@@ -24,6 +29,27 @@ class RaceController extends ChangeNotifier {
 
   void setDriverRaces(List<Race> races) {
     _driverRaces = races;
+    notifyListeners();
+  }
+
+  void setAcceptedPassengers(List<Map<String, dynamic>> passengers) {
+    _acceptedPassengers = passengers;
+    notifyListeners();
+  }
+
+  void setPendingPassengers(List<Map<String, dynamic>> passengers) {
+    _pendingPassengers = passengers;
+    notifyListeners();
+  }
+
+  void addAcceptedPassenger(Map<String, dynamic> passenger) {
+    _acceptedPassengers.add(passenger);
+    notifyListeners();
+  }
+
+
+  void removeAcceptedPassenger(Map<String, dynamic> passenger) {
+    _acceptedPassengers.removeWhere((p) => p['user']['id'] == passenger['user']['id']);
     notifyListeners();
   }
 
@@ -78,8 +104,46 @@ class RaceController extends ChangeNotifier {
     }
   }
 
+  Future<void> fetchPassengerRequests(String token, int rideId) async {
+    try {
+      final response = await ApiClient().getPassengerRequests(token, rideId);
+      final List<Map<String, dynamic>> passengerRequests = List<Map<String, dynamic>>.from(response.data);
+
+      _acceptedPassengers = passengerRequests.where((request) => request['userRide']['confirmed'] == true).toList();
+      _pendingPassengers = passengerRequests.where((request) => request['userRide']['confirmed'] == false).toList();
+      
+      notifyListeners();
+    } catch (e) {
+      print('Erro ao buscar passageiros: $e');
+    }
+  }
+
+  Future<void> confirmPassengerRequest(String token, int userId, int rideId) async {
+    try {
+      print('Enviando confirmação de passageiro: token=$token, userId=$userId, rideId=$rideId');
+      await ApiClient().confirmPassengerRequest(token, userId, rideId);
+    } catch (e) {
+      print('Erro ao confirmar passageiro: $e');
+      throw Exception('Erro ao confirmar passageiro');
+    }
+  }
+
+  Future<void> removePassengerRequest(String token, int userId, int rideId) async {
+    try {
+      print('Enviando remoção de passageiro: token=$token, userId=$userId, rideId=$rideId');
+      await ApiClient().removePassengerRequest(token, userId, rideId);
+    } catch (e) {
+      print('Erro ao remover passageiro: $e');
+      throw Exception('Erro ao remover passageiro');
+    }
+  }
+
   void clearActiveRace() {
     _activeRace = null;
     notifyListeners();
+  }
+
+  void clearDriverRaces() {
+    _driverRaces = [];
   }
 }

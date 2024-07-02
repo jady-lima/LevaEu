@@ -172,7 +172,7 @@ class _RaceDetailsScreenState extends State<RaceDetailsScreen> {
                           selected: _isPickup,
                           onSelected: (selected) {
                             setState(() {
-                              _isPickup = true;
+                              _isPickup = selected;
                             });
                           },
                         ),
@@ -181,7 +181,7 @@ class _RaceDetailsScreenState extends State<RaceDetailsScreen> {
                           selected: !_isPickup,
                           onSelected: (selected) {
                             setState(() {
-                              _isPickup = false;
+                              _isPickup = !selected;
                             });
                           },
                         ),

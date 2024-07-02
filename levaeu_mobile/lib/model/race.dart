@@ -79,6 +79,10 @@ import 'package:levaeu_mobile/model/user_request.dart';
     String get motoristaID => _motoristaID;
     String get motoristaName => _motoristaName;
     List<UserRequest> get userRequests => _userRequests;
+    double get saidaLat => _saidaLat;
+    double get saidaLng => _saidaLng;
+    double get destinoLat => _destinoLat;
+    double get destinoLng => _destinoLng;
 
     void updateSaida(String newSaida) {
       _saida = newSaida;

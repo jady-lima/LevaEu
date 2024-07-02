@@ -18,7 +18,7 @@ class UserRequest {
       'idUser': idUser,
       'idRide': idRide,
       'stopPoint': location.toJson(),
-      'isPickup': isPickup,
+      'isDeparture': isPickup,
     };
   }
 }

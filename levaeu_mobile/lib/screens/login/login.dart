@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/api/api_client.dart';
 import 'package:levaeu_mobile/controllers/auth_controller.dart';
+import 'package:levaeu_mobile/controllers/race_controller.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/register/registration.dart';
@@ -22,6 +23,13 @@ class LoginState extends State<Login> {
   final _formKeyLogin = GlobalKey<FormState>();
   final AuthController _authController = AuthController(apiClient: ApiClient());
   bool _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final raceController = Provider.of<RaceController>(context, listen: false);
+    raceController.clearDriverRaces(); // Chame o método que limpa a lista de driverRaces
+  }
 
   Future<void> _login(BuildContext context) async {
     final user = Provider.of<UserData>(context, listen: false);

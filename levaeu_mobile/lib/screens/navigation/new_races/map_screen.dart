@@ -24,6 +24,7 @@ class _MapScreenState extends State<MapScreen> {
   final TextEditingController _destinationController = TextEditingController();
   TextEditingController? _activeController;
   TimeOfDay? _selectedTime;
+  DateTime? _selectedDate;
 
   String? _startName;
   String? _destinationName;
@@ -127,8 +128,7 @@ class _MapScreenState extends State<MapScreen> {
       final user = Provider.of<UserData>(context, listen: false);
       final raceController = Provider.of<RaceController>(context, listen: false);
 
-      DateTime now = DateTime.now();
-      DateTime combinedDate = DateTime(now.year, now.month, now.day, _selectedTime!.hour, _selectedTime!.minute);
+      DateTime combinedDate = DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day, _selectedTime!.hour, _selectedTime!.minute);
 
       final newRace = Race(
         motoristaID: user.idUser,
@@ -175,14 +175,23 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialTime: _selectedTime ?? TimeOfDay.now(),
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _selectedTime) {
-      setState(() {
-        _selectedTime = picked;
-      });
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: _selectedTime ?? TimeOfDay.now(),
+      );
+      if (pickedTime != null) {
+        setState(() {
+          _selectedDate = pickedDate;
+          _selectedTime = pickedTime;
+        });
+      }
     }
   }
 
@@ -262,7 +271,7 @@ class _MapScreenState extends State<MapScreen> {
                           child: Text(
                             _selectedTime == null
                                 ? 'Selecione o horário'
-                                : 'Horário: ${_selectedTime?.format(context)}',
+                                : 'Horário: ${_selectedTime?.format(context)} ${_selectedDate?.day}/${_selectedDate?.month}/${_selectedDate?.year}',
                           ),
                         ),
                         IconButton(

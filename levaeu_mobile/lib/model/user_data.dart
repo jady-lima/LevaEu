@@ -336,10 +336,24 @@ class UserData extends ChangeNotifier {
         driverCar: DriverCar.fromJson(json['car']),
       );
     } 
-
     notifyListeners();
   }
 
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      name: json['name'],
+      email: json['email'],
+      matricula: json['enrollment'],
+      phone: json['phone'],
+      cep: json['cep'],
+      street: json['street'],
+      number: json['number'],
+      district: json['district'],
+      city: json['city'],
+      state: json['state'],
+      country: json['country'],
+      pass: '',
+    );
+  }
 
-  
 }
