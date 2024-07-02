@@ -57,6 +57,11 @@ public class CarController {
             Authentication auth = authenticationManager.authenticate(usernamePassword);
 
             String token = tokenService.generateToken((User) auth.getPrincipal());
+
+            tokenService.revokeAllUserTokens(driver);
+
+            tokenService.saveToken(token, driver);
+
             return new DriverResponseDTO(driver, token, driver.getDriverLicense(), driver.getCar());
         } catch (DuplicatedEntryException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -1,5 +1,6 @@
 package br.com.ufrn.levaeu.config;
 
+import br.com.ufrn.levaeu.service.LogoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,9 +30,14 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityFilter securityFilter;
+    private final LogoutHandler logoutHandler;
+
+    public SecurityConfig(LogoutHandler logoutHandler) {
+        this.logoutHandler = logoutHandler;
+    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, LogoutService logoutService) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
@@ -39,7 +46,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/veiculos").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/cnhs").permitAll()
                         .anyRequest().authenticated()
-                ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+                ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout()
+                .logoutUrl("/auth/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler(((request, response, authentication) ->
+                        SecurityContextHolder.clearContext()));
 
         return http.build();
     }

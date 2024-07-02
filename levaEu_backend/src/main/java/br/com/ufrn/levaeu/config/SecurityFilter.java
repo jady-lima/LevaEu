@@ -1,6 +1,7 @@
 package br.com.ufrn.levaeu.config;
 
 import br.com.ufrn.levaeu.model.User;
+import br.com.ufrn.levaeu.repository.TokenRepository;
 import br.com.ufrn.levaeu.repository.UserRepository;
 import br.com.ufrn.levaeu.service.AuthService;
 import br.com.ufrn.levaeu.service.TokenService;
@@ -22,11 +23,13 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserRepository userRepository;
     private final AuthService authService;
+    private final TokenRepository tokenRepository;
 
-    public SecurityFilter(TokenService tokenService, UserRepository userRepository, AuthService authService) {
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository, AuthService authService, TokenRepository tokenRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
         this.authService = authService;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -37,8 +40,16 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             UserDetails user = authService.loadUserByUsername(login);
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            boolean isTokenValid = tokenRepository.findByToken(token)
+                .map(t -> !t.isExpired() && !t.isRevoked())
+                .orElse(false);
+
+            if(isTokenValid){
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                throw new ServletException("O token inserido não é mais válido, por favor faça login novamente");
+            }
         }
 
         filterChain.doFilter(request, response);

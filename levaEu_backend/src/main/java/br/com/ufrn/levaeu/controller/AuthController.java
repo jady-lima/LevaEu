@@ -50,6 +50,10 @@ public class AuthController {
 
             User user = userService.findByEmailOrPhone(emailOrPhone);
 
+            tokenService.revokeAllUserTokens(user);
+
+            tokenService.saveToken(token, user);
+
             if(user.getTypeUser() == TypeUser.DRIVER){
                 Driver driver = driverService.findById(user.getId());
                 DriverResponseDTO driverResponseDTO = new DriverResponseDTO(user, token, driver.getDriverLicense(), driver.getCar());
@@ -79,7 +83,7 @@ public class AuthController {
             return new UserDTO(user, "");
         }
 
-        userService.createUser(user);
+        user = userService.createUser(user);
 
         String emailOrPhone = user.getEmail() != null ? user.getEmail() : user.getPhone();
 
@@ -87,6 +91,10 @@ public class AuthController {
         Authentication auth = authenticationManager.authenticate(usernamePassword);
 
         String token = tokenService.generateToken((User) auth.getPrincipal());
+
+        tokenService.revokeAllUserTokens(user);
+
+        tokenService.saveToken(token, user);
 
         UserDTO userDTO = new UserDTO(user, token);
         return userDTO;
