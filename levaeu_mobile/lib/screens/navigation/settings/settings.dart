@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/login/login.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/help.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/security/security_screen.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/share.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget{
   const Settings({super.key});
@@ -91,7 +93,10 @@ class _SettingsState extends State<Settings> {
               "Sair", 
               context, 
               () => const Login(), 
-              rootNavigator: true
+              rootNavigator: true,
+              onLogout: () {
+                Provider.of<UserData>(context, listen: false).logout();
+              },
             ),
           ),
         ],

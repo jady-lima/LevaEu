@@ -356,4 +356,24 @@ class UserData extends ChangeNotifier {
     );
   }
 
+  void logout() {
+      _user = null;
+      _idUser = '';
+      _name = '';
+      _email = '';
+      _matricula = '';
+      _phone = '';
+      _cep = '';
+      _street = '';
+      _number = '';
+      _district = '';
+      _city = '';
+      _state = '';
+      _country = '';
+      _pass = '';
+      _gender = '';
+      _token = '';
+      notifyListeners();
+  }
+
 }

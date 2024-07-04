@@ -67,7 +67,7 @@ class ElevatedButtonsForms{
 
 
 
-  static Widget buildElevatedButtonIcon(IconData? icon, String text, BuildContext context, Function() onPressed, {bool rootNavigator = false}) {
+  static Widget buildElevatedButtonIcon(IconData? icon, String text, BuildContext context, Function() onPressed, {bool rootNavigator = false, Function()? onLogout}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(200, 80),
@@ -81,6 +81,9 @@ class ElevatedButtonsForms{
         ),
       ),      
       onPressed: () {
+        if (onLogout != null) {
+          onLogout();
+        }
         if (rootNavigator) {
           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => onPressed()));
         } else {

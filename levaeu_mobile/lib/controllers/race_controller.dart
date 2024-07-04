@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/api/api_client.dart';
 import 'package:levaeu_mobile/model/race.dart';
@@ -118,15 +120,15 @@ class RaceController extends ChangeNotifier {
     }
   }
 
-  Future<void> confirmPassengerRequest(String token, int userId, int rideId) async {
-    try {
-      print('Enviando confirmação de passageiro: token=$token, userId=$userId, rideId=$rideId');
-      await ApiClient().confirmPassengerRequest(token, userId, rideId);
-    } catch (e) {
-      print('Erro ao confirmar passageiro: $e');
-      throw Exception('Erro ao confirmar passageiro');
-    }
-  }
+  // Future<void> confirmPassengerRequest(String token, int userId, int rideId) async {
+  //   try {
+  //     print('Enviando confirmação de passageiro: token=$token, userId=$userId, rideId=$rideId');
+  //     await ApiClient().confirmPassengerRequest(token, userId, rideId);
+  //   } catch (e) {
+  //     print('Erro ao confirmar passageiro: $e');
+  //     throw Exception('Erro ao confirmar passageiro');
+  //   }
+  // }
 
   Future<void> removePassengerRequest(String token, int userId, int rideId) async {
     try {
@@ -135,6 +137,20 @@ class RaceController extends ChangeNotifier {
     } catch (e) {
       print('Erro ao remover passageiro: $e');
       throw Exception('Erro ao remover passageiro');
+    }
+  }
+
+  Future<void> confirmPassengers(String token, int rideId, List<int> passengerIds) async {
+    try {
+      final response = await ApiClient().confirmPassengerRequest(token, rideId, passengerIds);
+      if (response.statusCode == 200) {
+        print('Passageiros confirmados com sucesso');
+      } else {
+        throw Exception('Erro ao confirmar passageiros');
+      }
+    } catch (e) {
+      print('Erro ao confirmar passageiros: ${e.toString()}');
+      throw Exception('Erro ao confirmar passageiros');
     }
   }
 

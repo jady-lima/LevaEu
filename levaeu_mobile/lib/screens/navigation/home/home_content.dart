@@ -39,16 +39,16 @@ class _HomeContentState extends State<HomeContent> {
 
           Container(
             margin: const EdgeInsets.only(left: 20),
-            constraints: const BoxConstraints(maxWidth: 340, minWidth: 220),
+            constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
             color: Colors.black,
             width: 350,
             height: 0.8,
           ),
           
           Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
+            margin: const EdgeInsets.only(top: 10, bottom: 10),
             constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
-            child: TitlesScreens.buildHomeMainTitle(" Corrida marcada: "),
+            child: TitlesScreens.buildHomeMainTitle("Corrida marcada: "),
           ),
 
           const Center(
@@ -117,10 +117,10 @@ class _HomeContentState extends State<HomeContent> {
           ),
 
           Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
+            margin: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
             padding: const EdgeInsets.only(left: 10),
             constraints: const BoxConstraints(maxWidth: 320, minWidth: 220),
-            child: TitlesScreens.buildHomeMainTitle(" Discussões recentes: "),
+            child: TitlesScreens.buildHomeMainTitle("Discussões recentes: "),
           ),
 
           Center(

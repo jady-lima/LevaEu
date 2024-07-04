@@ -55,22 +55,36 @@ class _AddUsersRaceState extends State<AddUsersRace> {
     });
   }
 
-  void _confirmRoute() {
+  void _confirmRoute() async {
     final raceController = Provider.of<RaceController>(context, listen: false);
+    final user = Provider.of<UserData>(context, listen: false);
 
-    // Coletar waypoints dos passageiros aceitos
-    final List<LatLng> waypoints = raceController.acceptedPassengers.map((passengerData) {
-      final stopPoint = passengerData['userRide']['stopPoint'];
-      return LatLng(stopPoint['latitude'], stopPoint['longitude']);
+    // Coletar IDs dos passageiros aceitos
+    final List<int> passengerIds = raceController.acceptedPassengers.map<int>((passengerData) {
+      return passengerData['user']['id'] as int;
     }).toList();
 
-    // Navegar para a tela de rota final
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RouteMapScreen(race: widget.race, waypoints: waypoints),
-      ),
-    );
+    try {
+      // Enviar a lista de IDs para o backend
+      //await raceController.confirmPassengers(user.token, int.parse(widget.race.idRace), passengerIds);
+
+      // Coletar waypoints dos passageiros aceitos
+      final List<LatLng> waypoints = raceController.acceptedPassengers.map((passengerData) {
+        final stopPoint = passengerData['userRide']['stopPoint'];
+        return LatLng(stopPoint['latitude'], stopPoint['longitude']);
+      }).toList();
+
+      // Navegar para a tela de rota final
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RouteMapScreen(race: widget.race, waypoints: waypoints),
+        ),
+      );
+    } catch (e) {
+      print('Erro ao confirmar passageiros: $e');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao confirmar passageiros')));
+    }
   }
 
   @override

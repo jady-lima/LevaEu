@@ -5,7 +5,7 @@ import 'package:levaeu_mobile/model/race.dart';
 class ApiClient {
   final Dio _dio = Dio();
 
-  final String baseUrl = 'http://192.168.87.243:8080';
+  final String baseUrl = 'http://192.168.1.11:8080';
 
   Future<Response> register(Map<String, dynamic> data) async {
     try {
@@ -122,17 +122,23 @@ class ApiClient {
     }
   }
 
-  Future<void> confirmPassengerRequest(String token, int userId, int rideId) async {
-    try {
-      print('Corpo da requisição para confirmação: { userId: $userId, rideId: $rideId }');
-      final response = await _dio.post('$baseUrl/api/request-ride/confirm/$userId/$rideId',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
-      if (response.statusCode != 200) {
-        throw Exception('Erro ao confirmar passageiro: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Erro ao confirmar passageiro: $e');
-    }
+  Future<Response> confirmPassengerRequest(String token, int rideId, List<int> passengerIds) async {
+    final url = '$baseUrl/api/request-ride/confirm/$rideId';
+    
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    final data = passengerIds.map((id) => {'idUser': id}).toList();
+
+    final response = await _dio.post(
+      url,
+      options: Options(headers: headers),
+      data: data,
+    );
+
+    return response;
   }
 
   Future<void> removePassengerRequest(String token, int userId, int rideId) async {
