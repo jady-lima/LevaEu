@@ -5,7 +5,7 @@ import 'package:levaeu_mobile/model/race.dart';
 class ApiClient {
   final Dio _dio = Dio();
 
-  final String baseUrl = 'http://192.168.1.11:8080';
+  final String baseUrl = 'http://192.168.87.243:8080';
 
   Future<Response> register(Map<String, dynamic> data) async {
     try {

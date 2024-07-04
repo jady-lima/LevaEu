@@ -23,7 +23,7 @@ class _SettingsState extends State<Settings> {
         children: <Widget>[
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
           ),
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.security, 
@@ -62,7 +62,7 @@ class _SettingsState extends State<Settings> {
           */
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.supervised_user_circle, 
@@ -74,7 +74,7 @@ class _SettingsState extends State<Settings> {
           ),
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.help, 
@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
           ),
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.exit_to_app, 

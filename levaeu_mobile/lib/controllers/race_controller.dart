@@ -168,4 +168,11 @@ class RaceController extends ChangeNotifier {
   void clearDriverRaces() {
     _driverRaces = [];
   }
+
+  List<Race> getNextThreeRaces() {
+    // Ordenar as corridas pelo horário de partida
+    _openRaces.sort((a, b) => a.data.compareTo(b.data));
+    // Retornar as três primeiras corridas
+    return _openRaces.take(3).toList();
+  }
 }
