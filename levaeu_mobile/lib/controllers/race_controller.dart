@@ -154,6 +154,12 @@ class RaceController extends ChangeNotifier {
     }
   }
 
+  void finishRace(String idRace) {
+    _driverRaces.removeWhere((race) => race.idRace == idRace);
+    _openRaces.removeWhere((race) => race.idRace == idRace);
+    notifyListeners();
+  }
+
   void clearActiveRace() {
     _activeRace = null;
     notifyListeners();

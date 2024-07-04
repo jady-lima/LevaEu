@@ -75,6 +75,7 @@ class _AddUsersRaceState extends State<AddUsersRace> {
       }).toList();
 
       // Navegar para a tela de rota final
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(

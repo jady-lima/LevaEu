@@ -39,7 +39,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
       final directions = await directionsService.fetchDirections(
         '${origin.latitude},${origin.longitude}',
         '${destination.latitude},${destination.longitude}',
-        widget.waypoints.map((point) => '${point.latitude},${point.longitude}').toList(),
+        widget.waypoints.map((point) => '${point.latitude},${point.longitude}').toList()
       );
 
       _drawPolyline(directions['routes'][0]['overview_polyline']['points']);
@@ -91,6 +91,12 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
     }
   }
 
+  void _finishRace() {
+    final raceController = Provider.of<RaceController>(context, listen: false);
+    raceController.finishRace(widget.race.idRace);
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,9 +109,12 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
         backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
         iconTheme: const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : GoogleMap(
+      body: Stack(
+        children: [
+          if (_isLoading)
+            const Center(child: CircularProgressIndicator())
+          else
+            GoogleMap(
               onMapCreated: (controller) => _mapController = controller,
               initialCameraPosition: CameraPosition(
                 target: LatLng(widget.race.saidaLat, widget.race.saidaLng),
@@ -114,6 +123,27 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
               markers: _markers,
               polylines: _polylines,
             ),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: Center(
+              child: Container(
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: _finishRace,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: const Color.fromRGBO(57, 96, 143, 1.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    
+                  ),
+                  child: const Text('Finalizar Corrida'),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
