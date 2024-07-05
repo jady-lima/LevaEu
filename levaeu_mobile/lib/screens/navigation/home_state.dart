@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:levaeu_mobile/screens/navigation/chats/chats.dart';
 import 'package:levaeu_mobile/screens/navigation/home/home_content.dart';
 import 'package:levaeu_mobile/screens/navigation/history/my_races.dart';
 import 'package:levaeu_mobile/screens/navigation/new_races/new_race.dart';
@@ -27,10 +26,10 @@ class _HomeState extends State<HomeState> {
   Widget build(BuildContext context) {    
     final List<Widget> screens = [
       HomeContent(onItemTapped: _onItemTapped), //0
-      const Chats(), //1
-      const NewRace(), //2
-      const MyRaces(), //3
-      const Settings(), //4
+      //const Chats(), //1
+      const NewRace(), //1
+      const MyRaces(), //2
+      const Settings(), //3
     ];
   
     return Scaffold(

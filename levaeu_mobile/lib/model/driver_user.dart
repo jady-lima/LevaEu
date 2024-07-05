@@ -39,4 +39,14 @@ class DriverUser extends UserData{
     pass: pass,
     gender: gender,
   );
+
+  @override
+  Map<String, dynamic> toMap() {
+    final map = super.toMap();
+    map.addAll({
+      "driverLicense": driverLicense?.toMap(),
+      "driverCar": driverCar?.toMap(),
+    });
+    return map;
+  }
 }

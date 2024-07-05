@@ -13,6 +13,8 @@ import 'package:levaeu_mobile/utils/elevated_buttons.dart';
 import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:levaeu_mobile/utils/titles_screens.dart';
 import 'package:provider/provider.dart';
+import 'package:levaeu_mobile/controllers/auth_controller.dart';
+import 'package:levaeu_mobile/api/api_client.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -24,6 +26,9 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  final ApiClient _apiClient = ApiClient();
+  late AuthController _authController;
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final matriculaController = TextEditingController();
@@ -47,10 +52,12 @@ class _RegistrationState extends State<Registration> {
   String city = '';
   String country = "Brasil";
   bool _isChecked = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    _authController = AuthController(apiClient: _apiClient);
     phoneController.addListener(formatPhoneNumber);
   }
 
@@ -112,61 +119,94 @@ class _RegistrationState extends State<Registration> {
     }
   }
 
-  void _submitUserData(BuildContext context) {
+
+  Future<void> _submitUserData(BuildContext context) async {
     final user = Provider.of<UserData>(context, listen: false);
+    setState(() {
+      _isLoading = true;
+    });
 
-    if (_isChecked) {
-      final driverUser = DriverUser(
-        name: nameController.text,
-        email: emailController.text,
-        matricula: matriculaController.text,
-        phone: phoneController.text,
-        cep: zipcodeController.text,
-        street: streetController.text,
-        number: numberController.text,
-        district: districtController.text,
-        city: cityController.text,
-        state: stateController.text,
-        country: countryController.text,
-        pass: passwordController.text,
-        gender: genderController.text,
-        driverLicense: DriverLicense(),
-        driverCar: DriverCar(),
-      );
+    Map<String, dynamic> userData = {
+      "name": nameController.text,
+      "email": emailController.text,
+      "phone": phoneController.text,
+      "pass": passwordController.text,
+      "cep": zipcodeController.text,
+      "street": streetController.text,
+      "number": numberController.text,
+      "district": districtController.text,
+      "city": cityController.text,
+      "state": stateController.text,
+      "country": countryController.text,
+      "gender": genderController.text,
+      "enrollment": matriculaController.text,
+      "typeUser": _isChecked ? "DRIVER" : "DEFAULT"
+    };
 
-      user.setUser(driverUser);
+    try {
+      print('Enviando dados do usuário para o backend: $userData');
+      final response = await _authController.registerUser(userData);
+      print('User registered successfully: ${response.data}');
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const RegistrationCNH(),
-        ),
-      );
-    } else {
-      user.updateAll(
-        newName: nameController.text,
-        newEmail: emailController.text,
-        newMatricula: matriculaController.text,
-        newPhone: phoneController.text,
-        newCep: zipcodeController.text,
-        newStreet: streetController.text,
-        newNumber: numberController.text,
-        newDistrict: districtController.text,
-        newCity: cityController.text,
-        newState: stateController.text,
-        newCountry: countryController.text,
-        newPass: passwordController.text,
-        newGender: genderController.text,
-      );
+      if (response.statusCode == 200) {
+        final responseData = response.data;
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeState(),
-        ),
-      );
+        if (_isChecked) {
+          final driverUser = DriverUser(
+            name: responseData['name'],
+            email: responseData['email'],
+            matricula: responseData['enrollment'],
+            phone: responseData['phone'],
+            cep: responseData['cep'],
+            street: responseData['street'],
+            number: responseData['number'],
+            district: responseData['district'],
+            city: responseData['city'],
+            state: responseData['state'],
+            country: responseData['country'],
+            pass: passwordController.text,
+            gender: responseData['gender'],
+            driverLicense: DriverLicense(),
+            driverCar: DriverCar(),
+          );
+
+          user.setUser(driverUser);
+
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationCNH()));
+        } else {
+          user.updateAll(
+            newName: responseData['name'],
+            newEmail: responseData['email'],
+            newMatricula: responseData['enrollment'],
+            newPhone: responseData['phone'],
+            newCep: responseData['cep'],
+            newStreet: responseData['street'],
+            newNumber: responseData['number'],
+            newDistrict: responseData['district'],
+            newCity: responseData['city'],
+            newState: responseData['state'],
+            newCountry: responseData['country'],
+            newPass:  passwordController.text,
+            newGender: responseData['gender'],
+          );
+
+          user.updateIdUser(responseData['id'].toString());
+          user.updateToken(responseData['token']);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeState()));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register user')));
+      }
+    } catch (e) {
+      print('Failed to register user: $e');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register user')));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -448,6 +488,10 @@ class _RegistrationState extends State<Registration> {
                   ],
                 ),
               ),
+              if (_isLoading)
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
             ],
           ),
         ],

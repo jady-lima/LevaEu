@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/api/api_client.dart';
+import 'package:levaeu_mobile/controllers/auth_controller.dart';
 import 'package:levaeu_mobile/model/driver_car.dart';
+import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/navigation/home_state.dart';
 import 'package:levaeu_mobile/screens/login/start_login.dart';
@@ -24,10 +27,21 @@ class _RegistrationCarState extends State<RegistrationCar> {
   final modeloController = TextEditingController();
   final placaController = TextEditingController();
 
-  void _submitUserCar(BuildContext context){
+  bool _isLoading = false;
+
+  late AuthController _authController;
+
+  @override
+  void initState() {
+    super.initState();
+    _authController = AuthController(apiClient: ApiClient());
+  }
+
+  Future<void> _submitUserCar(BuildContext context) async {
     final userData = Provider.of<UserData>(context, listen: false);
     final driverCar = Provider.of<DriverCar>(context, listen: false);
-    
+    final driverLicense = Provider.of<DriverLicense>(context, listen: false);
+
     driverCar.updateAll(
       newMarca: marcaController.text,
       newModelo: modeloController.text,
@@ -37,15 +51,43 @@ class _RegistrationCarState extends State<RegistrationCar> {
     );
 
     userData.updateDriverCar(driverCar);
-    print(userData.driverCar?.placa);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomeState(),
-      ),
-    );
+    final Map<String, dynamic> completeData = {
+      "driver": 
+        userData.toMap(),
+      "driverLicense": 
+        driverLicense.toMap(),
+      "car": 
+        driverCar.toMap()
+    };
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      print('Enviando dados completos para o backend: $completeData');
+      final response = await _authController.registerComplete(completeData);
+      print('User and vehicle registered successfully: ${response.data}');
+      if (response.statusCode == 200) {
+
+        userData.updateIdUser(response.data['id'].toString());
+        userData.updateToken(response.data['token']);
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeState()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register vehicle')));
+      }
+    } catch (e) {
+      print('Failed to register vehicle: $e');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register vehicle')));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {

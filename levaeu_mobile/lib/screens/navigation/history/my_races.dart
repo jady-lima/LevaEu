@@ -21,23 +21,23 @@ class _MyRacesState extends State<MyRaces> {
       name: "Hermonie",
       email: "hermonie@gmail.com",
       phone: "99999999999",
-      cep: "55555555",
-      street: "Alguma",
+      cep: "58073110",
+      street: "Rua Professora Ernestina Pinto",
       number: "10",
-      district: "cidade ai",
-      city: "cidade ai",
-      state: "Algum",
-      country: "dos bobos",
+      district: " ",
+      city: "João Pessoa",
+      state: "Paraíba",
+      country: "Brasil",
       gender: "Feminino",
     );
 
-    final List<UserData> passageiros1 = [user1, user1, user1];
-    final List<UserData> passageiros2 = [userMotorista, user1, user1];
+    final List<UserData> passageiros1 = [user1];
+    final List<UserData> passageiros2 = [userMotorista, user1];
 
     final pass2 = HistoryData(
       saida: "Natal",
       destino: "Parnamirim",
-      data: DateTime(2024, 6, 10),
+      data: DateTime(2024, 02, 07),
       horario: const TimeOfDay(hour: 11, minute: 0),
       motorista: userMotorista,
       passageiros: passageiros1,
@@ -46,14 +46,14 @@ class _MyRacesState extends State<MyRaces> {
     final pass1 = HistoryData(
       saida: "IMD",
       destino: "Natal Shopping",
-      data: DateTime(2024, 12, 25),
+      data: DateTime(2024, 01, 07),
       horario: const TimeOfDay(hour: 15, minute: 0),
       motorista: user1,
       passageiros: passageiros2,
     );
 
-    final List<HistoryData> passageiroViagens = [pass1, pass1, pass1];
-    final List<HistoryData> motoristaViagens = [pass2, pass2, pass2];
+    final List<HistoryData> passageiroViagens = [pass1];
+    final List<HistoryData> motoristaViagens = [pass2];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
