@@ -1,9 +1,7 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:levaeu_mobile/api/api_client.dart';
 import 'package:levaeu_mobile/model/race.dart';
-import 'package:levaeu_mobile/model/user_data.dart';
 
 class RaceController extends ChangeNotifier {
 
@@ -90,7 +88,7 @@ class RaceController extends ChangeNotifier {
       }
     } catch (e) {
       print('Failed to submit user request: $e');
-      throw e;
+      rethrow;
     }
   }
 

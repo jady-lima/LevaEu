@@ -5,14 +5,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:levaeu_mobile/api/directions_service.dart';
 import 'package:levaeu_mobile/model/race.dart';
-import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/controllers/race_controller.dart';
 
 class RouteMapScreen extends StatefulWidget {
   final Race race;
   final List<LatLng> waypoints;
 
-  const RouteMapScreen({Key? key, required this.race, required this.waypoints}) : super(key: key);
+  const RouteMapScreen({super.key, required this.race, required this.waypoints});
 
   @override
   _RouteMapScreenState createState() => _RouteMapScreenState();
@@ -20,8 +19,8 @@ class RouteMapScreen extends StatefulWidget {
 
 class _RouteMapScreenState extends State<RouteMapScreen> {
   late GoogleMapController _mapController;
-  Set<Polyline> _polylines = {};
-  Set<Marker> _markers = {};
+  final Set<Polyline> _polylines = {};
+  final Set<Marker> _markers = {};
   bool _isLoading = true;
 
   @override
@@ -128,7 +127,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
             left: 16,
             right: 16,
             child: Center(
-              child: Container(
+              child: SizedBox(
                 width: 200,
                 child: ElevatedButton(
                   onPressed: _finishRace,

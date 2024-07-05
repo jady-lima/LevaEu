@@ -1,6 +1,5 @@
 // api_client.dart
 import 'package:dio/dio.dart';
-import 'package:levaeu_mobile/model/race.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
@@ -65,7 +64,7 @@ class ApiClient {
          );
       return response;
     } catch (e) {
-      throw Exception('Erro ao criar corrida: ${e}');
+      throw Exception('Erro ao criar corrida: $e');
     }
   }
 

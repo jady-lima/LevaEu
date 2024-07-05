@@ -198,7 +198,7 @@ class RaceCard extends StatelessWidget {
                   builder: (context) => RaceDetailsScreen(race: race),
                 ),
               );
-            };
+            }
           },
         )
       ),

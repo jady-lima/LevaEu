@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 class RaceDetailsScreen extends StatefulWidget {
   final Race race;
 
-  const RaceDetailsScreen({Key? key, required this.race}) : super(key: key);
+  const RaceDetailsScreen({super.key, required this.race});
 
   @override
   _RaceDetailsScreenState createState() => _RaceDetailsScreenState();

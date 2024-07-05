@@ -53,7 +53,7 @@ class LoginState extends State<Login> {
       );
     } catch (e) {
       print('Failed to login: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to login')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to login')));
     } finally {
       setState(() {
         _isLoading = false;
