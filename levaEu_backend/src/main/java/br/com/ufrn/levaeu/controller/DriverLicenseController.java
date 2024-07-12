@@ -1,6 +1,7 @@
 package br.com.ufrn.levaeu.controller;
 
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
+import br.com.ufrn.levaeu.errors.InvalidEntryException;
 import br.com.ufrn.levaeu.model.DriverLicense;
 import br.com.ufrn.levaeu.service.DriverLicenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class DriverLicenseController {
         try {
             driverLicenseService.validateDriverLicense(driverLicense);
             return driverLicense;
-        } catch (Exception e) {
+        } catch (DuplicatedEntryException | InvalidEntryException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

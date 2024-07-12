@@ -1,6 +1,8 @@
 package br.com.ufrn.levaeu.service;
 
+import br.com.ufrn.levaeu.model.Token;
 import br.com.ufrn.levaeu.model.User;
+import br.com.ufrn.levaeu.repository.TokenRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -13,13 +15,21 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 
 @Service
 public class TokenService {
 
+    private final TokenRepository tokenRepository;
+
     @Value("${api.security.token.secret}")
     private String secret;
+
+    public TokenService(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
+
 
     public String generateToken(User user) {
         try {
@@ -60,6 +70,28 @@ public class TokenService {
     }
 
     private Instant generateExpirationDate(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusHours(24).toInstant(ZoneOffset.of("-03:00"));
+    }
+
+    public void saveToken(String jwtToken, User user) {
+        Token token = new Token();
+        token.setToken(jwtToken);
+        token.setUser(user);
+        token.setExpired(false);
+        token.setRevoked(false);
+        tokenRepository.save(token);
+    }
+
+    public void revokeAllUserTokens(User user) {
+        List<Token> validUsertokens = tokenRepository.findAllValidTokensByUser(user.getId());
+        if(validUsertokens.isEmpty()){
+            return;
+        }
+
+        for(Token token : validUsertokens){
+            token.setRevoked(true);
+            token.setExpired(true);
+        }
+        tokenRepository.saveAll(validUsertokens);
     }
 }

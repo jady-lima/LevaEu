@@ -1,6 +1,8 @@
 package br.com.ufrn.levaeu.service;
 
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
+import br.com.ufrn.levaeu.errors.EmptyEntryException;
+import br.com.ufrn.levaeu.errors.NotFoundException;
 import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +43,17 @@ public class UserService {
         if(userRepository.findByEnrollment(user.getEnrollment()).isPresent()){
             throw new DuplicatedEntryException("Já existe um usuário cadastrado com essa matrícula");
         }
+    }
+
+    public User findByEmailOrPhone(String emailOrPhone) {
+        return userRepository.findByPhoneOrEmail(emailOrPhone, emailOrPhone);
+    }
+
+    public User findById(Long idUser) throws NotFoundException {
+        Optional<User> user = userRepository.findById(idUser);
+        if(!user.isPresent()){
+            throw new NotFoundException("Usuário não encontrado");
+        }
+        return user.get();
     }
 }

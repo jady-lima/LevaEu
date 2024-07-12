@@ -1,10 +1,10 @@
 package br.com.ufrn.levaeu.service;
 
 import br.com.ufrn.levaeu.errors.DuplicatedEntryException;
+import br.com.ufrn.levaeu.errors.NotFoundException;
 import br.com.ufrn.levaeu.model.DriverLicense;
 import br.com.ufrn.levaeu.model.Driver;
 import br.com.ufrn.levaeu.model.Car;
-import br.com.ufrn.levaeu.model.User;
 import br.com.ufrn.levaeu.repository.DriverRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +47,11 @@ public class DriverService {
     public void excluirMotorista(Long id) { driverRepository.deleteById(id);
     }
 
-
+    public Driver findById(Long idDriver) throws NotFoundException {
+        Optional<Driver> driver = driverRepository.findById(idDriver);
+        if(!driver.isPresent()){
+            throw new NotFoundException("Motorista não encontrado");
+        }
+        return driver.get();
+    }
 }
