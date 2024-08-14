@@ -5,6 +5,7 @@ import 'package:levaeu_mobile/model/driver_user.dart';
 
 class UserData extends ChangeNotifier {
   dynamic _user;
+  String _idUser = '';
   String _name = '';
   String _email = '';
   String _matricula = '';
@@ -18,6 +19,7 @@ class UserData extends ChangeNotifier {
   String _country = '';
   String _pass = '';
   String _gender = '';
+  String _token = '';
 
   UserData({
     String? name,
@@ -50,6 +52,7 @@ class UserData extends ChangeNotifier {
   }
 
   dynamic get user => _user;
+  String get idUser => _idUser;
   String get name => _name;
   String get phone => _phone;
   String get matricula => _matricula;
@@ -64,6 +67,7 @@ class UserData extends ChangeNotifier {
   String get email => _email;
   String get senha => _pass;
   String get number => _number;
+  String get token => _token;
 
   DriverLicense? get driverLicense {
     if (_user is DriverUser) {
@@ -95,18 +99,60 @@ class UserData extends ChangeNotifier {
     _pass = user.pass;
     _gender = user.gender;
 
+    if (user is DriverUser) {
+      _user = DriverUser(
+        name: _name,
+        email: _email,
+        matricula: _matricula,
+        phone: _phone,
+        cep: _cep,
+        street: _street,
+        number: _number,
+        district: _district,
+        city: _city,
+        state: _state,
+        country: _country,
+        pass: _pass,
+        gender: _gender,
+        driverLicense: user.driverLicense,
+        driverCar: user.driverCar,
+      );
+   }
     notifyListeners();
   }
+
+
+  void convertToDriver(DriverLicense driverLicense, DriverCar driverCar) {
+  _user = DriverUser(
+    name: _name,
+    email: _email,
+    matricula: _matricula,
+    phone: _phone,
+    cep: _cep,
+    street: _street,
+    number: _number,
+    district: _district,
+    city: _city,
+    state: _state,
+    country: _country,
+    pass: _pass,
+    gender: _gender,
+    driverLicense: driverLicense,
+    driverCar: driverCar,
+  );
+  notifyListeners();
+}
+
 
   void updateDriverLicense(DriverLicense driverLicense) {
     if (_user is DriverUser) {
       (_user as DriverUser).updateDriverLicense(driverLicense);
       (_user as DriverUser).driverLicense?.updateAll(
-        newregistro: driverLicense.registro, 
-        newdataEmissao: driverLicense.dataEmissao, 
-        newdataValidade: driverLicense.dataValidade, 
-        newcategoria: driverLicense.categoria, 
-        newcpf: driverLicense.cpf
+        newRegistro: driverLicense.registro, 
+        newDataEmissao: driverLicense.dataEmissao, 
+        newDataValidade: driverLicense.dataValidade, 
+        newCategoria: driverLicense.categoria, 
+        newCpf: driverLicense.cpf
       );
       notifyListeners();
     }
@@ -124,6 +170,16 @@ class UserData extends ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  void updateIdUser(String newIdUser) {
+    _idUser = newIdUser;
+    notifyListeners();
+  }
+
+  void updateToken(String newToken) {
+    _token = newToken;
+    notifyListeners();
   }
 
   void updateName(String newName) {
@@ -223,4 +279,101 @@ class UserData extends ChangeNotifier {
     _user = userData ?? _user;
     notifyListeners();
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "idUser": _idUser,
+      "name": _name,
+      "email": _email,
+      "phone": _phone,
+      "pass": _pass,
+      "cep": _cep,
+      "street": _street,
+      "number": _number,
+      "district": _district,
+      "city": _city,
+      "state": _state,
+      "country": _country,
+      "gender": _gender,
+      "enrollment": _matricula,
+      "typeUser": (_user is DriverUser) ? "DRIVER" : "DEFAULT",
+      "token": _token,
+    };
+  }
+
+  void updateFromJson(Map<String, dynamic> json) {
+    _name = json['name'] ?? '';
+    _email = json['email'] ?? '';
+    _matricula = json['enrollment']?.toString() ?? '';
+    _phone = json['phone'] ?? '';
+    _cep = json['cep']?.toString() ?? '';
+    _street = json['street'] ?? '';
+    _number = json['number']?.toString() ?? '';
+    _district = json['district'] ?? '';
+    _city = json['city'] ?? '';
+    _state = json['state'] ?? '';
+    _country = json['country'] ?? '';
+    _gender = json['gender'] ?? '';
+    _token = json['token'] ?? '';
+    _idUser = json['id']?.toString() ?? '';
+
+    if (json['typeUser'] == 'DRIVER' && json.containsKey('driverLicense') && json.containsKey('car')) {
+      _user = DriverUser(
+        name: _name,
+        email: _email,
+        matricula: _matricula,
+        phone: _phone,
+        cep: _cep,
+        street: _street,
+        number: _number,
+        district: _district,
+        city: _city,
+        state: _state,
+        country: _country,
+        pass: _pass,
+        gender: _gender,
+        driverLicense: DriverLicense.fromJson(json['driverLicense']),
+        driverCar: DriverCar.fromJson(json['car']),
+      );
+    } 
+    notifyListeners();
+  }
+
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      name: json['name'],
+      email: json['email'],
+      matricula: json['enrollment'],
+      phone: json['phone'],
+      cep: json['cep'],
+      street: json['street'],
+      number: json['number'],
+      district: json['district'],
+      city: json['city'],
+      state: json['state'],
+      country: json['country'],
+      pass: '',
+    );
+  }
+
+  void logout() {
+      _user = null;
+      _idUser = '';
+      _name = '';
+      _email = '';
+      _matricula = '';
+      _phone = '';
+      _cep = '';
+      _street = '';
+      _number = '';
+      _district = '';
+      _city = '';
+      _state = '';
+      _country = '';
+      _pass = '';
+      _gender = '';
+      _token = '';
+      notifyListeners();
+  }
+
 }

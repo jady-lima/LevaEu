@@ -4,7 +4,7 @@ import 'package:levaeu_mobile/utils/text_fields_forms.dart';
 import 'package:provider/provider.dart';
 
 class Security extends StatefulWidget {
-  const Security({Key? key}) : super(key: key);
+  const Security({super.key});
 
   @override
   SecurityState createState() => SecurityState();

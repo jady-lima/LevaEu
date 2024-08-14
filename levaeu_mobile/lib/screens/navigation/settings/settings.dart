@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/login/login.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/help.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/profile.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/security/security_screen.dart';
 import 'package:levaeu_mobile/screens/navigation/settings/share.dart';
 import 'package:levaeu_mobile/utils/elevated_buttons.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget{
   const Settings({super.key});
@@ -21,7 +23,7 @@ class _SettingsState extends State<Settings> {
         children: <Widget>[
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             margin: const EdgeInsets.only(top: 10),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
@@ -34,7 +36,7 @@ class _SettingsState extends State<Settings> {
           ),
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.security, 
@@ -60,7 +62,7 @@ class _SettingsState extends State<Settings> {
           */
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.supervised_user_circle, 
@@ -72,7 +74,7 @@ class _SettingsState extends State<Settings> {
           ),
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.help, 
@@ -84,14 +86,17 @@ class _SettingsState extends State<Settings> {
           ),
 
           Container(
-            constraints: const BoxConstraints(maxWidth: 380, minWidth: 200, maxHeight: 100, minHeight: 50),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width, minWidth: 200, maxHeight: 100, minHeight: 50),
             alignment: Alignment.center,
             child: ElevatedButtonsForms.buildElevatedButtonIcon(
               Icons.exit_to_app, 
               "Sair", 
               context, 
               () => const Login(), 
-              rootNavigator: true
+              rootNavigator: true,
+              onLogout: () {
+                Provider.of<UserData>(context, listen: false).logout();
+              },
             ),
           ),
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:levaeu_mobile/api/api_client.dart';
+import 'package:levaeu_mobile/controllers/auth_controller.dart';
 import 'package:levaeu_mobile/model/driver_license.dart';
 import 'package:levaeu_mobile/model/user_data.dart';
 import 'package:levaeu_mobile/screens/register/registration_car.dart';
@@ -25,11 +27,15 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
 
   final _formKeyRegistration = GlobalKey<FormState>();
 
+  bool _isLoading = false;
+  late AuthController _authController;
+
   @override
   void initState() {
     super.initState();
     dataEmissaoController.addListener(formatDate);
     dataValidadeController.addListener(formatDate);
+    _authController = AuthController(apiClient: ApiClient());
   }
 
   @override
@@ -84,27 +90,48 @@ class _RegistrationCNHState extends State<RegistrationCNH> {
     }
   }
 
-  void _submitUserCNH(BuildContext context){
+  void _submitUserCNH(BuildContext context) async{
     final userData = Provider.of<UserData>(context, listen: false);
     final driverLicense = Provider.of<DriverLicense>(context, listen: false);
     
-    driverLicense.updateAll(
-      newregistro: registroController.text, 
-      newdataEmissao: dataEmissaoController.text, 
-      newdataValidade: dataValidadeController.text, 
-      newcategoria: categoriaController.text, 
-      newcpf: cpfController.text,
-    );
+    setState(() {
+      _isLoading = true;
+    });
 
-    userData.updateDriverLicense(driverLicense);
-    print(userData.driverLicense?.registro);
+    Map<String, dynamic> cnhData = {
+      "registrationNumber": registroController.text,
+      "cpf": cpfController.text,
+      "issuanceDate": dataEmissaoController.text,
+      "expirationDate": dataValidadeController.text,
+      "category": categoriaController.text,
+    };
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const RegistrationCar(),
-      ),
-    );
+    try {
+      print('Enviando dados da CNH para o backend: $cnhData');
+      final response = await _authController.registerCNH(cnhData);
+      print('CNH registered successfully: ${response.data}');
+
+      if (response.statusCode == 200) {
+        driverLicense.updateAll(
+          newRegistro: registroController.text, 
+          newDataEmissao: dataEmissaoController.text, 
+          newDataValidade: dataValidadeController.text, 
+          newCategoria: categoriaController.text, 
+          newCpf: cpfController.text,
+        );
+        userData.updateDriverLicense(driverLicense);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const RegistrationCar()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register CNH')));
+      }
+    } catch (e) {
+        print('Failed to register CNH: $e');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to register CNH')));
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override

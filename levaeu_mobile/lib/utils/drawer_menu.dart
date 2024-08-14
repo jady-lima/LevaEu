@@ -89,6 +89,9 @@ class DrawerMenu{
         style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
       ),
       onTap: () {
+        if (label == "Sair") {
+          Provider.of<UserData>(context, listen: false).logout();
+        }
         Navigator.push(context, MaterialPageRoute(builder: (context) => f));
       },
     );
